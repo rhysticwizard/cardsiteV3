@@ -82,7 +82,7 @@ function App() {
   return (
     <ErrorBoundary>
       <DeckProvider>
-        <Router>
+        <Router basename="/cardsiteV3">
           <Routes>
             {/* Main homepage is now the MTG Hub */}
             <Route path="/" element={
