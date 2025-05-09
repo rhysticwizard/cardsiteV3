@@ -1,0 +1,475 @@
+/* Global reset for consistent alignment */
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: #000000;
+    color: #ffffff;
+    padding: 0;
+}
+
+/* Consistent container sizes and alignment */
+.page-controls,
+.all-filters-container,
+main,
+.filter-bar,
+#card-display-area,
+#previously-viewed,
+.custom-divider {
+    max-width: 900px;
+    width: 100%;
+    box-sizing: border-box;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Custom divider that will be properly aligned */
+.custom-divider {
+    height: 1px;
+    background-color: #333;
+    margin: 10px auto;
+    padding: 0;
+    border: none;
+}
+
+/* Fix horizontal line alignment */
+hr {
+    display: none; /* Hide any native hr elements */
+}
+
+/* Fix filter alignment */
+.filter-group,
+.filter-label,
+.filter-pills {
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+/* Style the top buttons like text + icon */
+.page-controls {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+#get-random-card,
+#filters-toggle {
+    background: none; /* Remove background */
+    color: #a0a0a0; /* Grey text */
+    border: none; /* Remove border */
+    padding: 5px; /* Minimal padding */
+    border-radius: 0; /* Remove radius */
+    cursor: pointer;
+    font-size: 1em;
+    margin-left: 15px; /* Adjust spacing between buttons */
+    vertical-align: middle;
+}
+
+#get-random-card:hover,
+#filters-toggle:hover {
+    background: none; /* Ensure no background on hover */
+    color: #ffffff; /* White text on hover */
+}
+
+/* Remove dice icon from Get Random Card button */
+/* #get-random-card::before {
+    content: "\1F3B2";
+    margin-right: 6px;
+    font-size: 1.1em;
+    display: inline-block;
+} */
+
+#filters-toggle::after { /* Use ::after to put icon on the right */
+    content: "\25BC"; /* Unicode BLACK DOWN-POINTING TRIANGLE U+25BC */
+    margin-left: 6px; /* Space between text and icon */
+    font-size: 0.8em; /* Adjust icon size */
+    display: inline-block; /* Allows margin */
+    position: relative;
+    top: -1px; /* Minor vertical adjustment */
+}
+
+/* Rotate icon when filters are visible */
+#filters-toggle.active::after {
+    content: "\25B2"; /* Unicode BLACK UP-POINTING TRIANGLE U+25B2 */
+}
+
+/* All filters container */
+.all-filters-container {
+    margin-bottom: 0; /* Reduced because we use divider */
+    padding-top: 0;
+    padding-bottom: 0;
+    border-radius: 4px;
+    overflow: hidden; /* For smooth animation */
+    transition: all 0.3s ease;
+}
+
+.all-filters-container.hidden {
+    display: none; /* Hide when not active */
+}
+
+/* Filter Bar Styles */
+.filter-bar {
+    margin: 0;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-bottom: none; /* Removed, using custom-divider */
+}
+
+.filter-group {
+    margin-bottom: 12px;
+}
+
+.filter-group:last-child {
+    margin-bottom: 0;
+}
+
+.filter-label {
+    font-size: 0.9em;
+    color: #aaa;
+    margin-bottom: 6px;
+}
+
+.filter-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* Style for filter pill buttons */
+.filter-pill {
+    background: #222;
+    border: 1px solid #444;
+    color: #a0a0a0;
+    padding: 5px 10px;
+    border-radius: 12px;
+    font-size: 0.85em;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.filter-pill:hover {
+    background: #333;
+    color: #fff;
+}
+
+/* Selected state */
+.filter-pill.selected {
+    background: #555;
+    color: #fff;
+    border-color: #777;
+}
+
+/* Color pills specific styling */
+.color-pills .filter-pill {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    font-weight: bold;
+    background: #333; /* Gray background */
+    color: #777; /* Muted text color */
+    border-color: #555; /* Gray border */
+}
+
+/* Remove color-specific styling since we want uniform gray */
+.filter-pill[data-value="W"],
+.filter-pill[data-value="U"],
+.filter-pill[data-value="B"],
+.filter-pill[data-value="R"],
+.filter-pill[data-value="G"],
+.filter-pill[data-value="C"] {
+    border-color: #555;
+    color: #777;
+}
+
+/* Color pills selected state overrides */
+.color-pills .filter-pill.selected {
+    background: #666; /* Darker gray background when selected */
+    color: #fff; /* White text when selected */
+    border-color: #fff; /* White border when selected */
+    transform: none; /* Remove the grow effect */
+}
+
+/* Main Content Area */
+main {
+    padding-top: 0;
+    padding-bottom: 10px;
+}
+
+/* Fixed dimensions for card display to prevent layout shift */
+#card-display-area {
+    border: none !important;
+    min-height: 400px;
+    position: relative;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+/* Card placeholder styling - consistent alignment for ALL states */
+#card-placeholder {
+    border: none; /* No border */
+    min-height: 450px; /* Increased from 390px to match new card height */
+    width: 100%; /* Full width */
+    display: flex;
+    align-items: flex-start; /* Always top aligned */
+    justify-content: flex-start; /* Always left aligned */
+    color: #777;
+    padding: 0; /* No extra padding to maintain alignment */
+    margin-bottom: 0; /* Reduced from 15px */
+    transition: opacity 0.3s ease; /* Smooth fade transition */
+}
+
+/* When card is displayed - keep same alignment */
+#card-placeholder.has-card {
+    border: none;
+    min-height: 450px; /* Increased to match new size */
+    padding: 0;
+    border-bottom: none;
+    padding-bottom: 10px; /* Reduced from 20px */
+    margin-bottom: 10px; /* Reduced from 20px */
+    opacity: 1;
+}
+
+/* Loading state styling */
+#card-placeholder.loading {
+    opacity: 0.6; /* Slightly faded */
+}
+
+/* Card grid layout - always positioned the same */
+.card-details-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 20px 40px; /* Increased horizontal gap for more spacing */
+}
+
+/* Keep consistent image dimensions - add specificity to avoid affecting other components */
+#card-display-area .card-image,
+#card-placeholder .card-image {
+    width: 315px; /* Card image fixed width */
+    height: 440px; /* Card image fixed height */
+    border-radius: 6px; /* Slight rounding for card corner */
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+    /* Force fixed size regardless of image content */
+    min-width: 315px;
+    max-width: 315px;
+    min-height: 440px;
+    max-height: 440px;
+}
+
+#card-display-area .card-image:hover,
+#card-placeholder .card-image:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+}
+
+#card-display-area .card-image img,
+#card-placeholder .card-image img {
+    width: 100%;
+    height: 100%;
+    /* Change from cover to contain to prevent aspect ratio changes */
+    object-fit: contain;
+    border-radius: 6px; /* Match parent radius */
+    display: block; /* Remove any weird spacing */
+    max-width: 100%; /* Ensure image doesn't exceed container */
+    /* Ensure image is centered */
+    margin: 0 auto;
+    background-color: #000; /* Black background for card image */
+}
+
+.card-info-column { /* New class for the right column */
+    display: flex;
+    flex-direction: column;
+    text-align: left; /* Ensure everything left-aligned */
+}
+
+.card-info-column h3 { /* Card Name */
+    font-size: 1.4em;
+    margin-top: 0;
+    margin-bottom: 8px;
+    color: #fff;
+    font-weight: 600;
+}
+
+.card-info-column .metadata-line { /* Class for Rarity/Set/Color info */
+    font-size: 0.9em;
+    color: #bbb;
+    margin-bottom: 5px;
+    margin-top: 0;
+}
+
+.card-info-column .metadata-line strong { /* Make rarity bold */
+    font-weight: 600;
+    text-transform: capitalize; /* Make sure rarity is capitalized */
+    color: #fff;
+}
+
+.card-info-column .type-line { /* Class for the type line */
+    font-size: 1em;
+    color: #ddd;
+    border-bottom: 1px solid #444;
+    padding-bottom: 6px;
+    margin-bottom: 10px;
+    margin-top: 0;
+}
+
+.card-info-column .oracle-text { /* Class for the oracle text */
+    font-size: 0.95em;
+    line-height: 1.5;
+    color: #ccc;
+    margin-top: 10px;
+    white-space: pre-wrap; /* Preserve line breaks */
+    max-width: 550px; /* Prevent excessively long lines */
+    background: transparent !important; /* Ensure no background color with !important */
+    background-color: transparent !important; /* Also ensure background-color is transparent */
+}
+
+/* Additional specific selectors to override any potential conflicts */
+#card-display-area .card-info-column .oracle-text,
+#card-placeholder .card-info-column .oracle-text,
+.card-details-grid .card-info-column .oracle-text {
+    background: transparent !important;
+    background-color: transparent !important;
+    color: #ccc !important;
+}
+
+/* Ensure all paragraphs in oracle text also have transparent background */
+.card-info-column .oracle-text p,
+.card-info-column .oracle-text br,
+.card-info-column .oracle-text span {
+    background: transparent !important;
+    background-color: transparent !important;
+}
+
+/* Additional rules to target any elements inside oracle text */
+.card-info-column .oracle-text * {
+    background-color: transparent !important;
+    background: transparent !important;
+}
+
+/* Target specifically the content that might be inserted by dangerouslySetInnerHTML */
+.card-info-column .oracle-text[dangerouslySetInnerHTML] * {
+    background-color: transparent !important;
+    background: transparent !important;
+}
+
+/* Target line break elements */
+.card-info-column .oracle-text br::after,
+.card-info-column .oracle-text br::before {
+    background-color: transparent !important;
+    background: transparent !important;
+}
+
+#previously-viewed {
+    padding-top: 5px; /* Reduced from 15px */
+    padding-bottom: 15px;
+    margin-top: 0; /* Removed separation between card and history */
+    border-top: none; /* Removed now that we use custom-divider */
+    color: #ffffff;
+    margin-bottom: 0;
+}
+
+#previously-viewed h2 {
+    font-size: 1.1em;
+    font-weight: 500;
+    color: #aaa;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    border-bottom: none; /* Removed extra border that's no longer needed */
+    position: relative;
+    padding-left: 0; /* Remove any padding that might have been added */
+    text-align: left; /* Ensure left alignment */
+}
+
+.card-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    max-width: 100%;
+    margin-top: 0;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.previous-card-item {
+    padding: 6px 10px;
+    background: #111;
+    border: 1px solid #333;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+    text-align: left;
+}
+
+.previous-card-item:not(:last-child) {
+    margin-bottom: 0;
+}
+
+.previous-card-item:hover {
+    background: #222;
+}
+
+.previous-card-metadata {
+    font-size: 0.8em;
+    color: #777;
+    text-transform: capitalize;
+    margin-bottom: 2px;
+}
+
+.previous-card-main {
+    font-size: 0.95em;
+    color: #ddd;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Plane Card Specific Styling */
+.plane-card .card-details-grid,
+#card-placeholder.plane-card {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 20px 40px;
+    min-height: 300px;
+}
+
+/* Make selectors more specific to avoid affecting other components */
+#card-display-area .plane-card .card-image,
+#card-placeholder.plane-card .card-image {
+    width: 420px; /* Wider for plane cards */
+    height: 300px; /* Shorter for plane cards to maintain proper proportions */
+    border-radius: 8px;
+    overflow: hidden;
+    justify-self: start; /* Ensure alignment at start */
+    /* Force fixed size for plane cards too */
+    min-width: 420px;
+    max-width: 420px;
+    min-height: 300px;
+    max-height: 300px;
+}
+
+#card-display-area .plane-card .card-image img,
+#card-placeholder.plane-card .card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Changed from cover to contain */
+    border-radius: 8px;
+    /* Ensure image is centered */
+    margin: 0 auto;
+    background-color: #000; /* Black background for card image */
+}
+
+.plane-card .card-info-column,
+#card-placeholder.plane-card .card-info-column {
+    align-self: flex-start;
+} 

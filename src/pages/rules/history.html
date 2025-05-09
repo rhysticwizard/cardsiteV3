@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Version History - TCG Rules Explorer</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!-- Header Removed -->
+  <!-- Site Nav Removed -->
+
+  <main class="container">
+    <!-- Sidebar Area (Optional) -->
+    <!-- <div class="sidebar"> 
+      Optional: Could include links back to main explorer, version select, etc. 
+    </div> -->
+
+    <!-- Content Area Takes Full Width (or adjusts based on OpenAI style) -->
+    <div class="content full-width-content">
+      <div class="search-container content-search">
+        <input type="text" id="history-search" placeholder="Search rule changes...">
+        <button id="history-search-button"><i class="fas fa-search"></i></button>
+      </div>
+      <div id="breadcrumbs">
+        <span><a href="index.html">Rules Explorer</a></span>
+        <span>Version History</span>
+      </div>
+      
+      <div class="history-container">
+        <h2>Rules Version History</h2>
+        <p class="history-intro">This page documents the changes made to the comprehensive rules over time.</p>
+        
+        <div class="filter-container">
+          <label for="version-filter">Filter by Version:</label>
+          <select id="version-filter">
+            <option value="all">All Versions</option>
+            <!-- Options will be populated dynamically -->
+          </select>
+        </div>
+        
+        <div id="history-list">
+          <!-- History entries will be populated here dynamically -->
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer Removed for OpenAI style -->
+
+  <button id="dark-mode-toggle" class="dark-mode-toggle" aria-label="Toggle dark mode">
+    <i class="fas fa-moon"></i>
+  </button>
+
+  <script src="js/data.js"></script>
+  <script src="js/history.js"></script>
+</body>
+</html> 

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Glossary - TCG Rules Explorer</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!-- Header Removed -->
+  <!-- Site Nav Removed -->
+
+  <main class="container">
+    <!-- Sidebar Area (Optional for Glossary/History, can be added if needed) -->
+    <!-- <div class="sidebar">
+      Optional: Could include links back to main explorer, version select, etc.
+    </div> -->
+
+    <!-- Content Area Takes Full Width (or adjusts based on OpenAI style) -->
+    <div class="content full-width-content">
+      <div class="search-container content-search">
+        <input type="text" id="glossary-search" placeholder="Search glossary...">
+        <button id="glossary-search-button"><i class="fas fa-search"></i></button>
+      </div>
+      <div id="breadcrumbs">
+        <span><a href="index.html">Rules Explorer</a></span>
+        <span>Glossary</span>
+      </div>
+      
+      <div class="glossary-container">
+        <h2>Glossary of Terms</h2>
+        <p class="glossary-intro">This glossary contains commonly used terms in the TCG and their definitions.</p>
+        
+        <div class="glossary-nav">
+          <div class="alphabet-nav">
+            <!-- Alphabet Nav Content remains -->
+            <span class="letter-link active" data-letter="all">All</span>
+            <span class="letter-link" data-letter="A">A</span>
+            <span class="letter-link" data-letter="B">B</span>
+            <span class="letter-link" data-letter="C">C</span>
+            <span class="letter-link" data-letter="D">D</span>
+            <span class="letter-link" data-letter="E">E</span>
+            <span class="letter-link" data-letter="F">F</span>
+            <span class="letter-link" data-letter="G">G</span>
+            <span class="letter-link" data-letter="H">H</span>
+            <span class="letter-link" data-letter="I">I</span>
+            <span class="letter-link" data-letter="J">J</span>
+            <span class="letter-link" data-letter="K">K</span>
+            <span class="letter-link" data-letter="L">L</span>
+            <span class="letter-link" data-letter="M">M</span>
+            <span class="letter-link" data-letter="N">N</span>
+            <span class="letter-link" data-letter="O">O</span>
+            <span class="letter-link" data-letter="P">P</span>
+            <span class="letter-link" data-letter="Q">Q</span>
+            <span class="letter-link" data-letter="R">R</span>
+            <span class="letter-link" data-letter="S">S</span>
+            <span class="letter-link" data-letter="T">T</span>
+            <span class="letter-link" data-letter="U">U</span>
+            <span class="letter-link" data-letter="V">V</span>
+            <span class="letter-link" data-letter="W">W</span>
+            <span class="letter-link" data-letter="X">X</span>
+            <span class="letter-link" data-letter="Y">Y</span>
+            <span class="letter-link" data-letter="Z">Z</span>
+          </div>
+        </div>
+        
+        <div id="glossary-terms">
+          <!-- Glossary terms will be populated here dynamically -->
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer Removed for OpenAI style -->
+
+  <button id="dark-mode-toggle" class="dark-mode-toggle" aria-label="Toggle dark mode">
+    <i class="fas fa-moon"></i>
+  </button>
+
+  <script src="js/data.js"></script>
+  <script src="js/glossary.js"></script>
+</body>
+</html> 

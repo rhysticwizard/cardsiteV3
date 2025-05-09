@@ -1,0 +1,246 @@
+/* EmojiPicker Styles */
+.emoji-picker {
+  position: absolute;
+  bottom: 45px;
+  left: -5px;
+  width: 350px;
+  max-width: 350px;
+  height: 400px;
+  background-color: #2d2d2d;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+  overflow: hidden;
+  color: #e0e0e0;
+}
+
+/* Add an arrow at the bottom of the picker */
+.emoji-picker::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 20px;
+  border-width: 8px 8px 0;
+  border-style: solid;
+  border-color: #2d2d2d transparent transparent;
+}
+
+/* Tabs */
+.emoji-picker-tabs {
+  display: flex;
+  border-bottom: 1px solid #3d3d3d;
+  background-color: #1e1e1e;
+}
+
+.emoji-tab {
+  flex: 1;
+  padding: 12px;
+  background: none;
+  border: none;
+  color: #888;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: color 0.2s, background-color 0.2s;
+}
+
+.emoji-tab:hover {
+  background-color: #383838;
+  color: #ddd;
+}
+
+.emoji-tab.active {
+  color: #fff;
+  background-color: #2d2d2d;
+  border-bottom: 2px solid #7e57c2;
+}
+
+/* Search */
+.emoji-search-container {
+  padding: 10px;
+  background-color: #1e1e1e;
+  position: relative;
+}
+
+.emoji-search {
+  width: 100%;
+  padding: 8px 32px 8px 10px;
+  border-radius: 4px;
+  border: 1px solid #3d3d3d;
+  background-color: #2d2d2d;
+  color: #e0e0e0;
+  font-size: 14px;
+}
+
+.emoji-search:focus {
+  outline: none;
+  border-color: #7e57c2;
+  box-shadow: 0 0 0 1px #7e57c2;
+}
+
+.emoji-search-clear {
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #888;
+  cursor: pointer;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+}
+
+.emoji-search-clear:hover {
+  color: #e0e0e0;
+  background-color: #444;
+}
+
+/* Content area */
+.emoji-content {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+/* Categories sidebar */
+.emoji-categories {
+  width: 40px;
+  background-color: #1e1e1e;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.category-btn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  opacity: 0.7;
+  padding: 0;
+  transition: opacity 0.2s, background-color 0.2s;
+}
+
+.category-btn:hover {
+  opacity: 1;
+  background-color: #383838;
+}
+
+.category-btn.active {
+  opacity: 1;
+  background-color: #383838;
+  border-left: 3px solid #7e57c2;
+}
+
+/* Emoji grid */
+.emoji-grid {
+  flex: 1;
+  padding: 10px;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  overflow-y: auto;
+}
+
+.emoji-item {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.emoji-item:hover {
+  background-color: #383838;
+}
+
+.no-results {
+  grid-column: 1 / -1;
+  padding: 20px;
+  text-align: center;
+  color: #888;
+  font-size: 14px;
+}
+
+/* Scrollbar styling */
+.emoji-grid::-webkit-scrollbar,
+.emoji-categories::-webkit-scrollbar {
+  width: 8px;
+}
+
+.emoji-grid::-webkit-scrollbar-track,
+.emoji-categories::-webkit-scrollbar-track {
+  background-color: #1e1e1e;
+}
+
+.emoji-grid::-webkit-scrollbar-thumb,
+.emoji-categories::-webkit-scrollbar-thumb {
+  background-color: #444;
+  border-radius: 4px;
+}
+
+.emoji-grid::-webkit-scrollbar-thumb:hover,
+.emoji-categories::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+/* Sticker grid */
+.sticker-grid {
+  flex: 1;
+  padding: 10px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  overflow-y: auto;
+}
+
+.sticker-item {
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 5px;
+  transition: background-color 0.2s;
+  overflow: hidden;
+}
+
+.sticker-item:hover {
+  background-color: #383838;
+}
+
+.sticker-item img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* GIFs placeholder */
+.gifs-placeholder {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+} 

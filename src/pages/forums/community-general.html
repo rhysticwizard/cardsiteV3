@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>General Discussion - CardSite V2</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dark-theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Breadcrumb Navigation */
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            color: var(--text-color-secondary);
+        }
+        
+        .breadcrumb a {
+            color: var(--text-color-secondary);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        
+        .breadcrumb a:hover {
+            color: var(--text-color);
+            text-decoration: underline;
+        }
+        
+        .breadcrumb-separator {
+            margin: 0 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <main class="content-area community-layout">
+        <!-- Breadcrumb navigation -->
+        <div class="breadcrumb">
+            <a href="index.html">Categories</a>
+            <span class="breadcrumb-separator">></span>
+            <span>General Discussion</span>
+        </div>
+        
+        <!-- Community banner -->
+        <div class="community-banner">
+            <div class="community-info">
+                <div class="community-icon">
+                    <i class="fa fa-comments"></i>
+                </div>
+                <h1 class="community-name">General Discussion</h1>
+            </div>
+        </div>
+        
+        <!-- Main container with single column layout -->
+        <div class="community-container single-column">
+            <!-- Posts column -->
+            <div class="posts-column">
+                <!-- Top actions and sorting -->
+                <div class="community-actions">
+                    <a href="create-post.html?category=general" class="create-post-btn"><i class="fa fa-plus"></i> Create Post</a>
+                    
+                    <div class="post-filters">
+                        <button class="filter-btn active"><i class="fa fa-certificate"></i> New</button>
+                        <button class="filter-btn"><i class="fa fa-arrow-up"></i> Top</button>
+                    </div>
+                </div>
+                
+                <!-- Post items -->
+                <div class="posts-list">
+                    <!-- Post 1 -->
+                    <article class="post-item">
+                        <div class="post-content">
+                            <div class="post-category">ANNOUNCEMENT</div>
+                            <h3 class="post-title">
+                                <a href="post-welcome.html">Welcome to the General Discussion Forum</a>
+                            </h3>
+                            <p class="post-meta">Posted by <a href="#" class="author">CommunityMod</a> 5 days ago</p>
+                            <p class="post-excerpt">Welcome to our community! This is the place for all general discussions about the card game. Feel free to share your thoughts, ask questions, and connect with fellow players.</p>
+                            
+                            <div class="post-actions">
+                                <a href="post-welcome.html" class="post-action heart-btn"><i class="fa fa-heart"></i> 352</a>
+                                <a href="post-welcome.html" class="post-action"><i class="fa fa-comment"></i> 128 comments</a>
+                                <a href="#" class="post-action"><i class="fa fa-share"></i> Share</a>
+                                <a href="#" class="post-action"><i class="fa fa-bookmark"></i> Save</a>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <!-- Post 2 -->
+                    <article class="post-item">
+                        <div class="post-content">
+                            <div class="post-category">DISCUSSION</div>
+                            <h3 class="post-title">
+                                <a href="#">What got you into this card game?</a>
+                            </h3>
+                            <p class="post-meta">Posted by <a href="#" class="author">CardEnthusiast</a> 2 days ago</p>
+                            <p class="post-excerpt">I'm curious about everyone's story. What initially drew you to the game? Was it the artwork, the mechanics, or did a friend introduce you to it?</p>
+                            
+                            <div class="post-actions">
+                                <a href="#" class="post-action heart-btn"><i class="fa fa-heart"></i> 245</a>
+                                <a href="#" class="post-action"><i class="fa fa-comment"></i> 87 comments</a>
+                                <a href="#" class="post-action"><i class="fa fa-share"></i> Share</a>
+                                <a href="#" class="post-action"><i class="fa fa-bookmark"></i> Save</a>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <!-- Post 3 -->
+                    <article class="post-item">
+                        <div class="post-content">
+                            <div class="post-category">EVENT</div>
+                            <h3 class="post-title">
+                                <a href="#">Upcoming Tournament - May 20th</a>
+                            </h3>
+                            <p class="post-meta">Posted by <a href="#" class="author">EventOrganizer</a> 1 day ago</p>
+                            <p class="post-excerpt">We're excited to announce our next online tournament happening on May 20th. Registration is now open! Prize pool of $500 and exclusive digital items for participants.</p>
+                            
+                            <div class="post-actions">
+                                <a href="#" class="post-action heart-btn"><i class="fa fa-heart"></i> 198</a>
+                                <a href="#" class="post-action"><i class="fa fa-comment"></i> 42 comments</a>
+                                <a href="#" class="post-action"><i class="fa fa-share"></i> Share</a>
+                                <a href="#" class="post-action"><i class="fa fa-bookmark"></i> Save</a>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <!-- Post 4 - New post -->
+                    <article class="post-item">
+                        <div class="post-content">
+                            <div class="post-category">QUESTION</div>
+                            <h3 class="post-title">
+                                <a href="#">Best places to buy card sleeves and accessories?</a>
+                            </h3>
+                            <p class="post-meta">Posted by <a href="#" class="author">NewCollector</a> 6 hours ago</p>
+                            <p class="post-excerpt">I'm looking for recommendations on where to buy quality card sleeves, deck boxes, and other accessories. Any favorite online stores or local shops worth checking out?</p>
+                            
+                            <div class="post-actions">
+                                <a href="#" class="post-action heart-btn"><i class="fa fa-heart"></i> 14</a>
+                                <a href="#" class="post-action"><i class="fa fa-comment"></i> 8 comments</a>
+                                <a href="#" class="post-action"><i class="fa fa-share"></i> Share</a>
+                                <a href="#" class="post-action"><i class="fa fa-bookmark"></i> Save</a>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <!-- Post 5 - Very popular -->
+                    <article class="post-item">
+                        <div class="post-content">
+                            <div class="post-category">COMMUNITY</div>
+                            <h3 class="post-title">
+                                <a href="#">Share your favorite card artwork!</a>
+                            </h3>
+                            <p class="post-meta">Posted by <a href="#" class="author">ArtLover</a> 14 days ago</p>
+                            <p class="post-excerpt">The artwork in this game is phenomenal. Let's share our favorite card art and the stories behind why we love them so much!</p>
+                            
+                            <div class="post-actions">
+                                <a href="#" class="post-action heart-btn"><i class="fa fa-heart"></i> 879</a>
+                                <a href="#" class="post-action"><i class="fa fa-comment"></i> 325 comments</a>
+                                <a href="#" class="post-action"><i class="fa fa-share"></i> Share</a>
+                                <a href="#" class="post-action"><i class="fa fa-bookmark"></i> Save</a>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <!-- Post 6 - New with no hearts -->
+                    <article class="post-item">
+                        <div class="post-content">
+                            <div class="post-category">NEW PLAYER</div>
+                            <h3 class="post-title">
+                                <a href="post-just-started.html">Just started the game yesterday!</a>
+                            </h3>
+                            <p class="post-meta">Posted by <a href="#" class="author">FirstTimePlayer</a> 4 hours ago</p>
+                            <p class="post-excerpt">Hello everyone! I just started playing yesterday and I'm really enjoying it so far. Any tips for absolute beginners? What should I focus on first?</p>
+                            
+                            <div class="post-actions">
+                                <a href="post-just-started.html" class="post-action heart-btn"><i class="fa fa-heart"></i> 3</a>
+                                <a href="post-just-started.html" class="post-action"><i class="fa fa-comment"></i> 2 comments</a>
+                                <a href="#" class="post-action"><i class="fa fa-share"></i> Share</a>
+                                <a href="#" class="post-action"><i class="fa fa-bookmark"></i> Save</a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/community.js"></script>
+</body>
+</html> 

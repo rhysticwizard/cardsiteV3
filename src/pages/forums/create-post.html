@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Post - CardSite V2</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Additional styles specific to post creation */
+        .post-creation-container {
+            max-width: 740px;
+            margin: 0 auto;
+            background-color: #000;
+            border-radius: 4px;
+            border: 1px solid #333;
+        }
+        
+        .post-type-tabs {
+            display: flex;
+            border-bottom: 1px solid #333;
+        }
+        
+        .post-type-tab {
+            padding: 12px 16px;
+            flex-grow: 1;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 500;
+            color: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .post-type-tab.active {
+            color: #fff;
+            border-bottom: 2px solid #ff4500;
+        }
+        
+        .post-type-tab:hover:not(.active) {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        
+        .post-form {
+            padding: 16px;
+        }
+        
+        .form-group {
+            margin-bottom: 16px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 10px 12px;
+            background-color: #000;
+            border: 1px solid #444;
+            border-radius: 4px;
+            color: #eee;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #666;
+        }
+        
+        .form-control.title {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        
+        textarea.form-control {
+            min-height: 200px;
+            resize: vertical;
+        }
+        
+        .category-select {
+            margin-bottom: 16px;
+            border: 1px solid #444;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .category-select-header {
+            padding: 12px 16px;
+            background-color: #000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .category-selected {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #eee;
+        }
+        
+        .category-icon-wrapper {
+            width: 24px;
+            height: 24px;
+            background-color: #000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            border: 1px solid #444;
+        }
+        
+        .formatting-toolbar {
+            padding: 8px;
+            background-color: #000;
+            border: 1px solid #444;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+        
+        .formatting-button {
+            background-color: transparent;
+            border: none;
+            color: #aaa;
+            width: 32px;
+            height: 32px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        .formatting-button:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: #fff;
+        }
+        
+        .post-rules {
+            background-color: #000;
+            border-radius: 4px;
+            padding: 16px;
+            margin-top: 20px;
+            border: 1px solid #333;
+        }
+        
+        .post-rules h3 {
+            margin-top: 0;
+            color: #eee;
+            font-size: 1rem;
+            margin-bottom: 12px;
+        }
+        
+        .rule-list {
+            margin: 0;
+            padding-left: 20px;
+            color: #bbb;
+            font-size: 0.9rem;
+        }
+        
+        .rule-list li {
+            margin-bottom: 8px;
+        }
+        
+        .action-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        
+        .btn {
+            padding: 8px 16px;
+            border-radius: 9999px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: #eee;
+            border: 1px solid #555;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #333;
+        }
+        
+        .btn-primary {
+            background-color: #ff4500;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #e03d00;
+        }
+        
+        .btn-primary:disabled {
+            background-color: #763a28;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        
+        .tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        
+        .tag {
+            background-color: #000;
+            border: 1px solid #444;
+            border-radius: 4px;
+            padding: 4px 8px;
+            font-size: 0.8rem;
+            color: #eee;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .tag .remove {
+            cursor: pointer;
+            color: #aaa;
+        }
+        
+        .tag .remove:hover {
+            color: #fff;
+        }
+        
+        .drag-drop-area {
+            border: 2px dashed #444;
+            border-radius: 4px;
+            padding: 30px;
+            text-align: center;
+            color: #aaa;
+            cursor: pointer;
+            margin-bottom: 16px;
+            background-color: #000;
+        }
+        
+        .drag-drop-area:hover {
+            border-color: #666;
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+        
+        .drag-drop-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: #666;
+        }
+        
+        .post-footer-note {
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: #888;
+            text-align: center;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .post-type-tabs {
+                overflow-x: auto;
+            }
+            
+            .post-type-tab {
+                padding: 12px 10px;
+                font-size: 0.9rem;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+        
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            color: #999;
+        }
+        
+        .breadcrumb a {
+            color: #999;
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+            color: #eee;
+        }
+        
+        .breadcrumb-separator {
+            margin: 0 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <main class="content-area">
+        <!-- Breadcrumb navigation -->
+        <div class="breadcrumb">
+            <a href="index.html">Categories</a>
+            <span class="breadcrumb-separator">></span>
+            <span>Create Post</span>
+        </div>
+        
+        <div class="post-creation-container">
+            <!-- Post type tabs -->
+            <div class="post-type-tabs">
+                <div class="post-type-tab active">
+                    <i class="fa fa-file-alt"></i>
+                    <span>Post</span>
+                </div>
+                <div class="post-type-tab">
+                    <i class="fa fa-image"></i>
+                    <span>Image & Video</span>
+                </div>
+                <div class="post-type-tab">
+                    <i class="fa fa-link"></i>
+                    <span>Link</span>
+                </div>
+                <div class="post-type-tab">
+                    <i class="fa fa-question-circle"></i>
+                    <span>Poll</span>
+                </div>
+            </div>
+            
+            <!-- Post form -->
+            <form class="post-form" action="community-general.html" method="get">
+                <!-- Title -->
+                <div class="form-group">
+                    <input type="text" class="form-control title" placeholder="Title" required>
+                </div>
+                
+                <!-- Category select -->
+                <div class="category-select">
+                    <div class="category-select-header">
+                        <div class="category-selected">
+                            <div class="category-icon-wrapper">
+                                <i class="fa fa-comments"></i>
+                            </div>
+                            <span>General Discussion</span>
+                        </div>
+                        <i class="fa fa-chevron-down"></i>
+                    </div>
+                </div>
+                
+                <!-- Formatting toolbar -->
+                <div class="formatting-toolbar">
+                    <button type="button" class="formatting-button" title="Bold">
+                        <i class="fa fa-bold"></i>
+                    </button>
+                    <button type="button" class="formatting-button" title="Italic">
+                        <i class="fa fa-italic"></i>
+                    </button>
+                    <button type="button" class="formatting-button" title="Link">
+                        <i class="fa fa-link"></i>
+                    </button>
+                    <button type="button" class="formatting-button" title="Strikethrough">
+                        <i class="fa fa-strikethrough"></i>
+                    </button>
+                    <button type="button" class="formatting-button" title="Code">
+                        <i class="fa fa-code"></i>
+                    </button>
+                    <button type="button" class="formatting-button" title="Superscript">
+                        <i class="fa fa-superscript"></i>
+                    </button>
+                    <button type="button" class="formatting-button" title="Heading">
+                        <i class="fa fa-heading"></i>
+                    </button>
+                    <button type="button" class="formatting-button" title="List Bulleted">
+                        <i class="fa fa-list-ul"></i>
+                    </button>
+                    <button type="button" class="formatting-button" title="List Numbered">
+                        <i class="fa fa-list-ol"></i>
+                    </button>
+                    <button type="button" class="formatting-button" title="Quote">
+                        <i class="fa fa-quote-right"></i>
+                    </button>
+                </div>
+                
+                <!-- Post content -->
+                <div class="form-group">
+                    <textarea class="form-control" placeholder="Text (optional)"></textarea>
+                </div>
+                
+                <!-- Tags -->
+                <div class="form-group">
+                    <label>Add post flair (optional)</label>
+                    <div class="tag-container">
+                        <div class="tag">
+                            <span>Discussion</span>
+                            <i class="fa fa-times remove"></i>
+                        </div>
+                        <div class="tag">
+                            <span>Question</span>
+                            <i class="fa fa-times remove"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Image upload for Image & Video tab (hidden by default) -->
+                <div class="drag-drop-area" style="display: none;">
+                    <div class="drag-drop-icon">
+                        <i class="fa fa-cloud-upload-alt"></i>
+                    </div>
+                    <p>Drag and drop images or</p>
+                    <button type="button" class="btn btn-secondary">Upload</button>
+                </div>
+                
+                <!-- Post settings -->
+                <div class="post-rules">
+                    <h3>Posting Guidelines</h3>
+                    <ol class="rule-list">
+                        <li>Be respectful to others. No personal attacks or harassment.</li>
+                        <li>Stay on topic and ensure your post contributes to the community.</li>
+                        <li>Don't spam or post excessive self-promotion.</li>
+                        <li>Use appropriate flair/tags for your content.</li>
+                        <li>Provide adequate information for discussion or questions.</li>
+                    </ol>
+                </div>
+                
+                <!-- Submit buttons -->
+                <div class="action-buttons">
+                    <button type="button" class="btn btn-secondary">Save Draft</button>
+                    <button type="submit" class="btn btn-primary">Post</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2023 CardSite V2. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Category select dropdown
+            const categoryHeader = document.querySelector('.category-select-header');
+            
+            if (categoryHeader) {
+                categoryHeader.addEventListener('click', function() {
+                    // In a real implementation, this would show a dropdown
+                    // For this demo, we'll just set the text directly
+                    const categoryText = document.querySelector('.category-selected span');
+                    
+                    // Normally this would toggle a dropdown menu
+                    alert('In a dynamic implementation, this would show a dropdown menu to select categories. Currently all posts go to General Discussion.');
+                });
+            }
+            
+            // Submit form logic
+            const form = document.querySelector('.post-form');
+            
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // In a real implementation, this would submit the post data
+                    // For this demo, we'll just redirect to the community page
+                    window.location.href = 'community-general.html';
+                });
+            }
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,404 @@
+/* Dark Theme Styling based on OpenAI blog design */
+:root {
+    --bg-color: #000000;
+    --text-color: #ffffff;
+    --text-color-secondary: rgba(255, 255, 255, 0.7);
+    --border-color: rgba(255, 255, 255, 0.2);
+    --card-bg: #000000;
+    --hover-color: rgba(255, 255, 255, 0.1);
+    --spacing-unit: 1.5rem;
+    --heart-color: #ff4c4c;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    line-height: 1.5;
+    margin: 0;
+    padding: 0;
+}
+
+.content-area {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: calc(var(--spacing-unit) * 2) var(--spacing-unit);
+    background-color: var(--bg-color);
+}
+
+/* Post Item Styling */
+.posts-list {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--spacing-unit) * 0.8);
+    background-color: var(--bg-color);
+}
+
+.post-item {
+    display: block;
+    padding: var(--spacing-unit);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background-color: var(--bg-color);
+}
+
+.post-item:last-child {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.post-content {
+    flex: 1;
+}
+
+.post-category {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-color-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-bottom: 0.7rem;
+}
+
+.post-title {
+    margin: 0 0 0.75rem 0;
+    font-size: 1.3rem;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.post-title a {
+    color: var(--text-color);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.post-title a:hover {
+    text-decoration: underline;
+}
+
+.post-meta {
+    font-size: 0.85rem;
+    color: var(--text-color-secondary);
+    margin-bottom: 0.85rem;
+}
+
+.post-meta a {
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+.post-meta a:hover {
+    text-decoration: underline;
+}
+
+.post-excerpt {
+    color: var(--text-color-secondary);
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.post-actions {
+    display: flex;
+    gap: var(--spacing-unit);
+    margin-top: var(--spacing-unit);
+    border-top: 1px solid var(--border-color);
+    padding-top: var(--spacing-unit);
+}
+
+.post-action {
+    color: var(--text-color-secondary);
+    font-size: 0.85rem;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.post-action:hover {
+    color: var(--text-color);
+}
+
+/* Heart button styling */
+.heart-btn {
+    transition: color 0.2s ease;
+}
+
+.heart-btn:hover {
+    color: var(--heart-color);
+}
+
+.heart-btn.active {
+    color: var(--heart-color);
+}
+
+.heart-btn i {
+    font-size: 1rem;
+    margin-right: 0.3rem;
+}
+
+/* Filter Button Styling */
+.community-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: calc(var(--spacing-unit) * 2);
+    padding-bottom: var(--spacing-unit);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.post-filters {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.filter-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-color-secondary);
+    cursor: pointer;
+    font-size: 0.95rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.filter-btn:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--text-color);
+}
+
+.filter-btn.active {
+    color: var(--text-color);
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    font-weight: 500;
+}
+
+.create-post-btn {
+    color: var(--text-color);
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+}
+
+.create-post-btn:hover {
+    background-color: var(--hover-color);
+    text-decoration: none;
+}
+
+/* Sidebar Styling */
+.sidebar-column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-unit);
+    background-color: var(--bg-color);
+}
+
+.sidebar-card {
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: var(--spacing-unit);
+}
+
+.sidebar-card h2 {
+    margin-top: 0;
+    margin-bottom: var(--spacing-unit);
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--text-color);
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.community-description {
+    color: var(--text-color-secondary);
+    font-size: 0.95rem;
+    margin-bottom: 0;
+    line-height: 1.6;
+}
+
+.rules-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.rule {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.rule:last-child {
+    border-bottom: none;
+}
+
+.rule-header {
+    display: flex;
+    align-items: center;
+}
+
+.rule-number {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    margin-right: 0.8rem;
+}
+
+.rule-header h3 {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-color);
+    flex-grow: 1;
+}
+
+.expand-rule {
+    background: none;
+    border: none;
+    color: var(--text-color-secondary);
+    cursor: pointer;
+    padding: 0.25rem;
+}
+
+/* Community Banner */
+.community-banner {
+    margin-bottom: calc(var(--spacing-unit) * 1.5);
+    padding-bottom: var(--spacing-unit);
+    border-bottom: 1px solid var(--border-color);
+    background-color: var(--bg-color);
+}
+
+.community-info {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-unit);
+}
+
+.community-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 4px;
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-color);
+    font-size: 1.5rem;
+}
+
+.community-name {
+    margin: 0;
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+/* Community Container */
+.community-container {
+    display: grid;
+    grid-template-columns: 7fr 3fr;
+    gap: calc(var(--spacing-unit) * 2);
+    background-color: var(--bg-color);
+}
+
+/* Single column layout */
+.community-container.single-column {
+    grid-template-columns: 1fr;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Additional OpenAI-style padding and spacing */
+.posts-column {
+    padding-right: var(--spacing-unit);
+    background-color: var(--bg-color);
+}
+
+.community-container.single-column .posts-column {
+    padding-right: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 1000px) {
+    .community-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .sidebar-column {
+        order: -1;
+    }
+    
+    .posts-column {
+        padding-right: 0;
+    }
+}
+
+/* Community Navigation */
+.community-nav {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: var(--spacing-unit);
+    padding-bottom: var(--spacing-unit);
+    border-bottom: 1px solid var(--border-color);
+    background-color: var(--bg-color);
+    overflow-x: auto;
+    scrollbar-width: none; /* Firefox */
+}
+
+.community-nav::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Edge */
+}
+
+.nav-item {
+    color: var(--text-color-secondary);
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.nav-item:hover {
+    color: var(--text-color);
+    background-color: var(--hover-color);
+}
+
+.nav-item.active {
+    color: var(--text-color);
+    background-color: var(--hover-color);
+    border: 1px solid var(--border-color);
+}
+
+.nav-item i {
+    font-size: 1rem;
+}
+
+.post-rules {
+    background-color: var(--bg-color);
+    border-radius: 4px;
+    padding: 16px;
+    margin-top: 20px;
+    border: 1px solid var(--border-color);
+} 

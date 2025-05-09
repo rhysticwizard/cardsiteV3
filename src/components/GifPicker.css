@@ -1,0 +1,186 @@
+/* GIF Picker Styles - Dark theme to match forums */
+.gif-picker-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.gif-picker-container {
+  background-color: #1a1a1a;
+  width: 90%;
+  max-width: 800px;
+  height: 80%;
+  max-height: 600px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid #333;
+}
+
+.gif-picker-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border-bottom: 1px solid #333;
+}
+
+.gif-picker-header h3 {
+  margin: 0;
+  color: #fff;
+  font-size: 1.2rem;
+}
+
+.gif-close-btn {
+  background: none;
+  border: none;
+  color: #aaa;
+  font-size: 1.5rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.gif-close-btn:hover {
+  color: #fff;
+}
+
+.gif-search-form {
+  display: flex;
+  padding: 16px;
+  border-bottom: 1px solid #333;
+}
+
+.gif-search-input {
+  flex: 1;
+  padding: 8px 12px;
+  background-color: #222;
+  border: 1px solid #444;
+  border-radius: 4px 0 0 4px;
+  color: #fff;
+  font-size: 14px;
+}
+
+.gif-search-input:focus {
+  outline: none;
+  border-color: #555;
+}
+
+.gif-search-btn {
+  padding: 8px 16px;
+  background-color: #ff4500;
+  color: #fff;
+  border: none;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.gif-search-btn:hover {
+  background-color: #e03d00;
+}
+
+.gif-results {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+}
+
+.gif-loading,
+.gif-error,
+.gif-no-results {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  color: #aaa;
+  font-size: 16px;
+}
+
+.gif-error {
+  color: #ff6347;
+}
+
+.gif-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+}
+
+.gif-item {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  border-radius: 4px;
+  background-color: #222;
+  aspect-ratio: 1.33;
+  transition: transform 0.2s;
+}
+
+.gif-item:hover {
+  transform: scale(1.03);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.gif-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Scrollbar styling */
+.gif-results::-webkit-scrollbar {
+  width: 8px;
+}
+
+.gif-results::-webkit-scrollbar-track {
+  background: #222;
+}
+
+.gif-results::-webkit-scrollbar-thumb {
+  background-color: #444;
+  border-radius: 4px;
+}
+
+.gif-results::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Add these styles for the category buttons */
+.gif-categories {
+  display: flex;
+  padding: 0 16px;
+  gap: 8px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.gif-category-btn {
+  background: none;
+  border: 1px solid #444;
+  color: #aaa;
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.gif-category-btn:hover {
+  background-color: #222;
+  color: #fff;
+}
+
+.gif-category-btn.active {
+  background-color: #444;
+  color: #fff;
+  border-color: #666;
+} 

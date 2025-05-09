@@ -1,0 +1,854 @@
+.deck-builder-container {
+  max-width: 1450px;
+  margin: 0 auto;
+  padding: 10px 20px;
+}
+
+.search-results-carousel {
+  margin: 20px 0;
+  width: 100%;
+}
+
+.carousel-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  position: relative;
+  padding: 0 40px;
+}
+
+.carousel-cards {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.carousel-nav-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: background-color 0.2s, opacity 0.2s;
+}
+
+.carousel-nav-button:hover {
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+.carousel-nav-button.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.carousel-prev {
+  left: 0;
+}
+
+.carousel-next {
+  right: 0;
+}
+
+.card-item {
+  flex: 0 0 calc(20% - 10px);
+  max-width: 200px;
+  border-radius: 4.75% / 3.5%;
+  overflow: hidden;
+  transition: transform 0.3s;
+  cursor: pointer;
+  position: relative;
+  touch-action: none; /* Improves drag experience */
+}
+
+.card-item:hover {
+  transform: translateY(-10px);
+  z-index: 1;
+}
+
+/* Hide card item when being dragged - keep it in the DOM but visually hidden */
+.card-item.being-dragged {
+  opacity: 0;
+  transform: scale(0.01); /* Almost invisible but preserves dimensions for drag operation */
+}
+
+.card-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 4.75% / 3.5%;
+}
+
+.card-placeholder {
+  background-color: #222;
+  height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  text-align: center;
+  color: #fff;
+  border-radius: 4.75% / 3.5%;
+}
+
+.search-prompt {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+  font-style: italic;
+}
+
+/* Deck Building Area */
+.deck-building-area {
+  margin-top: 30px;
+  margin-bottom: 50px;
+  min-height: 200px;
+  border: none;
+  border-radius: 8px;
+  padding: 20px;
+  transition: background-color 0.3s, border-color 0.3s;
+  overflow: visible;
+  width: 100%;
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+.deck-building-area.drag-over {
+  background-color: rgba(0, 123, 255, 0.1);
+  border-color: #007bff;
+}
+
+.deck-empty-message {
+  text-align: center;
+  color: #666;
+  font-style: italic;
+  margin: 40px 0;
+}
+
+/* Empty column hint */
+.empty-column::after {
+  content: "Drag cards here";
+  display: block;
+  text-align: center;
+  color: #555;
+  font-style: italic;
+  font-size: 12px;
+  margin-top: 60px;
+  pointer-events: none;
+}
+
+.deck-content {
+  width: 100%;
+  max-width: 100%;
+  overflow: visible;
+}
+
+/* Deck header layout */
+.deck-header {
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #333;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Title on the left */
+.deck-title {
+  max-width: 250px;
+}
+
+/* Right side container */
+.deck-header-right {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+/* Card count */
+.deck-count h3 {
+  font-size: 18px;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+/* Action buttons container */
+.deck-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Deck title input styling */
+.deck-title-input {
+  font-size: 18px;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  padding: 8px 12px;
+  width: 100%;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.deck-title-input:hover, .deck-title-input:focus {
+  border-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Save Deck Button */
+.save-deck-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  white-space: nowrap;
+}
+
+.save-deck-button:hover {
+  background-color: #388e3c;
+}
+
+.save-deck-button:disabled {
+  background-color: #9e9e9e;
+  cursor: not-allowed;
+}
+
+/* Reset state button */
+.reset-state-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #607d8b;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.reset-state-button:hover {
+  background-color: #455a64;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+  .deck-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+  
+  .deck-title {
+    max-width: 100%;
+    width: 100%;
+  }
+  
+  .deck-header-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .save-deck-button,
+  .reset-state-button {
+    padding: 8px 15px;
+  }
+  
+  .carousel-cards {
+    gap: 5px;
+  }
+  
+  .card-item {
+    flex: 0 0 calc(33.33% - 5px);
+  }
+  
+  .deck-cards-container {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+  
+  .deck-card-count {
+    font-size: 9px;
+    padding: 1px 3px;
+    top: 3px;
+    left: 3px;
+  }
+}
+
+@media (max-width: 480px) {
+  .carousel-cards {
+    gap: 3px;
+  }
+  
+  .card-item {
+    flex: 0 0 calc(50% - 3px);
+  }
+  
+  .deck-cards-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px;
+  }
+  
+  .deck-card-count {
+    font-size: 8px;
+    padding: 1px 2px;
+    top: 2px;
+    left: 2px;
+  }
+}
+
+.deck-cards-container {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px;
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+  min-height: 200px;
+  padding-bottom: 20px;
+  overflow: visible;
+}
+
+.deck-column {
+  position: relative;
+  width: 100%;
+  /* Set a minimum height to accommodate stacked cards */
+  min-height: 200px;
+  /* Can be adjusted based on max expected cards */
+  height: 100%;
+  /* Add hover highlights for drag-drop */
+  padding: 2px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  transition: background-color 0.2s ease-in-out;
+  overflow: visible; /* Ensure content can overflow */
+  border: none;
+}
+
+/* Empty column style */
+.deck-column.empty-column {
+  background-color: rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.deck-column.empty-column::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 1px dashed #444;
+  pointer-events: none;
+  border-radius: 8px;
+  z-index: 1;
+}
+
+/* Highlight column for dnd-kit drop target */
+.deck-column[data-over="true"] {
+  background-color: rgba(0, 123, 255, 0.25);
+  position: relative;
+}
+
+.deck-column[data-over="true"]::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 2px dashed rgba(0, 123, 255, 0.5);
+  pointer-events: none;
+  border-radius: 8px;
+  z-index: 1;
+}
+
+/* Column title container */
+.column-title-container {
+  width: 100%;
+  padding: 5px 0;
+  position: relative;
+  z-index: 10; /* Ensure title is above cards */
+  margin-bottom: 5px;
+}
+
+/* Column title input styling */
+.column-title-input {
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  color: #fff;
+  padding: 5px 8px;
+  font-size: 12px;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.column-title-input:hover, .column-title-input:focus {
+  background-color: rgba(0, 0, 0, 0.6);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Remove z-index precedence for hovered cards */
+/* Individual card hover still takes precedence */
+.deck-column .deck-card-item:hover {
+  /* Remove z-index effect */
+  z-index: auto;
+}
+
+/* Invisible spacer element to maintain column height */
+.column-spacer {
+  pointer-events: none; /* Allow interaction with cards behind it */
+  transition: height 0.3s ease;
+  width: 100%;
+}
+
+/* Styles for draggable deck cards */
+.deck-card-item {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5px;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transition: transform 0.3s ease-out;
+  cursor: grab;
+  touch-action: none; /* Improves drag experience */
+}
+
+/* Card being dragged with dnd-kit */
+.deck-card-item[data-dragging="true"] {
+  opacity: 0.4;
+  cursor: grabbing;
+  transform: none;
+  z-index: 1000 !important;
+}
+
+/* Remove card hover effect */
+.deck-card-item:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* Add white outline to the card image container on hover */
+.deck-card-item:hover .deck-card-image-container {
+  box-shadow: 0 0 15px 5px rgba(255, 255, 255, 0.5), 0 0 8px 2px rgba(255, 255, 255, 0.8);
+  outline: 3px solid rgba(255, 255, 255, 0.9);
+  outline-offset: 0px; /* Match the outline to the exact edges */
+}
+
+.deck-card-image-container {
+  position: relative;
+  border-radius: 4.75% / 3.5%;
+  overflow: hidden;
+  aspect-ratio: 5 / 7;
+  width: 100%;
+  height: 0;
+  padding-bottom: 140%; /* 5:7 aspect ratio = 140% */
+  background-color: #1a1a1a; /* Dark background for card container */
+  transition: box-shadow 0.15s ease-in-out;
+}
+
+.deck-card-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 4.75% / 3.5%;
+}
+
+.deck-card-placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #222;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  text-align: center;
+  color: #fff;
+  border-radius: 4.75% / 3.5%;
+  box-sizing: border-box;
+}
+
+/* Card count badge - adjust position to match screenshot */
+.deck-card-count {
+  position: absolute;
+  top: 35px;
+  left: 5px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 1px 4px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 3px;
+  z-index: 3;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  min-width: 20px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+/* DND-Kit specific styles */
+.dnd-overlay {
+  border-radius: 4.75% / 3.5%;
+  transform: none; /* Remove rotation, keep it straight */
+  pointer-events: none;
+  z-index: 9999;
+  background-color: #1a1a1a;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Media queries for responsive design */
+@media (max-width: 1399px) {
+  .deck-cards-container {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .deck-cards-container {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+}
+
+/* Save Deck Dialog */
+.save-deck-dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.save-deck-dialog {
+  background-color: #272727;
+  border-radius: 8px;
+  padding: 24px;
+  width: 100%;
+  max-width: 500px;
+}
+
+.save-deck-dialog h2 {
+  color: #f8f8f8;
+  margin-top: 0;
+  margin-bottom: 16px;
+  font-size: 20px;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: #f8f8f8;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #444;
+  border-radius: 4px;
+  background-color: #333;
+  color: #f8f8f8;
+  font-size: 14px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #7986cb;
+}
+
+.error-message {
+  color: #ef5350;
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+.dialog-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.cancel-button,
+.save-button {
+  padding: 10px 16px;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+
+.cancel-button {
+  background-color: transparent;
+  color: #f8f8f8;
+  border: 1px solid #444;
+}
+
+.cancel-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.save-button {
+  background-color: #4caf50;
+  color: white;
+}
+
+.save-button:hover {
+  background-color: #388e3c;
+}
+
+/* Deck Card Reveal Effect - Only for deck column cards */
+.deck-card-item.card-selected .deck-card-image-container {
+  box-shadow: 0 0 20px 8px rgba(255, 255, 255, 0.5), 0 0 10px 3px rgba(255, 255, 255, 0.8);
+  outline: 3px solid rgba(255, 255, 255, 0.9);
+  outline-offset: 0px;
+  z-index: 50;
+  /* Remove transform: scale(1.05); to prevent card growth */
+  transition: box-shadow 0.2s ease-out;
+}
+
+/* Card stack effect - adjust the distance cards are pushed down */
+.deck-card-item.card-selected ~ .deck-card-item {
+  transform: translateY(85px); /* Reduced from 100px to 85px for more moderate spacing */
+  transition: transform 0.3s ease-out;
+}
+
+/* Card Preview - MTG Arena style hover preview */
+.card-preview {
+  position: fixed;
+  z-index: 9999;
+  pointer-events: none; /* Allows mouse events to pass through to elements beneath */
+  filter: drop-shadow(0 0 20px rgba(0, 0, 0, 0.9));
+  transform-origin: top left;
+  /* Offset it a bit from the top to align nicely with the title */
+  transform: translateY(-50px);
+  transition: opacity 0.3s ease-in-out;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Animation for the card preview when it appears */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-50px) scale(1);
+  }
+}
+
+/* Specific styling for left-positioned previews (for rightmost columns) */
+.card-preview.left-positioned {
+  transform-origin: top right;
+  /* Mirror the vertical offset */
+  transform: translateY(-50px);
+}
+
+.card-preview-image {
+  width: auto;
+  height: auto;
+  max-height: 450px; /* Reduced from 550px for a more moderate size */
+  border-radius: 4.75% / 3.5%;
+  display: block;
+}
+
+/* Update card quantity controls position */
+.card-quantity-controls {
+  position: absolute;
+  top: 25%; /* Moved up from 30% */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.85);
+  border-radius: 20px;
+  padding: 4px 10px;
+  z-index: 10;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+/* Make quantity buttons more prominent */
+.quantity-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-weight: bold;
+  font-size: 20px; /* Increased size */
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: color 0.2s;
+  padding: 0;
+  outline: none;
+}
+
+.quantity-btn:hover {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.quantity-btn:active {
+  color: rgba(255, 255, 255, 0.6);
+  transform: scale(0.95);
+}
+
+.quantity-btn.subtract {
+  margin-right: 10px;
+}
+
+.quantity-btn.add {
+  margin-left: 10px;
+}
+
+/* Make quantity number larger and more prominent */
+.card-quantity {
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+  min-width: 30px;
+  text-align: center;
+  user-select: none;
+}
+
+/* Show quantity controls ONLY when card is selected, not on hover */
+.deck-card-item .card-quantity-controls {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s, visibility 0.2s;
+}
+
+/* Only show controls when card is selected, remove hover trigger */
+.deck-card-item.card-selected .card-quantity-controls {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Import Deck Button Styles */
+.import-deck-button {
+  background-color: #3a7ca5;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: 10px;
+}
+
+.import-deck-button:hover {
+  background-color: #2d6384;
+}
+
+/* Import Deck Dialog Styles */
+.import-deck-dialog {
+  min-width: 500px;
+  max-width: 800px;
+}
+
+.import-deck-dialog textarea {
+  width: 100%;
+  font-family: monospace;
+  font-size: 14px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+.browse-button {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.browse-button:hover {
+  background-color: #e0e0e0;
+}
+
+.file-info {
+  font-size: 14px;
+  color: #666;
+}
+
+.import-button {
+  background-color: #3a7ca5;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  min-width: 100px;
+}
+
+.import-button:hover {
+  background-color: #2d6384;
+} 

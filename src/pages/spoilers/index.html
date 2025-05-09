@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MTG Spoilers</title>
+    <meta name="description" content="View the latest Magic: The Gathering card spoilers">
+    <!-- Preload critical assets -->
+    <link rel="preload" href="styles.css" as="style">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Defer non-critical JavaScript -->
+    <script defer src="js/api.js"></script>
+    <script defer src="js/cards.js"></script>
+    <script defer src="js/modal.js"></script>
+    <script defer src="js/app.js"></script>
+</head>
+<body>
+    <div class="container">
+        <main>
+            <div id="loading">Loading spoilers...</div>
+            <div id="cards-grid">
+                <!-- Cards will be populated by JavaScript -->
+            </div>
+            <button id="load-more" class="load-more-button">Load More Spoilers</button>
+        </main>
+        
+        <!-- Card Modal -->
+        <div id="card-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <div class="modal-body">
+                    <div class="modal-card-image">
+                        <!-- Card image will be inserted here -->
+                    </div>
+                    <div class="modal-card-details">
+                        <h2 class="modal-card-name"></h2>
+                        <div class="modal-card-type"></div>
+                        <div class="modal-card-text"></div>
+                        <div class="modal-card-stats"></div>
+                        <div class="modal-card-set"></div>
+                        <div class="modal-card-legality"></div>
+                        <button class="modal-printings-button">Load Other Printings</button>
+                        <div class="modal-printings-container"></div>
+                        <a href="#" class="modal-scryfall-link" target="_blank">View on Scryfall</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

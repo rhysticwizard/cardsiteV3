@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card Details | Magic: The Gathering</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .other-printings {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+        
+        .other-printings h2 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+            color: #fff;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 10px;
+        }
+        
+        .printings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 15px;
+        }
+        
+        .printing-card {
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+        
+        .printing-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+        }
+        
+        .printing-set-name {
+            font-size: 0.85em;
+            margin-top: 8px;
+            text-align: center;
+            color: #ddd;
+        }
+        
+        @media (max-width: 768px) {
+            .printings-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            }
+        }
+        
+        /* Character Wiki Link Styling */
+        .wiki-link {
+            margin: 5px 0 15px 0;
+        }
+        
+        .character-wiki-link {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 12px;
+            background-color: rgba(129, 69, 184, 0.2);
+            color: #b388de;
+            border-radius: 4px;
+            font-size: 0.9em;
+            text-decoration: none;
+            transition: background-color 0.2s, color 0.2s;
+        }
+        
+        .character-wiki-link:hover {
+            background-color: rgba(129, 69, 184, 0.4);
+            color: #d8bfef;
+        }
+        
+        .character-wiki-link i {
+            margin-right: 6px;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div class="header">
+            <div class="breadcrumb-container">
+                <div class="breadcrumbs">
+                    <a href="index.html" class="breadcrumb-item home-link">All Sets</a>
+                    <i class="fas fa-chevron-right breadcrumb-separator"></i>
+                    <span id="set-breadcrumb" class="breadcrumb-item"></span>
+                    <i class="fas fa-chevron-right breadcrumb-separator"></i>
+                    <span id="card-breadcrumb" class="breadcrumb-item active"></span>
+                </div>
+            </div>
+        </div>
+
+        <div id="card-details-container">
+            <div class="card-page">
+                <div class="card-page-content">
+                    <!-- Card details will be loaded here by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="card.js"></script>
+</body>
+</html> 
