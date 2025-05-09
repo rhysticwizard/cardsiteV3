@@ -79,10 +79,14 @@ class ErrorBoundary extends Component<{children: React.ReactNode}, {hasError: bo
 }
 
 function App() {
+  // Detect if we're on GitHub Pages and use the proper basename
+  const isGitHubPages = window.location.hostname.includes('github.io');
+  const basename = isGitHubPages ? '/cardsiteV3' : '';
+
   return (
     <ErrorBoundary>
       <DeckProvider>
-        <Router basename="/cardsiteV3">
+        <Router basename={basename}>
           <Routes>
             {/* Main homepage is now the MTG Hub */}
             <Route path="/" element={
