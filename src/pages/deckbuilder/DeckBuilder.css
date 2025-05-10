@@ -126,8 +126,8 @@
 }
 
 .deck-building-area.drag-over {
-  background-color: rgba(0, 123, 255, 0.1);
-  border-color: #007bff;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: #ffffff;
 }
 
 .deck-empty-message {
@@ -220,8 +220,8 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-  background-color: #4caf50;
-  color: white;
+  background-color: #ffffff;
+  color: #222;
   border: none;
   border-radius: 4px;
   padding: 10px 20px;
@@ -233,7 +233,7 @@
 }
 
 .save-deck-button:hover {
-  background-color: #388e3c;
+  background-color: #e0e0e0;
 }
 
 .save-deck-button:disabled {
@@ -375,7 +375,7 @@
 
 /* Highlight column for dnd-kit drop target */
 .deck-column[data-over="true"] {
-  background-color: rgba(0, 123, 255, 0.25);
+  background-color: rgba(255, 255, 255, 0.25);
   position: relative;
 }
 
@@ -386,7 +386,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  border: 2px dashed rgba(0, 123, 255, 0.5);
+  border: 2px dashed rgba(255, 255, 255, 0.5);
   pointer-events: none;
   border-radius: 8px;
   z-index: 1;
@@ -608,7 +608,7 @@
 .form-group input:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: #7986cb;
+  border-color: #ffffff;
 }
 
 .error-message {
@@ -646,12 +646,12 @@
 }
 
 .save-button {
-  background-color: #4caf50;
-  color: white;
+  background-color: #ffffff;
+  color: #222;
 }
 
 .save-button:hover {
-  background-color: #388e3c;
+  background-color: #e0e0e0;
 }
 
 /* Deck Card Reveal Effect - Only for deck column cards */
@@ -787,8 +787,8 @@
 
 /* Import Deck Button Styles */
 .import-deck-button {
-  background-color: #3a7ca5;
-  color: white;
+  background-color: #ffffff;
+  color: #222;
   border: none;
   padding: 8px 16px;
   border-radius: 4px;
@@ -801,7 +801,27 @@
 }
 
 .import-deck-button:hover {
-  background-color: #2d6384;
+  background-color: #e0e0e0;
+}
+
+/* Playtest Deck Button Styles */
+.playtest-deck-button {
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: 10px;
+  transition: background-color 0.2s;
+}
+
+.playtest-deck-button:hover {
+  background-color: #1976d2;
 }
 
 /* Import Deck Dialog Styles */
@@ -839,8 +859,8 @@
 }
 
 .import-button {
-  background-color: #3a7ca5;
-  color: white;
+  background-color: #ffffff;
+  color: #222;
   border: none;
   padding: 8px 16px;
   border-radius: 4px;
@@ -850,5 +870,5 @@
 }
 
 .import-button:hover {
-  background-color: #2d6384;
+  background-color: #e0e0e0;
 } 

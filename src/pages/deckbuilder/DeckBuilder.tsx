@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
   faSearch, faTimes, faSpinner, faChevronLeft, faChevronRight, 
-  faTrash, faSave, faRedo, faPlus, faMinus, faFileImport 
+  faTrash, faSave, faRedo, faPlus, faMinus, faFileImport, faBug 
 } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import ScryfallAPI, { Card } from '../../utils/ScryfallAPI';
@@ -1928,27 +1928,48 @@ const DeckBuilder: React.FC = () => {
                 </button>
                 
                 {deckCards.length > 0 && (
-                  <button 
-                    className="save-deck-button"
-                    onClick={() => {
-                      // Preserve search state when clicking save/update
-                      const currentSearchState = {
-                        query: searchQuery,
-                        results: searchResults,
-                        hasSearched: hasSearched,
-                        lastSearch: lastSearchRef.current
-                      };
-                      
-                      // Trigger save
-                      handleSaveDeck(deckTitle, '');
-                      
-                      // We'll restore the search state in handleSaveDeck
-                    }}
-                    disabled={isSaving}
-                  >
-                    <FontAwesomeIcon icon={faSave} />
-                    {isSaving ? 'Saving...' : isEditingDeck ? 'Update Deck' : 'Save Deck'}
-                  </button>
+                  <>
+                    {/* Add Playtest button */}
+                    <button 
+                      className="playtest-deck-button"
+                      onClick={() => {
+                        if (isEditingDeck && editingDeckId) {
+                          navigate(`/playmat/${editingDeckId}`);
+                        } else {
+                          // Save the deck first if it hasn't been saved
+                          if (!isEditingDeck) {
+                            setShowSaveDeckDialog(true);
+                          }
+                        }
+                      }}
+                      title="Playtest this deck"
+                    >
+                      <FontAwesomeIcon icon={faBug} />
+                      Playtest
+                    </button>
+
+                    <button 
+                      className="save-deck-button"
+                      onClick={() => {
+                        // Preserve search state when clicking save/update
+                        const currentSearchState = {
+                          query: searchQuery,
+                          results: searchResults,
+                          hasSearched: hasSearched,
+                          lastSearch: lastSearchRef.current
+                        };
+                        
+                        // Trigger save
+                        handleSaveDeck(deckTitle, '');
+                        
+                        // We'll restore the search state in handleSaveDeck
+                      }}
+                      disabled={isSaving}
+                    >
+                      <FontAwesomeIcon icon={faSave} />
+                      {isSaving ? 'Saving...' : isEditingDeck ? 'Update Deck' : 'Save Deck'}
+                    </button>
+                  </>
                 )}
                 <button 
                   className="reset-state-button"

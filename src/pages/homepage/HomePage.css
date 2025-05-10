@@ -23,7 +23,7 @@ body {
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 2rem 20px 0;
+    padding: 4rem 20px 0;
 }
 
 .image-placeholder {
@@ -51,6 +51,7 @@ a:hover {
 
 /* Featured Section */
 .featured-section {
+    margin-top: 2rem;
     margin-bottom: 4rem;
 }
 

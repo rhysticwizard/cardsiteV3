@@ -44,43 +44,72 @@ interface DeckProviderProps {
 
 export const DeckProvider: React.FC<DeckProviderProps> = ({ children }) => {
   const [decks, setDecks] = useState<Deck[]>([]);
+  // Add a loading state to prevent saving during initialization
+  const [isLoading, setIsLoading] = useState(true);
 
   // Load saved decks from localStorage on component mount
   useEffect(() => {
+    setIsLoading(true); // Set loading state to true during initial load
+    
     try {
       // Try main storage first
       const loadFromStorage = () => {
         const savedDecks = localStorage.getItem('savedDecks');
-        console.log('[DeckContext] Attempting to load savedDecks from localStorage:', savedDecks);
+        console.log('[DeckContext] Attempting to load savedDecks from localStorage:', 
+          savedDecks ? `Found (${savedDecks.length} chars)` : 'Not found');
         
         if (savedDecks) {
           try {
             const parsedData = JSON.parse(savedDecks);
-            console.log('[DeckContext] Successfully parsed data:', parsedData);
+            console.log('[DeckContext] Successfully parsed data type:', 
+              Array.isArray(parsedData) ? 'Array' : 
+              (parsedData && typeof parsedData === 'object') ? 'Object' : typeof parsedData);
             
             // Handle new format with version number
-            if (parsedData && typeof parsedData === 'object' && 'version' in parsedData && Array.isArray(parsedData.decks)) {
-              console.log('[DeckContext] Loading decks from new format with version', parsedData.version);
+            if (parsedData && typeof parsedData === 'object' && 'version' in parsedData) {
+              console.log('[DeckContext] Found version format with version', parsedData.version);
               
-              // Validate and clean decks before setting them
-              const validDecks = parsedData.decks
-                .filter((deck: any) => validateDeck(deck))
-                .map((deck: any) => ({
-                  ...deck,
-                  // Ensure cards are valid and sanitized
-                  cards: validateCards(deck.cards) 
-                    ? deck.cards.map((card: any) => sanitizeCard(card as DeckCard))
-                    : []
-                }));
+              // Check if decks array exists and is an array (even if empty)
+              if ('decks' in parsedData && Array.isArray(parsedData.decks)) {
+                console.log('[DeckContext] Loading decks array, length:', parsedData.decks.length);
                 
-              console.log('[DeckContext] Valid decks after cleaning:', validDecks.length);
-              setDecks(validDecks);
-              return true;
+                // Handle empty array case explicitly
+                if (parsedData.decks.length === 0) {
+                  console.log('[DeckContext] Empty decks array loaded, setting empty state');
+                  setDecks([]);
+                  return true;
+                }
+                
+                // Validate and clean decks before setting them
+                const validDecks = parsedData.decks
+                  .filter((deck: any) => validateDeck(deck))
+                  .map((deck: any) => ({
+                    ...deck,
+                    // Ensure cards are valid and sanitized
+                    cards: validateCards(deck.cards) 
+                      ? deck.cards.map((card: any) => sanitizeCard(card as DeckCard))
+                      : []
+                  }));
+                  
+                console.log('[DeckContext] Valid decks after cleaning:', validDecks.length);
+                setDecks(validDecks);
+                return true;
+              } else {
+                console.error('[DeckContext] Invalid decks property in data:', parsedData);
+                return false;
+              }
             }
             
             // Handle old format (direct array)
             if (Array.isArray(parsedData)) {
-              console.log('[DeckContext] Loading decks from old format (direct array)');
+              console.log('[DeckContext] Loading decks from old array format, length:', parsedData.length);
+              
+              // Handle empty array case explicitly
+              if (parsedData.length === 0) {
+                console.log('[DeckContext] Empty decks array loaded, setting empty state');
+                setDecks([]);
+                return true;
+              }
               
               // Validate and clean decks before setting them
               const validDecks = parsedData
@@ -98,7 +127,8 @@ export const DeckProvider: React.FC<DeckProviderProps> = ({ children }) => {
               return true;
             }
             
-            console.error('[DeckContext] Parsed data is in unknown format:', parsedData);
+            console.error('[DeckContext] Parsed data is in unknown format:', 
+              typeof parsedData, Array.isArray(parsedData));
             return false;
           } catch (error) {
             console.error('[DeckContext] Error parsing saved decks:', error);
@@ -106,8 +136,9 @@ export const DeckProvider: React.FC<DeckProviderProps> = ({ children }) => {
           }
         }
         
-        console.log('[DeckContext] No saved decks found in localStorage');
-        return false;
+        console.log('[DeckContext] No saved decks found in localStorage, using empty array');
+        setDecks([]);
+        return true;
       };
       
       // Try to load from main storage
@@ -123,36 +154,67 @@ export const DeckProvider: React.FC<DeckProviderProps> = ({ children }) => {
         if (backupDecks) {
           try {
             const parsedBackup = JSON.parse(backupDecks);
-            console.log('[DeckContext] Successfully parsed backup:', parsedBackup);
+            console.log('[DeckContext] Successfully parsed backup type:', 
+              Array.isArray(parsedBackup) ? 'Array' : 
+              (parsedBackup && typeof parsedBackup === 'object') ? 'Object' : typeof parsedBackup);
             
             // Handle new format with version number
-            if (parsedBackup && typeof parsedBackup === 'object' && 'version' in parsedBackup && Array.isArray(parsedBackup.decks)) {
-              console.log('[DeckContext] Recovering decks from backup (new format)');
+            if (parsedBackup && typeof parsedBackup === 'object' && 'version' in parsedBackup) {
+              console.log('[DeckContext] Found backup with version format', parsedBackup.version);
               
-              // Validate and clean decks before setting them
-              const validDecks = parsedBackup.decks
-                .filter((deck: any) => validateDeck(deck))
-                .map((deck: any) => ({
-                  ...deck,
-                  // Ensure cards are valid and sanitized
-                  cards: validateCards(deck.cards) 
-                    ? deck.cards.map((card: any) => sanitizeCard(card as DeckCard))
-                    : []
-                }));
+              // Check if decks array exists and is an array (even if empty)
+              if ('decks' in parsedBackup && Array.isArray(parsedBackup.decks)) {
+                console.log('[DeckContext] Backup decks array length:', parsedBackup.decks.length);
                 
-              console.log('[DeckContext] Valid decks after cleaning backup:', validDecks.length);
-              setDecks(validDecks);
-              
-              // Restore to main storage - but with the cleaned data
-              const cleanedData = {
-                version: parsedBackup.version,
-                decks: validDecks
-              };
-              localStorage.setItem('savedDecks', JSON.stringify(cleanedData));
+                // Handle empty array case explicitly
+                if (parsedBackup.decks.length === 0) {
+                  console.log('[DeckContext] Empty backup decks array, setting empty state');
+                  setDecks([]);
+                  
+                  // Restore empty array to main storage
+                  const emptyData = { version: parsedBackup.version, decks: [] };
+                  localStorage.setItem('savedDecks', JSON.stringify(emptyData));
+                  return;
+                }
+                
+                // Validate and clean decks before setting them
+                const validDecks = parsedBackup.decks
+                  .filter((deck: any) => validateDeck(deck))
+                  .map((deck: any) => ({
+                    ...deck,
+                    // Ensure cards are valid and sanitized
+                    cards: validateCards(deck.cards) 
+                      ? deck.cards.map((card: any) => sanitizeCard(card as DeckCard))
+                      : []
+                  }));
+                  
+                console.log('[DeckContext] Valid decks after cleaning backup:', validDecks.length);
+                setDecks(validDecks);
+                
+                // Restore to main storage - but with the cleaned data
+                const cleanedData = {
+                  version: parsedBackup.version,
+                  decks: validDecks
+                };
+                localStorage.setItem('savedDecks', JSON.stringify(cleanedData));
+              } else {
+                console.error('[DeckContext] Invalid decks property in backup:', parsedBackup);
+                setDecks([]); // Set empty state as fallback
+              }
             } 
             // Handle old format (direct array)
             else if (Array.isArray(parsedBackup)) {
-              console.log('[DeckContext] Recovering decks from backup (old format)');
+              console.log('[DeckContext] Backup has old array format, length:', parsedBackup.length);
+              
+              // Handle empty array case explicitly
+              if (parsedBackup.length === 0) {
+                console.log('[DeckContext] Empty backup array, setting empty state');
+                setDecks([]);
+                
+                // Restore empty array to main storage
+                localStorage.setItem('savedDecks', JSON.stringify([]));
+                return;
+              }
               
               // Validate and clean decks before setting them
               const validDecks = parsedBackup
@@ -171,31 +233,42 @@ export const DeckProvider: React.FC<DeckProviderProps> = ({ children }) => {
               // Restore to main storage - but with the cleaned data
               localStorage.setItem('savedDecks', JSON.stringify(validDecks));
             } else {
-              console.error('[DeckContext] Backup is in unknown format:', parsedBackup);
+              console.error('[DeckContext] Backup is in unknown format:', typeof parsedBackup);
+              setDecks([]); // Set empty state as fallback
             }
           } catch (error) {
             console.error('[DeckContext] Error parsing backup decks:', error);
             localStorage.removeItem('savedDecks_backup'); // Clear corrupted backup
+            setDecks([]); // Set empty state as fallback
           }
         } else {
-          console.log('[DeckContext] No backup found');
+          console.log('[DeckContext] No backup found, using empty state');
+          setDecks([]);
         }
       }
     } catch (e) {
       // Handle any other localStorage errors (like quota exceeded)
       console.error('[DeckContext] Error accessing localStorage:', e);
+      setDecks([]); // Ensure we have a default empty state
+    } finally {
+      // Set loading to false when done, regardless of success or failure
+      console.log('[DeckContext] Loading completed, now allowing save operations');
+      setIsLoading(false);
     }
   }, []);
 
   // Save decks to localStorage whenever they change
   useEffect(() => {
-    if (decks.length === 0) {
-      // Don't save empty deck arrays to localStorage
+    // Don't save during the initial loading phase
+    if (isLoading) {
+      console.log('[DeckContext] Still loading, skipping save operation');
       return;
     }
     
+    console.log('[DeckContext] Saving decks, count:', decks.length);
+    
     try {
-      // Add a version number to our data to help with future migrations
+      // Always save the current state of decks, even if empty
       const dataToSave = {
         version: 1,
         decks: decks
@@ -208,7 +281,7 @@ export const DeckProvider: React.FC<DeckProviderProps> = ({ children }) => {
       
       // If serialization successful, save to localStorage
       localStorage.setItem('savedDecks', serialized);
-      console.log('[DeckContext] Decks saved successfully');
+      console.log('[DeckContext] Decks saved successfully, count:', decks.length);
       
       // Also save as backup in case the main one gets corrupted
       localStorage.setItem('savedDecks_backup', serialized);
@@ -218,14 +291,15 @@ export const DeckProvider: React.FC<DeckProviderProps> = ({ children }) => {
       // Try to identify problematic deck
       decks.forEach((deck, index) => {
         try {
-          const testSerialize = JSON.stringify(deck);
-          console.log(`[DeckContext] Deck ${index} (${deck.name}) serializes OK`);
+          // Verify each deck can be serialized (using result to avoid warning)
+          const serialized = JSON.stringify(deck);
+          console.log(`[DeckContext] Deck ${index} (${deck.name}) serializes OK: ${serialized.substring(0, 20)}...`);
         } catch (e) {
           console.error(`[DeckContext] Deck ${index} (${deck.name}) fails to serialize:`, e);
         }
       });
     }
-  }, [decks]);
+  }, [decks, isLoading]);
 
   // Helper function to validate a deck before loading
   const validateDeck = (deck: any): boolean => {
@@ -337,6 +411,9 @@ export const DeckProvider: React.FC<DeckProviderProps> = ({ children }) => {
     };
     
     console.log('[DeckContext] Adding new deck with sanitized cards:', newDeck);
+    
+    // Set the decks state with the new deck included
+    // The useEffect will handle saving to localStorage
     setDecks(prevDecks => [...prevDecks, newDeck]);
   };
 
@@ -355,7 +432,11 @@ export const DeckProvider: React.FC<DeckProviderProps> = ({ children }) => {
   };
 
   const deleteDeck = (deckId: string) => {
-    setDecks(prevDecks => prevDecks.filter(deck => deck.id !== deckId));
+    // Filter out the deleted deck
+    const updatedDecks = decks.filter(deck => deck.id !== deckId);
+    
+    // Update the state with the new decks array
+    setDecks(updatedDecks);
   };
 
   const getDeck = (deckId: string) => {

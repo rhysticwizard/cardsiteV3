@@ -17,6 +17,7 @@ import RandomCard from './pages/random-card/RandomCard';
 import SearchPage from './pages/search/SearchPage';
 import DeckBuilder from './pages/deckbuilder';
 import DecksPage from './pages/decks';
+import Playmat from './pages/playmat';
 import { RandomCardProvider } from './context/RandomCardContext';
 import { DeckProvider } from './context/DeckContext';
 
@@ -83,6 +84,10 @@ function App() {
   const isGitHubPages = window.location.hostname.includes('github.io');
   const basename = isGitHubPages ? '/cardsiteV3' : '';
 
+  // For development/troubleshooting
+  console.log("App rendering with basename:", basename);
+  console.log("Current location:", window.location.pathname);
+
   return (
     <ErrorBoundary>
       <DeckProvider>
@@ -122,6 +127,20 @@ function App() {
             <Route path="/decks" element={
               <MainLayout>
                 <DecksPage />
+              </MainLayout>
+            } />
+            
+            {/* Playmat page */}
+            <Route path="/playmat/:deckId" element={
+              <MainLayout>
+                <Playmat />
+              </MainLayout>
+            } />
+            
+            {/* Playmat page (default without deck) */}
+            <Route path="/playmat" element={
+              <MainLayout>
+                <Playmat />
               </MainLayout>
             } />
             

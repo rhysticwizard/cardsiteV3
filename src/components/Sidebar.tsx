@@ -273,6 +273,13 @@ const Sidebar: React.FC = () => {
               Decks
             </Link>
             <Link 
+              to="/playmat" 
+              className={`nav-item ${location.pathname.includes('/playmat') ? 'nav-item-active' : ''}`}
+              onClick={closeSidebar}
+            >
+              Playmat
+            </Link>
+            <Link 
               to="/random-card" 
               className={`nav-item ${location.pathname.includes('/random-card') ? 'nav-item-active' : ''}`}
               onClick={closeSidebar}

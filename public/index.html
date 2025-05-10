@@ -26,6 +26,12 @@
       // MIT License
       // https://github.com/rafgraph/spa-github-pages
       (function(l) {
+        // Redirect from /cardsiteV3 to / for local development
+        if (l.pathname === '/cardsiteV3' && !l.hostname.includes('github.io')) {
+          window.location.replace('/');
+          return;
+        }
+
         if (l.search[1] === '/' ) {
           var decoded = l.search.slice(1).split('&').map(function(s) { 
             return s.replace(/~and~/g, '&')
