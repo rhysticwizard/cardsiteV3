@@ -1,15 +1,126 @@
 import React, { useState, useRef, useEffect } from 'react';
 import type { HandCard } from '../index';
+import { useDraggable, useDroppable } from '@dnd-kit/core';
+import { CSS } from '@dnd-kit/utilities';
 
 interface HandZoneProps {
   cards: HandCard[];
   onCardPlay: (cardId: string) => void;
+  onCardMouseEnter?: (card: HandCard, event: React.MouseEvent) => void;
+  onCardMouseLeave?: () => void;
+  onReturnToHand?: (cardId: string) => void;
 }
 
-const HandZone: React.FC<HandZoneProps> = ({ cards, onCardPlay }) => {
+// Create a draggable hand card component
+const HandCardComponent: React.FC<{
+  card: HandCard;
+  index: number;
+  position: {
+    x: number;
+    y: number;
+    rotation: number;
+    scale: number;
+  };
+  isHovered: boolean;
+  zIndex: number;
+  onClick: () => void;
+  onMouseEnter: (e: React.MouseEvent) => void;
+  onMouseLeave: () => void;
+}> = ({ 
+  card, 
+  index, 
+  position, 
+  isHovered, 
+  zIndex, 
+  onClick, 
+  onMouseEnter, 
+  onMouseLeave 
+}) => {
+  // Set up draggable
+  const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
+    id: `hand-${card.id}`,
+    data: {
+      type: 'hand-card',
+      card
+    }
+  });
+
+  // Apply DND transforms and original transforms
+  const baseTransform = `translate(-50%, 0) scale(${position.scale}) rotate(${position.rotation}deg)`;
+  const style = {
+    left: `${position.x}px`,
+    top: `${position.y}px`,
+    transform: CSS.Translate.toString(transform) ? 
+      `${baseTransform} ${CSS.Translate.toString(transform)}` : 
+      baseTransform,
+    zIndex: isDragging ? 1000 : zIndex, // Ensure dragged card is on top
+    position: 'absolute' as const,
+    transition: isDragging ? 'none' : 'all 0.2s ease-out',
+    opacity: isDragging ? 0 : 1, // Make completely invisible when dragging
+    width: `${120 * position.scale}px`,
+    height: `${168 * position.scale}px`,
+    cursor: isDragging ? 'grabbing' : 'grab',
+    visibility: isDragging ? 'hidden' as const : 'visible' as const // Hide the element completely
+  };
+
+  return (
+    <div 
+      ref={setNodeRef}
+      className={`hand-card ${isHovered ? 'hovered' : ''}`}
+      style={style}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      onClick={onClick}
+      {...listeners}
+      {...attributes}
+    >
+      {card.image_uris?.normal ? (
+        <img 
+          src={card.image_uris.normal} 
+          alt={card.name} 
+          className="hand-card-image"
+          draggable={false} // Prevent image itself from being draggable
+        />
+      ) : card.card_faces && card.card_faces[0]?.image_uris?.normal ? (
+        <img 
+          src={card.card_faces[0].image_uris.normal} 
+          alt={card.name}
+          className="hand-card-image"
+          draggable={false} // Prevent image itself from being draggable
+        />
+      ) : (
+        <div className="card-placeholder">
+          <p>{card.name}</p>
+        </div>
+      )}
+    </div>
+  );
+};
+
+const HandZone: React.FC<HandZoneProps> = ({ 
+  cards, 
+  onCardPlay, 
+  onCardMouseEnter,
+  onCardMouseLeave,
+  onReturnToHand
+}) => {
   // State to track the currently hovered card
   const [hoveredCardId, setHoveredCardId] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  
+  // Setup the hand zone as a droppable area
+  const { setNodeRef: setDroppableRef, isOver } = useDroppable({
+    id: 'hand-zone',
+    data: {
+      type: 'hand-zone'
+    }
+  });
+  
+  // Use refs for both dropping and container size measurements
+  const setRefs = (element: HTMLDivElement | null) => {
+    containerRef.current = element;
+    setDroppableRef(element);
+  };
   
   console.log("HandZone rendered with", cards.length, "cards");
   
@@ -124,7 +235,13 @@ const HandZone: React.FC<HandZoneProps> = ({ cards, onCardPlay }) => {
         y,
         rotation,
         isHovered,
-        scale: threshold.scale // Pass the scale factor for rendering
+        scale: threshold.scale, // Pass the scale factor for rendering
+        position: {
+          x,
+          y,
+          rotation,
+          scale: threshold.scale
+        }
       };
     });
   };
@@ -153,47 +270,47 @@ const HandZone: React.FC<HandZoneProps> = ({ cards, onCardPlay }) => {
     return 50 - distanceFromMiddle;
   };
   
+  // Handle mouse enter on a card with preview functionality
+  const handleMouseEnter = (e: React.MouseEvent, card: HandCard) => {
+    setHoveredCardId(card.id);
+    
+    // Call parent component's mouse enter handler if provided
+    if (onCardMouseEnter) {
+      // Use the current target element for accurate positioning
+      onCardMouseEnter(card, e as React.MouseEvent<HTMLDivElement>);
+    }
+  };
+  
+  // Handle mouse leave on a card with preview functionality
+  const handleMouseLeave = () => {
+    setHoveredCardId(null);
+    
+    // Call parent component's mouse leave handler if provided
+    if (onCardMouseLeave) {
+      onCardMouseLeave();
+    }
+  };
+  
   return (
-    <div ref={containerRef} className="hand-zone">
+    <div 
+      ref={setRefs} 
+      className={`hand-zone ${isOver ? 'hand-zone-drop-active' : ''}`}
+    >
       {cards.length === 0 && (
         <div className="hand-empty-message">Your hand is empty. Click the deck to draw a card.</div>
       )}
-      {cardPositions.map(({ card, x, y, rotation, isHovered, scale }, index) => (
-        <div 
+      {cardPositions.map(({ card, position, isHovered }, index) => (
+        <HandCardComponent
           key={card.id}
-          className={`hand-card ${isHovered ? 'hovered' : ''}`}
-          style={{
-            left: `${x}px`,
-            top: `${y}px`,
-            transform: `translate(-50%, 0) rotate(${rotation}deg) ${isHovered ? 'translateY(-40px) scale(1.2)' : ''}`,
-            zIndex: getZIndex(index, isHovered),
-            position: 'absolute',
-            transition: 'all 0.2s ease-out',
-            width: `${120 * scale}px`,
-            height: `${168 * scale}px`
-          }}
-          onMouseEnter={() => setHoveredCardId(card.id)}
-          onMouseLeave={() => setHoveredCardId(null)}
+          card={card}
+          index={index}
+          position={position}
+          isHovered={isHovered}
+          zIndex={getZIndex(index, isHovered)}
           onClick={() => onCardPlay(card.id)}
-        >
-          {card.image_uris?.normal ? (
-            <img 
-              src={card.image_uris.normal} 
-              alt={card.name} 
-              className="hand-card-image"
-            />
-          ) : card.card_faces && card.card_faces[0]?.image_uris?.normal ? (
-            <img 
-              src={card.card_faces[0].image_uris.normal} 
-              alt={card.name}
-              className="hand-card-image" 
-            />
-          ) : (
-            <div className="card-placeholder">
-              <p>{card.name}</p>
-            </div>
-          )}
-        </div>
+          onMouseEnter={(e) => handleMouseEnter(e, card)}
+          onMouseLeave={handleMouseLeave}
+        />
       ))}
     </div>
   );

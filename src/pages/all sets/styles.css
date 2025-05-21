@@ -1203,4 +1203,131 @@ main {
         height: 32px;
         font-size: 18px;
     }
+}
+
+/* Retailer Prices (EDHREC style) */
+.retailer-prices {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.retailer-price {
+    text-align: center;
+    flex: 1;
+}
+
+.retailer-price a {
+    text-decoration: none;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.2s;
+}
+
+.retailer-price a:hover {
+    transform: translateY(-2px);
+}
+
+.retailer-logo {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.tcgplayer-logo {
+    background-color: #0E5B94;
+}
+
+.cardkingdom-logo {
+    background-color: #DC3545;
+}
+
+.cardmarket-logo {
+    background-color: #28A745;
+}
+
+.retailer-price-value {
+    font-weight: 600;
+    color: #fff;
+}
+
+/* Social Interaction Buttons */
+.card-social-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin: 15px 0;
+    padding: 10px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    max-width: 100%;
+    width: 100%;
+}
+
+.social-button {
+    background: transparent;
+    border: none;
+    color: #ccc;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s ease;
+    border-radius: 5px;
+    justify-content: center;
+    flex: 1;
+}
+
+.social-button:hover {
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.like-button:hover {
+    color: #ff4a4a;
+}
+
+.like-button.liked {
+    color: #ff4a4a;
+}
+
+.like-button.liked i {
+    animation: heartBeat 0.6s ease-in-out;
+}
+
+@keyframes heartBeat {
+    0% { transform: scale(1); }
+    25% { transform: scale(1.3); }
+    50% { transform: scale(1); }
+    75% { transform: scale(1.3); }
+    100% { transform: scale(1); }
+}
+
+.comment-button:hover {
+    color: #4a9fff;
+}
+
+.share-button:hover {
+    color: #4aff7f;
+}
+
+.social-button i {
+    font-size: 16px;
+}
+
+/* Search Bar overrides */
+.search-input:focus {
+  outline: 1px solid white !important; /* Change focus outline to white */
+  border-color: white !important; /* Ensure border color also changes or is consistent */
+  box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25) !important; /* Optional: to mimic bootstrap focus shadow but in white */
 } 

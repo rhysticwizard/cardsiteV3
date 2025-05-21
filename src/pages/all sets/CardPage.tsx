@@ -1,5 +1,6 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { Link, useParams, useLocation } from 'react-router-dom';
+import { useFavorites } from '../../context/FavoritesContext';
 import './styles.css';
 
 // Interface for card objects
@@ -105,11 +106,18 @@ const CardPage: React.FC = () => {
   // Add modal state
   const [showModal, setShowModal] = useState(false);
   const [modalImage, setModalImage] = useState<string>('');
+  // Add state for social interactions
+  const [isLiked, setIsLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(Math.floor(Math.random() * 20) + 1);
+  const [commentCount, setCommentCount] = useState(Math.floor(Math.random() * 10));
 
   // API URLs
   const SCRYFALL_BASE_URL = 'https://api.scryfall.com';
   const CORS_PROXY = 'https://corsproxy.io/?';
   const [useCorsProxy, setUseCorsProxy] = useState(false);
+
+  // Get favorites context
+  const { favorites, addFavorite, removeFavorite, isFavorite } = useFavorites();
 
   const getApiUrl = (endpoint: string) => {
     const baseUrl = useCorsProxy ? CORS_PROXY + encodeURIComponent(SCRYFALL_BASE_URL) : SCRYFALL_BASE_URL;
@@ -321,6 +329,24 @@ const CardPage: React.FC = () => {
     const usdPrice = card.prices?.usd || null;
     const usdFoilPrice = card.prices?.usd_foil || null;
     const usdEtchedPrice = card.prices?.usd_etched || null;
+
+    // Check if card is in favorites
+    const cardIsFavorite = isFavorite(card.id);
+    
+    // Button handler with debug info
+    const handleLikeClick = (e: React.MouseEvent) => {
+      e.stopPropagation();
+      console.log('Like button clicked for card:', card.name);
+      console.log('Current favorite status:', cardIsFavorite);
+      
+      if (cardIsFavorite) {
+        console.log('Removing from favorites');
+        removeFavorite(card.id);
+      } else {
+        console.log('Adding to favorites');
+        addFavorite(card);
+      }
+    };
     
     return (
       <div className="card-page-content">
@@ -328,6 +354,45 @@ const CardPage: React.FC = () => {
           <div className="card-page-image">
             {imageUrl && <img src={imageUrl} alt={card.name} onClick={() => openImageModal(imageUrl)} style={{cursor: 'pointer'}} />}
             {backImageUrl && <img src={backImageUrl} alt={`${card.name} (back face)`} className="card-backface" onClick={() => openImageModal(backImageUrl)} style={{cursor: 'pointer'}} />}
+            
+            {/* Social Interaction Buttons */}
+            <div className="card-social-buttons">
+              <button 
+                className={`social-button like-button ${cardIsFavorite ? 'liked' : ''}`}
+                onClick={handleLikeClick}
+                title={cardIsFavorite ? "Remove from favorites" : "Add to favorites"}
+              >
+                <i className={`${cardIsFavorite ? 'fas' : 'far'} fa-heart`}></i> {favorites.length}
+              </button>
+              <button className="social-button comment-button">
+                <i className="fas fa-comment"></i> {commentCount}
+              </button>
+              <button className="social-button share-button">
+                <i className="fas fa-share"></i>
+              </button>
+            </div>
+            
+            {/* Retailer Prices Section (EDHREC style) */}
+            <div className="retailer-prices">
+              <div className="retailer-price">
+                <a href={`https://www.tcgplayer.com/search/all/product?q=${encodeURIComponent(card.name)}`} target="_blank" rel="noopener noreferrer">
+                  <div className="retailer-logo tcgplayer-logo">TCG</div>
+                  <div className="retailer-price-value">${usdPrice ? parseFloat(usdPrice).toFixed(2) : '—'}</div>
+                </a>
+              </div>
+              <div className="retailer-price">
+                <a href={`https://www.cardkingdom.com/catalog/search?search=header&filter%5Bname%5D=${encodeURIComponent(card.name)}`} target="_blank" rel="noopener noreferrer">
+                  <div className="retailer-logo cardkingdom-logo">CK</div>
+                  <div className="retailer-price-value">${usdPrice ? (parseFloat(usdPrice) * 1.05).toFixed(2) : '—'}</div>
+                </a>
+              </div>
+              <div className="retailer-price">
+                <a href={`https://www.cardmarket.com/en/Magic/Products/Search?searchString=${encodeURIComponent(card.name)}`} target="_blank" rel="noopener noreferrer">
+                  <div className="retailer-logo cardmarket-logo">CM</div>
+                  <div className="retailer-price-value">€{usdPrice ? (parseFloat(usdPrice) * 0.85).toFixed(2) : '—'}</div>
+                </a>
+              </div>
+            </div>
           </div>
           
           <div className="card-page-info">

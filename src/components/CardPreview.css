@@ -1,0 +1,38 @@
+.card-preview {
+  position: fixed;
+  z-index: 9999;
+  pointer-events: none; /* Allows mouse events to pass through to elements beneath */
+  filter: drop-shadow(0 0 20px rgba(0, 0, 0, 0.9));
+  transform-origin: top left;
+  /* Offset it a bit from the top to align with cursor */
+  transform: translateY(-50px);
+  transition: opacity 0.3s ease-in-out;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Animation for the card preview when it appears */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-50px) scale(1);
+  }
+}
+
+/* Specific styling for left-positioned previews (for rightmost cards) */
+.card-preview.left-positioned {
+  transform-origin: top right;
+  /* Mirror the vertical offset */
+  transform: translateY(-50px);
+}
+
+.card-preview-image {
+  width: auto;
+  height: auto;
+  max-height: 450px;
+  border-radius: 4.75% / 3.5%;
+  display: block;
+} 

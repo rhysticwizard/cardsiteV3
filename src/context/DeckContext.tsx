@@ -6,6 +6,7 @@ export interface DeckCard extends Card {
   count: number;
   column?: number;
   stackPosition?: number;
+  columnOption?: string;
 }
 
 // Interface for a complete deck
@@ -14,18 +15,20 @@ export interface Deck {
   name: string;
   description: string;
   cards: DeckCard[];
-  columnTitles: Record<number, string>;
   createdAt: number;
   updatedAt: number;
+  isPublic: boolean;
 }
 
 interface DeckContextType {
   decks: Deck[];
-  addDeck: (deck: Omit<Deck, 'id' | 'createdAt' | 'updatedAt'>) => void;
+  addDeck: (deck: Omit<Deck, 'id' | 'createdAt' | 'updatedAt'> & { id?: string }) => Deck;
   updateDeck: (updatedDeck: Deck) => void;
   deleteDeck: (deckId: string) => void;
   getDeck: (deckId: string) => Deck | undefined;
+  getUnsavedDeck: (deckId: string) => Deck | undefined;
   resetStorage: () => void;
+  createNewDeckId: () => string;
 }
 
 const DeckContext = createContext<DeckContextType | undefined>(undefined);
@@ -336,6 +339,7 @@ export const DeckProvider: React.FC<DeckProviderProps> = ({ children }) => {
       count: typeof card.count === 'number' ? card.count : 1, // Default to 1 if count is missing
       column: typeof card.column === 'number' ? card.column : 0,
       stackPosition: typeof card.stackPosition === 'number' ? card.stackPosition : 0,
+      columnOption: typeof card.columnOption === 'string' ? card.columnOption : 'startsInDeck', // Add columnOption
     };
     
     // Copy other common properties if they exist
@@ -396,7 +400,7 @@ export const DeckProvider: React.FC<DeckProviderProps> = ({ children }) => {
     return safeCard as DeckCard;
   };
 
-  const addDeck = (deck: Omit<Deck, 'id' | 'createdAt' | 'updatedAt'>) => {
+  const addDeck = (deck: Omit<Deck, 'id' | 'createdAt' | 'updatedAt'> & { id?: string }) => {
     const timestamp = Date.now();
     
     // Create a safe copy of the cards using the helper function
@@ -405,9 +409,11 @@ export const DeckProvider: React.FC<DeckProviderProps> = ({ children }) => {
     const newDeck: Deck = {
       ...deck,
       cards: sanitizedCards,
-      id: `deck_${timestamp}_${Math.random().toString(36).substr(2, 9)}`,
+      // Use the provided id if it exists, otherwise generate a new one
+      id: deck.id || `deck_${timestamp}_${Math.random().toString(36).substr(2, 9)}`,
       createdAt: timestamp,
-      updatedAt: timestamp
+      updatedAt: timestamp,
+      isPublic: deck.isPublic !== undefined ? deck.isPublic : false // Default to private
     };
     
     console.log('[DeckContext] Adding new deck with sanitized cards:', newDeck);
@@ -415,6 +421,9 @@ export const DeckProvider: React.FC<DeckProviderProps> = ({ children }) => {
     // Set the decks state with the new deck included
     // The useEffect will handle saving to localStorage
     setDecks(prevDecks => [...prevDecks, newDeck]);
+    
+    // Return the newly created deck so callers can access the ID
+    return newDeck;
   };
 
   const updateDeck = (updatedDeck: Deck) => {
@@ -443,6 +452,55 @@ export const DeckProvider: React.FC<DeckProviderProps> = ({ children }) => {
     return decks.find(deck => deck.id === deckId);
   };
 
+  const getUnsavedDeck = (deckId: string): Deck | undefined => {
+    // First check if it exists in saved decks
+    const savedDeck = getDeck(deckId);
+    if (savedDeck) {
+      return savedDeck;
+    }
+    
+    // If not found, try to construct a deck from localStorage
+    try {
+      // Check if we have any unsaved deck cards in localStorage
+      const savedDeckCards = localStorage.getItem('deckbuilder_cards');
+      if (!savedDeckCards) {
+        return undefined;
+      }
+      
+      // Get stored deck ID
+      const storedDeckId = localStorage.getItem('deckbuilder_id');
+      
+      // Only return data if this is the correct deck ID or if there's no stored ID yet
+      if (storedDeckId && storedDeckId !== deckId) {
+        console.log(`[DeckContext] Requested deck ID ${deckId} doesn't match stored ID ${storedDeckId}`);
+        return undefined;
+      }
+      
+      // Get deck title
+      const deckTitle = localStorage.getItem('deckbuilder_title') || 'Untitled Deck';
+      
+      // Parse the deck cards
+      const deckCards = JSON.parse(savedDeckCards) || [];
+      
+      // Construct an unsaved deck object
+      const unsavedDeck: Deck = {
+        id: deckId,
+        name: deckTitle,
+        description: '',
+        cards: deckCards.map((card: any) => sanitizeCard(card as DeckCard)),
+        createdAt: Date.now(),
+        updatedAt: Date.now(),
+        isPublic: false // Default unsaved decks to private
+      };
+      
+      console.log(`[DeckContext] Constructed unsaved deck with ID ${deckId}`);
+      return unsavedDeck;
+    } catch (error) {
+      console.error('[DeckContext] Error constructing unsaved deck:', error);
+      return undefined;
+    }
+  };
+
   const resetStorage = () => {
     console.log('[DeckContext] Resetting all deck storage');
     
@@ -460,8 +518,24 @@ export const DeckProvider: React.FC<DeckProviderProps> = ({ children }) => {
     return true;
   };
 
+  const createNewDeckId = () => {
+    const timestamp = Date.now();
+    const newId = `deck_${timestamp}_${Math.random().toString(36).substr(2, 9)}`;
+    console.log('[DeckContext] Created new deck ID:', newId);
+    return newId;
+  };
+
   return (
-    <DeckContext.Provider value={{ decks, addDeck, updateDeck, deleteDeck, getDeck, resetStorage }}>
+    <DeckContext.Provider value={{ 
+      decks, 
+      addDeck, 
+      updateDeck, 
+      deleteDeck, 
+      getDeck,
+      getUnsavedDeck,
+      resetStorage,
+      createNewDeckId
+    }}>
       {children}
     </DeckContext.Provider>
   );

@@ -18,6 +18,7 @@ body {
     margin: 0 auto;
     padding: 10px;
     padding-top: 0;
+    overflow: visible; /* Allow card previews to overflow the container */
 }
 
 /* Header styles */
@@ -144,11 +145,13 @@ button:hover {
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 8px;
-    contain: layout style paint;
     background-color: #000000;
     padding: 10px;
     max-width: 100%;
     margin: 0 auto;
+    position: relative;
+    overflow: visible; /* Important: Allow card previews to overflow */
+    contain: none; /* Remove containment to allow card previews to display */
 }
 
 .card {
@@ -157,12 +160,12 @@ button:hover {
     overflow: hidden;
     cursor: pointer;
     will-change: transform;
-    contain: content;
-    transform: translateZ(0); /* Hardware acceleration */
     transition: transform 0.2s ease;
     box-shadow: none;
     margin: 0;
     border: 1px solid rgba(255, 255, 255, 0.05);
+    position: relative; /* Set position to relative */
+    contain: none; /* Remove containment */
 }
 
 .card:hover {
@@ -183,8 +186,47 @@ button:hover {
     aspect-ratio: 0.716; /* Standard card aspect ratio */
     object-fit: cover;
     background-color: #000000; /* Placeholder color while loading */
-    contain: strict;
     transform: translateZ(0); /* Hardware acceleration */
+    contain: none; /* Remove containment */
+}
+
+/* Card Preview Styles */
+.card-preview {
+    position: fixed !important; /* Use !important to override any other styles */
+    z-index: 9999 !important; /* Ensure it's above everything */
+    pointer-events: none;
+    filter: drop-shadow(0 0 20px rgba(0, 0, 0, 0.9));
+    transform-origin: top left;
+    transform: translateY(-50px);
+    transition: opacity 0.3s ease-in-out;
+    animation: fadeIn 0.3s ease-in-out;
+    background: transparent;
+    contain: none !important; /* Remove any containment */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(-50px) scale(1);
+    }
+}
+
+.card-preview.left-positioned {
+    transform-origin: top right;
+    transform: translateY(-50px);
+}
+
+.card-preview-image {
+    width: auto;
+    height: auto;
+    max-height: 450px;
+    border-radius: 4.75% / 3.5%;
+    display: block;
+    background: transparent;
 }
 
 .card-info {

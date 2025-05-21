@@ -2,9 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
   faSearch, faTimes, faSpinner, faChevronLeft, faChevronRight, 
-  faTrash, faSave, faRedo, faPlus, faMinus, faFileImport, faBug 
+  faTrash, faSave, faRedo, faPlus, faMinus, faFileImport, faBug, faInfoCircle, faCaretDown, faCaretRight 
 } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams, useParams } from 'react-router-dom';
 import ScryfallAPI, { Card } from '../../utils/ScryfallAPI';
 import '../../App.css';
 import '../search/SearchPage.css';
@@ -30,17 +30,14 @@ import {
   sortableKeyboardCoordinates
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
+import { v4 as uuidv4 } from 'uuid';
 
 // Interface for deck cards with count
 interface DeckCard extends Card {
   count: number;
   column?: number; // Add column tracking
   stackPosition?: number; // Add stack position tracking
-}
-
-// Interface for column information
-interface ColumnInfo {
-  title: string;
+  columnOption?: string; // Track column option (startsInDeck, startsInHand, etc.)
 }
 
 // Save deck dialog props
@@ -254,7 +251,7 @@ const DraggableDeckCard: React.FC<{
   const style = {
     zIndex: index + 1,
     position: 'absolute' as const,
-    top: `${index * 65 + 30}px`, // Reduced from 80px to 65px for more moderate spacing
+    top: `${index * 65 + 45}px`, // Increased offset from 30px to 45px
     transform: CSS.Transform.toString(transform),
     opacity: isDragging ? 0 : 1 // Completely invisible when dragging
   };
@@ -327,12 +324,49 @@ const DraggableDeckCard: React.FC<{
   );
 };
 
-// Update the DroppableColumn component to pass increment/decrement handlers
-const DroppableColumn: React.FC<{
+// New TreeItem component
+interface TreeItemProps {
+  label: string;
+  level: number;
+  // Future props: isExpanded, hasChildren, onToggleExpand, isSelected, onSelect
+  // For now, keeping it simple
+}
+
+const TreeItem: React.FC<TreeItemProps> = ({ label, level }) => {
+  const itemStyle: React.CSSProperties = {
+    paddingLeft: `${level * 20}px`, // Indentation based on level
+    display: 'flex',
+    alignItems: 'center',
+    cursor: 'pointer',
+    paddingTop: '5px',
+    paddingBottom: '5px',
+  };
+
+  // Placeholder for expand icon (can be faCaretRight or faCaretDown later)
+  // For now, just a simple bullet or space if level > 0
+  const iconPlaceholder = level > 0 ? (
+    <FontAwesomeIcon icon={faCaretRight} style={{ marginRight: '8px' }} />
+  ) : null; // Root items might not have an icon or a different one
+
+  return (
+    <div style={itemStyle} className="tree-item">
+      {iconPlaceholder}
+      <span>{label}</span>
+    </div>
+  );
+};
+
+// Define the props for TreeItem if it's used across components or keep it local
+interface TreeItemProps {
+  label: string;
+  level: number;
+  onClick?: () => void;
+}
+
+// Update the DroppableColumn component props
+interface DroppableColumnProps {
   columnId: number;
-  title: string;
   cards: DeckCard[];
-  onTitleChange: (title: string) => void;
   removeCardFromDeck: (cardId: string) => void;
   selectedCardId: string | null;
   onCardClick: (cardId: string) => void;
@@ -341,45 +375,239 @@ const DroppableColumn: React.FC<{
   onCardDragStart: () => void;
   onIncrementCard: (cardId: string) => void;
   onDecrementCard: (cardId: string) => void;
-}> = ({ 
-  columnId, 
-  title, 
-  cards, 
-  onTitleChange, 
-  removeCardFromDeck, 
-  selectedCardId, 
+  columnTitle: string;
+  isEditing: boolean;
+  onStartRename: () => void;
+  onSaveTitle: (newTitle: string) => void;
+}
+
+// Define structure for menu items
+interface MenuItem {
+  id: string;
+  label: string;
+  level: number;
+  children?: MenuItem[];
+  isSelectable?: boolean;
+  defaultSelected?: boolean; // For initial selection
+}
+
+// Update the DroppableColumn component
+const DroppableColumn: React.FC<DroppableColumnProps> = ({
+  columnId,
+  cards, // This prop contains the cards for this specific column
+  removeCardFromDeck,
+  selectedCardId,
   onCardClick,
   onCardMouseEnter,
   onCardMouseLeave,
   onCardDragStart,
   onIncrementCard,
-  onDecrementCard
+  onDecrementCard,
+  columnTitle,
+  isEditing,
+  onStartRename,
+  onSaveTitle
 }) => {
   const { setNodeRef, isOver } = useDroppable({
     id: `column-${columnId}`,
-    data: {
-      type: 'column',
-      columnId
-    }
+    data: { type: 'column', columnId }
   });
 
-  return (
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const [editableTitle, setEditableTitle] = useState(columnTitle);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [expandedItems, setExpandedItems] = useState<Set<string>>(new Set());
+
+  // Initialize selectedOption based on the cards prop
+  const [selectedOption, setSelectedOption] = useState<string>(() => {
+    if (cards && cards.length > 0 && cards[0].columnOption) {
+      return cards[0].columnOption;
+    }
+    return 'startsInDeck'; // Default if no cards or no option set
+  });
+
+  // Effect to update selectedOption if cards prop changes and has a different option
+  useEffect(() => {
+    if (cards && cards.length > 0 && cards[0].columnOption) {
+      if (cards[0].columnOption !== selectedOption) {
+        setSelectedOption(cards[0].columnOption);
+      }
+    } else {
+      // If no cards, or cards have no option, default to 'startsInDeck'
+      // Only update if it's not already the default to prevent infinite loops
+      if (selectedOption !== 'startsInDeck') {
+        setSelectedOption('startsInDeck');
+      }
+    }
+  }, [cards, selectedOption]); // Rerun when cards or selectedOption changes
+
+  const menuStructure: MenuItem[] = [
+    { id: 'rename', label: 'Rename', level: 0, isSelectable: false },
+    {
+      id: 'columnOptions', label: 'Column Options', level: 0, isSelectable: false,
+      children: [
+        { id: 'startsInDeck', label: 'Starts in Deck', level: 1, isSelectable: true, defaultSelected: true },
+        { id: 'startsInExtra', label: 'Starts in Extra', level: 1, isSelectable: true },
+        { id: 'startsInHand', label: 'Starts in Hand', level: 1, isSelectable: true },
+        {
+          id: 'startsInPlay', label: 'Starts in Play', level: 1, isSelectable: false, // Changed ID and Label
+          children: [
+            { id: 'playFaceup', label: 'Faceup', level: 2, isSelectable: true },
+            { id: 'playFacedown', label: 'Facedown', level: 2, isSelectable: true },
+          ]
+        },
+        { id: 'sideboard', label: 'Sideboard', level: 1, isSelectable: true },
+      ]
+    }
+  ];
+
+  useEffect(() => {
+    if (isEditing) {
+      setEditableTitle(columnTitle);
+      setIsDropdownOpen(false);
+      setTimeout(() => inputRef.current?.focus(), 0);
+    }
+  }, [isEditing, columnTitle]);
+
+  const toggleDropdown = () => {
+    if (!isEditing) {
+      setIsDropdownOpen(!isDropdownOpen);
+      if (isDropdownOpen) { // If closing, reset expanded items for next open
+        setExpandedItems(new Set());
+      }
+    }
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false);
+        setExpandedItems(new Set());
+      }
+    };
+    if (isDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [isDropdownOpen]);
+
+  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => setEditableTitle(event.target.value);
+  const handleTitleSave = () => {
+    if (editableTitle.trim() === "") setEditableTitle(columnTitle);
+    else onSaveTitle(editableTitle.trim());
+  };
+  const handleInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') { handleTitleSave(); event.currentTarget.blur(); }
+    else if (event.key === 'Escape') { setEditableTitle(columnTitle); onSaveTitle(columnTitle); event.currentTarget.blur(); }
+  };
+
+  // Enhanced TreeItem props and component
+  interface EnhancedTreeItemProps {
+    item: MenuItem;
+    isExpanded: boolean;
+    isSelected: boolean;
+    onItemClick: (item: MenuItem) => void;
+  }
+
+  const EnhancedTreeItem: React.FC<EnhancedTreeItemProps> = ({ item, isExpanded, isSelected, onItemClick }) => (
     <div 
+      style={{ paddingLeft: item.level * 20 + 'px' }} 
+      onClick={() => onItemClick(item)} 
+      className={`tree-item ${isSelected && item.isSelectable ? 'selected' : ''}`}
+    >
+      {item.children && (
+        <FontAwesomeIcon icon={isExpanded ? faCaretDown : faCaretRight} className="caret-icon-tree" />
+      )}
+      <span style={{ marginLeft: item.children ? '5px' : '20px' }}>{item.label}</span>
+      {isSelected && item.isSelectable && <span className="checkmark">✓</span>}
+    </div>
+  );
+  
+  const handleMenuItemClick = (item: MenuItem) => {
+    if (item.id === 'rename') {
+      onStartRename();
+      setIsDropdownOpen(false);
+      setExpandedItems(new Set());
+      return;
+    }
+
+    if (item.children) {
+      setExpandedItems(prev => {
+        const next = new Set(prev);
+        if (next.has(item.id)) next.delete(item.id);
+        else next.add(item.id);
+        return next;
+      });
+    } else if (item.isSelectable) {
+      setSelectedOption(item.id);
+      console.log(`${item.label} selected for column ${columnId + 1}`);
+      
+      // Update columnOption for all cards in this column
+      cards.forEach(card => {
+        card.columnOption = item.id;
+      });
+      
+      // Potentially close dropdown or parent levels after selection
+      // setIsDropdownOpen(false); 
+      // setExpandedItems(new Set());
+    }
+  };
+
+  const renderMenuItems = (items: MenuItem[]): React.JSX.Element[] => { // Explicitly using React.JSX.Element
+    let elements: React.JSX.Element[] = []; // Explicitly using React.JSX.Element
+    for (const item of items) {
+      elements.push(
+        <EnhancedTreeItem
+          key={item.id}
+          item={item}
+          isExpanded={expandedItems.has(item.id)}
+          isSelected={selectedOption === item.id}
+          onItemClick={handleMenuItemClick}
+        />
+      );
+      if (item.children && expandedItems.has(item.id)) {
+        elements = elements.concat(renderMenuItems(item.children));
+      }
+    }
+    return elements;
+  };
+
+  return (
+    <div
       ref={setNodeRef}
       className={`deck-column ${cards.length === 0 ? 'empty-column' : ''}`}
       data-column-id={columnId}
       data-over={isOver ? 'true' : 'false'}
     >
-      <div className="column-title-container">
-        <input
-          type="text"
-          className="column-title-input"
-          value={title}
-          onChange={(e) => onTitleChange(e.target.value)}
-          placeholder={`Category ${columnId + 1}`}
-        />
+      <div className="column-title-wrapper" ref={dropdownRef}>
+        <div className="column-title-container">
+          <button className="column-title-button" onClick={toggleDropdown} disabled={isEditing}>
+            {isEditing ? (
+              <input
+                ref={inputRef}
+                type="text"
+                value={editableTitle}
+                onChange={handleTitleChange}
+                onBlur={handleTitleSave}
+                onKeyDown={handleInputKeyDown}
+                className="column-title-input"
+                onClick={(e) => e.stopPropagation()}
+              />
+            ) : (
+              <span>{columnTitle}</span>
+            )}
+            {!isEditing && <FontAwesomeIcon icon={faCaretDown} className={`caret-icon ${isDropdownOpen ? 'open' : ''}`} />}
+          </button>
+          {isDropdownOpen && !isEditing && (
+            <div className="column-dropdown-tree">
+              {renderMenuItems(menuStructure)}
+            </div>
+          )}
+        </div>
       </div>
-      
       {cards.map((card, index) => (
         <DraggableDeckCard 
           key={`${card.id}-column${columnId}-pos${index}`}
@@ -395,15 +623,11 @@ const DroppableColumn: React.FC<{
           onDecrementCard={onDecrementCard}
         />
       ))}
-      
-      {/* Add a spacer div to ensure column has proper height */}
       <div 
         className="column-spacer" 
         style={{ 
           height: `${(cards.length > 0 ? 
-            // Add extra space for title (30px) plus card spacing
-            // Adjust spacing to match the updated card stacking
-            (cards.length - 1) * 65 + 170 + 30
+            (cards.length - 1) * 65 + 170 + 45 // Increased offset from 30 to 45
             : 170)}px`
         }} 
       />
@@ -519,63 +743,55 @@ const ImportDeckDialog: React.FC<ImportDeckDialogProps> = ({
 };
 
 const DeckBuilder: React.FC = () => {
+  const { addDeck, getDeck, decks, updateDeck } = useDeckContext();
   const [searchParams, setSearchParams] = useSearchParams();
-  const initialQuery = searchParams.get('q') || '';
-  const deckIdParam = searchParams.get('deck');
+  const { deckId: paramDeckId } = useParams<{ deckId?: string }>();
   const navigate = useNavigate();
-  const { addDeck, getDeck, updateDeck } = useDeckContext();
-  
-  // State to track if we're editing an existing deck
-  const [isEditingDeck, setIsEditingDeck] = useState<boolean>(false);
-  const [editingDeckId, setEditingDeckId] = useState<string | null>(null);
-  
-  const [searchQuery, setSearchQuery] = useState(initialQuery);
-  const [hasSearched, setHasSearched] = useState(!!initialQuery);
-  const [suggestions, setSuggestions] = useState<Card[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isFetchingSuggestions, setIsFetchingSuggestions] = useState(false);
+
+  const initialQuery = searchParams.get('q') || '';
+  const shouldShowSaveDialog = searchParams.get('save') === 'true'; // Re-added this line
+
+  // Existing States
   const [searchResults, setSearchResults] = useState<Card[]>([]);
-  const [showSuggestions, setShowSuggestions] = useState(false);
-  const searchInputRef = useRef<HTMLInputElement>(null);
-  const suggestionsRef = useRef<HTMLDivElement>(null);
-  const lastSearchRef = useRef<string>('');
-  const deckAreaRef = useRef<HTMLDivElement>(null);
-  
-  // Add state for selected card
-  const [selectedCardId, setSelectedCardId] = useState<string | null>(null);
-  
-  // State for save deck dialog
-  const [showSaveDeckDialog, setShowSaveDeckDialog] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
-  const [isSaveOperation, setIsSaveOperation] = useState(false);
-  
-  // State for deck cards
   const [deckCards, setDeckCards] = useState<DeckCard[]>([]);
-  
-  // Add state for deck title
   const [deckTitle, setDeckTitle] = useState<string>('Untitled Deck');
-  
-  // State for column titles
-  const [columnTitles, setColumnTitles] = useState<Record<number, string>>({
-    0: "Creatures",
-    1: "Spells",
-    2: "Artifacts",
-    3: "Enchantments",
-    4: "Lands",
-    5: "Sideboard"
+  const [currentDeckId, setCurrentDeckId] = useState<string | null>(paramDeckId || null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isSearching, setIsSearching] = useState<boolean>(false);
+  const [searchQuery, setSearchQuery] = useState<string>(localStorage.getItem('deckbuilder_search_query') || initialQuery || '');
+  const [activeDragItem, setActiveDragItem] = useState<any>(null);
+  const [selectedCardId, setSelectedCardId] = useState<string | null>(null);
+  const [showSaveDeckDialog, setShowSaveDeckDialog] = useState(false);
+  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+
+  // States for column titles and editing (added previously)
+  const initialColumnTitles = ['Creatures', 'Spells', 'Artifacts', 'Enchantments', 'Lands', 'Sideboard'];
+  const [columnTitles, setColumnTitles] = useState<string[]>(() => {
+    const savedTitles = localStorage.getItem('deckbuilder_column_titles');
+    return savedTitles ? JSON.parse(savedTitles) : initialColumnTitles;
   });
-  
-  // State for active drag
-  const [activeDragItem, setActiveDragItem] = useState<DragItemType | null>(null);
-  
-  // State for carousel pagination
+  const [editingColumnId, setEditingColumnId] = useState<number | null>(null);
+
+  // Re-adding missing state variables based on linter errors
   const [currentPage, setCurrentPage] = useState(0);
-  const cardsPerPage = 5;
-  
-  // Calculate total pages
+  const cardsPerPage = 5; // Assuming a default value, can be adjusted
   const totalPages = Math.ceil(searchResults.length / cardsPerPage);
 
-  // Set up sensors for drag and drop
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const suggestionsRef = useRef<HTMLDivElement>(null);
+  const deckAreaRef = useRef<HTMLDivElement>(null); // Found this in the full file, seems to be used
+  const lastSearchRef = useRef<string>(''); // Found this in the full file
+
+  const [suggestions, setSuggestions] = useState<Card[]>([]); // From full file
+  const [showSuggestions, setShowSuggestions] = useState(false); // From full file
+  const [isFetchingSuggestions, setIsFetchingSuggestions] = useState(false); // From full file
+  const [hasSearched, setHasSearched] = useState(!!searchQuery); // From full file, initialize based on searchQuery
+
+  const [isEditingDeck, setIsEditingDeck] = useState<boolean>(false); // From full file
+  const [editingDeckId, setEditingDeckId] = useState<string | null>(null); // From full file
+  const [isSaveOperation, setIsSaveOperation] = useState(false); // From full file
+  const [isSaving, setIsSaving] = useState(false); // From full file
+
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
@@ -936,12 +1152,17 @@ const DeckBuilder: React.FC = () => {
     };
   }, []);
   
-  // Perform search when initialQuery is available
+  // Perform search when initialQuery is available (this useEffect should now work)
   useEffect(() => {
-    if (initialQuery && !isLoading) {
-      handleSearch();
+    if (initialQuery && !isLoading) { // Uses the defined initialQuery
+      // To avoid an immediate search if searchQuery is already set from localStorage
+      // and is different from initialQuery, we might want to set searchQuery state here first.
+      // For now, let's assume if initialQuery exists, it dictates the first search.
+      setSearchQuery(initialQuery); // Explicitly set searchQuery to trigger search via its own useEffect or handleSearch directly
+      handleSearch(); // Pass initialQuery to handleSearch if it should take a query
     }
-  }, [initialQuery]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialQuery, isLoading]); // Dependency array includes initialQuery
   
   // Generate suggestions based on input
   useEffect(() => {
@@ -1121,49 +1342,48 @@ const DeckBuilder: React.FC = () => {
   // Calculate deck stats
   const getDeckStats = () => {
     const totalCards = deckCards.reduce((total, card) => total + card.count, 0);
-    return { totalCards };
+    
+    // Calculate counts by card type
+    let creatureCount = 0;
+    let landCount = 0;
+    let nonCreatureCount = 0;
+    
+    deckCards.forEach(card => {
+      const typeLine = card.type_line?.toLowerCase() || '';
+      const count = card.count || 1;
+      
+      if (typeLine.includes('land')) {
+        landCount += count;
+      } else if (typeLine.includes('creature')) {
+        creatureCount += count;
+      } else {
+        nonCreatureCount += count;
+      }
+    });
+    
+    return { 
+      totalCards,
+      creatureCount,
+      nonCreatureCount,
+      landCount
+    };
   };
 
   // Group cards by column for rendering
   const groupCardsByColumn = () => {
-    const columnsMap: Record<number, DeckCard[]> = {};
-    const maxColumns = 6; // Match the number of columns in CSS
-    
-    // Initialize all columns (even empty ones)
-    for (let i = 0; i < maxColumns; i++) {
-      columnsMap[i] = [];
+    const grouped: Record<number, DeckCard[]> = {};
+    // Initialize for a fixed number of columns, e.g., 6
+    for (let i = 0; i < 6; i++) { // Assuming 6 columns
+      grouped[i] = [];
     }
-    
-    // Group cards by their column
     deckCards.forEach(card => {
-      const column = card.column !== undefined ? card.column : 0;
-      if (column < maxColumns) {
-        columnsMap[column].push(card);
-      } else {
-        // If a card somehow has a column outside our range, put it in column 0
-        columnsMap[0].push(card);
+      const col = card.column === undefined ? 0 : card.column; // Default to column 0 if undefined
+      if (!grouped[col]) {
+        grouped[col] = [];
       }
+      grouped[col].push(card);
     });
-    
-    // Sort cards in each column by stack position
-    Object.keys(columnsMap).forEach(columnKey => {
-      const column = parseInt(columnKey);
-      columnsMap[column].sort((a, b) => {
-        const posA = a.stackPosition !== undefined ? a.stackPosition : 0;
-        const posB = b.stackPosition !== undefined ? b.stackPosition : 0;
-        return posA - posB;
-      });
-    });
-    
-    return columnsMap;
-  };
-
-  // Handle column title change
-  const handleColumnTitleChange = (columnIndex: number, title: string) => {
-    setColumnTitles(prev => ({
-      ...prev,
-      [columnIndex]: title
-    }));
+    return grouped;
   };
 
   // Load deck if deck ID is provided in URL, otherwise start fresh
@@ -1175,76 +1395,58 @@ const DeckBuilder: React.FC = () => {
     lastSearchRef.current = '';
     setShowSuggestions(false);
     setSuggestions([]);
-    
-    if (deckIdParam) {
-      const existingDeck = getDeck(deckIdParam);
-      
+
+    if (paramDeckId) { // Corrected to use paramDeckId
+      // Check if this ID exists in our saved decks
+      const existingDeck = getDeck(paramDeckId); // Corrected to use paramDeckId
+
       if (existingDeck) {
-        console.log(`Loading existing deck: ${existingDeck.name} (${deckIdParam})`);
-        
+        console.log(`Loading existing deck: ${existingDeck.name} (${paramDeckId})`); // Corrected
+
         // Clear any existing localStorage to prevent interference
         localStorage.removeItem('deckbuilder_cards');
         localStorage.removeItem('deckbuilder_title');
-        localStorage.removeItem('deckbuilder_column_titles');
         localStorage.removeItem('deckbuilder_search_results');
         localStorage.removeItem('deckbuilder_search_query');
-        
+        localStorage.removeItem('deckbuilder_id');
+
         // Set deck data
         setDeckTitle(existingDeck.name);
         setDeckCards(existingDeck.cards);
-        
-        // Set column titles if they exist
-        if (existingDeck.columnTitles && Object.keys(existingDeck.columnTitles).length > 0) {
-          setColumnTitles(existingDeck.columnTitles);
-        }
-        
+
         // Mark as editing
         setIsEditingDeck(true);
-        setEditingDeckId(deckIdParam);
+        setEditingDeckId(paramDeckId); // Corrected
+        console.log(`Editing saved deck with ID: ${paramDeckId}`); // Corrected
       } else {
-        console.error(`Deck with ID ${deckIdParam} not found`);
-        // Maybe show an error or redirect
+        console.log(`Using new deck ID: ${paramDeckId}`); // Corrected
+
+        // Set up a new unsaved deck with the provided ID
+        setDeckTitle('Untitled Deck');
+        setDeckCards([]);
+        console.log(`Created unsaved deck with ID: ${paramDeckId}`); // Corrected
+
+        // Store the ID in localStorage immediately
+        localStorage.setItem('deckbuilder_id', paramDeckId); // Corrected
       }
     } else {
-      // No deck ID provided, starting fresh (Create New Deck case)
-      console.log('Creating a new deck - clearing any saved state');
-      
-      // Clear localStorage saved state for deck builder
-      localStorage.removeItem('deckbuilder_cards');
-      localStorage.removeItem('deckbuilder_title');
-      localStorage.removeItem('deckbuilder_column_titles');
-      localStorage.removeItem('deckbuilder_search_results');
-      localStorage.removeItem('deckbuilder_search_query');
-      
-      // Reset state to defaults
-      setDeckTitle('Untitled Deck');
-      setDeckCards([]);
-      setColumnTitles({
-        0: "Creatures",
-        1: "Spells",
-        2: "Artifacts",
-        3: "Enchantments",
-        4: "Lands",
-        5: "Sideboard"
-      });
-      
-      // Ensure we're not in edit mode
-      setIsEditingDeck(false);
-      setEditingDeckId(null);
+      // No deck ID provided, but this should rarely happen with our new flow
+      console.log('No deck ID provided - redirecting to create-deck');
+      navigate('/create-deck');
     }
-  }, [deckIdParam, getDeck]);
+  }, [paramDeckId, getDeck, navigate]); // Corrected dependency to paramDeckId
 
   // Add localStorage persistence for deck state
   useEffect(() => {
     // When deck ID is provided, we're editing an existing deck - don't load from localStorage
-    if (deckIdParam) {
+    if (paramDeckId) { // Corrected
       console.log("Skipping localStorage load since we're editing an existing deck");
       return;
     }
-    
+
     // Only load saved state when NOT editing a specific deck
     // This only applies to in-progress decks that aren't saved yet
-    
+
     // Load saved state when component mounts
     const loadSavedState = () => {
       try {
@@ -1253,29 +1455,23 @@ const DeckBuilder: React.FC = () => {
         if (savedDeckCards) {
           setDeckCards(JSON.parse(savedDeckCards));
         }
-        
+
         // Load deck title
         const savedDeckTitle = localStorage.getItem('deckbuilder_title');
         if (savedDeckTitle) {
           setDeckTitle(savedDeckTitle);
         }
-        
-        // Load column titles
-        const savedColumnTitles = localStorage.getItem('deckbuilder_column_titles');
-        if (savedColumnTitles) {
-          setColumnTitles(JSON.parse(savedColumnTitles));
-        }
-        
+
         // We no longer load search results and query to avoid remembering previous searches
-        
+
         console.log('Loaded saved deckbuilder state from localStorage');
       } catch (error) {
         console.error('Error loading saved deckbuilder state:', error);
       }
     };
-    
+
     loadSavedState();
-  }, [deckIdParam]);
+  }, [paramDeckId]); // Corrected dependency
 
   // Save deck cards whenever they change
   useEffect(() => {
@@ -1287,7 +1483,12 @@ const DeckBuilder: React.FC = () => {
     if (deckCards.length > 0) {
       localStorage.setItem('deckbuilder_cards', JSON.stringify(deckCards));
     }
-  }, [deckCards, isSaveOperation]);
+    
+    // Also save the current deck ID so we can retrieve unsaved deck data
+    if (editingDeckId) {
+      localStorage.setItem('deckbuilder_id', editingDeckId);
+    }
+  }, [deckCards, isSaveOperation, editingDeckId]);
 
   // Save deck title whenever it changes
   useEffect(() => {
@@ -1299,16 +1500,6 @@ const DeckBuilder: React.FC = () => {
     localStorage.setItem('deckbuilder_title', deckTitle);
   }, [deckTitle, isSaveOperation]);
 
-  // Save column titles whenever they change
-  useEffect(() => {
-    // Skip localStorage updates during save operations
-    if (isSaveOperation) {
-      return;
-    }
-
-    localStorage.setItem('deckbuilder_column_titles', JSON.stringify(columnTitles));
-  }, [columnTitles, isSaveOperation]);
-
   // Add a function to clear saved state
   const clearSavedState = () => {
     localStorage.removeItem('deckbuilder_cards');
@@ -1316,6 +1507,7 @@ const DeckBuilder: React.FC = () => {
     localStorage.removeItem('deckbuilder_column_titles');
     localStorage.removeItem('deckbuilder_search_results');
     localStorage.removeItem('deckbuilder_search_query');
+    localStorage.removeItem('deckbuilder_id');
     
     // Reload the page to start fresh
     window.location.reload();
@@ -1358,61 +1550,38 @@ const DeckBuilder: React.FC = () => {
 
   // Add handlers for mouse enter and leave on deck cards with delay
   const handleCardMouseEnter = (card: Card, event: React.MouseEvent) => {
-    // Ensure we have a valid event and target
     if (!event || !event.currentTarget) return;
-    
-    // Clear any existing timer
     if (hoverTimerRef.current) {
       clearTimeout(hoverTimerRef.current);
       hoverTimerRef.current = null;
     }
-    
-    // Capture the current target element to avoid null reference later
     const targetElement = event.currentTarget;
-    
-    // Set a new timer for half a second delay
     hoverTimerRef.current = setTimeout(() => {
-      // Get the column element to position preview
       const column = targetElement.closest('.deck-column');
-      
-      // If no column found, don't show preview
       if (!column) return;
-      
-      // Get the column index to determine if it's one of the rightmost columns
       const columnId = parseInt(column.getAttribute('data-column-id') || '0');
-      const isRightmostColumn = columnId >= 3; // Columns 3, 4, 5 are the three rightmost
-      
-      // Find the column title container
+      const isRightmostColumn = columnId >= 3;
       const titleContainer = column.querySelector('.column-title-container');
-      
       if (titleContainer) {
         const titleRect = titleContainer.getBoundingClientRect();
-        
         let previewPosX;
-        
         if (isRightmostColumn) {
-          // For the rightmost three columns, position to the LEFT of the title
-          previewPosX = titleRect.left - 20 - 300; // 20px margin, 300px for card width estimate
+          previewPosX = titleRect.left - 20 - 300;
         } else {
-          // For other columns, position to the RIGHT of the title
-          previewPosX = titleRect.right + 20; // 20px margin from title edge
+          previewPosX = titleRect.right + 20;
         }
-        
-        // Vertical position at the same level as the title for alignment
         const previewPosY = titleRect.top;
-        
         setPreviewCard(card);
-        setPreviewPosition({ x: previewPosX, y: previewPosY });
+        setPreviewPosition({ x: previewPosX, y: previewPosY }); // ENSURE THIS USES x AND y
       } else {
-        // Fallback if title container not found
         const columnRect = column.getBoundingClientRect();
         setPreviewCard(card);
-        setPreviewPosition({ 
-          x: columnRect.right + 20,
+        setPreviewPosition({
+          x: columnRect.right + 20, // ENSURE THIS USES x AND y
           y: columnRect.top + 100
         });
       }
-    }, 500); // 500ms = 0.5 second delay
+    }, 500);
   };
 
   const handleCardMouseLeave = () => {
@@ -1485,6 +1654,17 @@ const DeckBuilder: React.FC = () => {
 
   // Function to handle saving a deck
   const handleSaveDeck = (name: string, description: string) => {
+    // Check if we are editing an existing deck or creating a new one
+    // const currentDeckId = editingDeckId || uuidv4(); // This line is part of the unused deckToSave
+    
+    // Create a new deck object // This object is not strictly necessary as deckData serves a similar purpose
+    // const deckToSave: Deck = { // Removing deckToSave
+    //   id: currentDeckId,
+    //   name: name,
+    //   description: description,
+    //   cards: deckCards,
+    // };
+
     setIsSaving(true);
     setIsSaveOperation(true); // Mark that we're in a save operation
     
@@ -1497,13 +1677,14 @@ const DeckBuilder: React.FC = () => {
         name: finalName,
         description,
         cards: deckCards as ContextDeckCard[],
-        columnTitles
       };
       
       // Save current search state to restore it after update
       const currentSearchQuery = searchQuery;
       const currentSearchResults = searchResults;
       const currentHasSearched = hasSearched;
+      
+      let savedDeckId = '';
       
       if (isEditingDeck && editingDeckId) {
         // Update existing deck
@@ -1515,29 +1696,44 @@ const DeckBuilder: React.FC = () => {
             ...existingDeck,
             ...deckData,
             id: editingDeckId,
-            updatedAt: Date.now()
+            updatedAt: Date.now(),
           };
           
           updateDeck(updatedDeck);
+          savedDeckId = editingDeckId;
           alert('Deck updated successfully!');
         } else {
           console.error(`Could not find deck with ID ${editingDeckId} for updating`);
           
-          // Fall back to creating a new deck
-          addDeck(deckData);
-          alert('Could not find the original deck. A new copy has been saved instead.');
+          // If we have an ID but the deck doesn't exist yet, create a new one with the provided ID
+          const newDeck = addDeck({
+            ...deckData,
+            ...(editingDeckId ? { id: editingDeckId } : {}),
+            isPublic: false
+          });
+          savedDeckId = newDeck.id;
+          alert('Deck saved successfully!');
         }
       } else {
-        // Add new deck
-        addDeck(deckData);
+        // New deck with ID we've been using
+        const newDeck = addDeck({
+          ...deckData,
+          ...(editingDeckId ? { id: editingDeckId } : {}),
+          isPublic: false
+        });
+        savedDeckId = newDeck.id;
         alert('Deck saved successfully! You can view it in the Decks page.');
       }
       
       // Close the dialog
       setShowSaveDeckDialog(false);
       
+      // Mark that we're editing the saved deck now
+      setIsEditingDeck(true);
+      setEditingDeckId(savedDeckId);
+      
       // For deck updates, restore search state to prevent clearing search results
-      if (isEditingDeck && currentHasSearched && currentSearchResults.length > 0) {
+      if (currentHasSearched && currentSearchResults.length > 0) {
         // Small delay to ensure state updates properly after the save operation
         setTimeout(() => {
           setSearchQuery(currentSearchQuery);
@@ -1752,6 +1948,35 @@ const DeckBuilder: React.FC = () => {
     }
   };
 
+  // Add state for deck details dialog
+  const [showDeckDetailsDialog, setShowDeckDetailsDialog] = useState(false);
+
+  // Show save dialog if save=true is present in the URL
+  useEffect(() => {
+    if (shouldShowSaveDialog && !isEditingDeck) {
+      setShowSaveDeckDialog(true);
+    }
+  }, [shouldShowSaveDialog, isEditingDeck]);
+
+  useEffect(() => {
+    // Save column titles to localStorage
+    localStorage.setItem('deckbuilder_column_titles', JSON.stringify(columnTitles));
+  }, [columnTitles]);
+
+  const handleStartRenameColumn = (columnId: number) => {
+    setEditingColumnId(columnId);
+  };
+
+  const handleSaveColumnTitle = (columnId: number, newTitle: string) => {
+    setColumnTitles(prevTitles => {
+      const updatedTitles = [...prevTitles];
+      updatedTitles[columnId] = newTitle;
+      return updatedTitles;
+    });
+    setEditingColumnId(null); // Exit editing mode
+    setHasUnsavedChanges(true);
+  };
+
   return (
     <div className="deck-builder-container">
       <div className="search-container">
@@ -1948,6 +2173,24 @@ const DeckBuilder: React.FC = () => {
                       Playtest
                     </button>
 
+                    {/* Add Details button */}
+                    <button 
+                      className="details-deck-button"
+                      onClick={() => {
+                        if (editingDeckId) {
+                          navigate(`/deck-details/${editingDeckId}`);
+                        } else {
+                          // If deck hasn't been saved yet, show dialog to save first
+                          alert("Please save your deck first to view detailed information.");
+                          setShowSaveDeckDialog(true);
+                        }
+                      }}
+                      title="View deck details"
+                    >
+                      <FontAwesomeIcon icon={faInfoCircle} />
+                      Details
+                    </button>
+                    
                     <button 
                       className="save-deck-button"
                       onClick={() => {
@@ -1990,11 +2233,15 @@ const DeckBuilder: React.FC = () => {
                 
                 return (
                   <DroppableColumn
-                    key={`column-${column}`} 
+                    key={`column-${column}`}
                     columnId={column}
-                    title={columnTitles[column] || `Category ${column + 1}`}
                     cards={cardsInColumn}
-                    onTitleChange={(title) => handleColumnTitleChange(column, title)}
+                    // Pass title and editing props
+                    columnTitle={columnTitles[column] || `Column ${column + 1}`}
+                    isEditing={editingColumnId === column}
+                    onStartRename={() => handleStartRenameColumn(column)}
+                    onSaveTitle={(newTitle) => handleSaveColumnTitle(column, newTitle)}
+                    // Other props
                     removeCardFromDeck={removeCardFromDeck}
                     selectedCardId={selectedCardId}
                     onCardClick={handleCardSelect}
@@ -2033,6 +2280,106 @@ const DeckBuilder: React.FC = () => {
         onClose={() => setShowImportDeckDialog(false)}
         onImport={handleImportDeck}
       />
+
+      {/* Deck Details Dialog */}
+      <DeckDetailsDialog
+        isOpen={showDeckDetailsDialog}
+        onClose={() => setShowDeckDetailsDialog(false)}
+        deckTitle={deckTitle}
+        deckStats={getDeckStats()}
+        deckCards={deckCards}
+      />
+    </div>
+  );
+};
+
+// Add DeckDetailsDialog component
+interface DeckDetailsDialogProps {
+  isOpen: boolean;
+  onClose: () => void;
+  deckTitle: string;
+  deckStats: {
+    totalCards: number;
+    creatureCount: number;
+    nonCreatureCount: number;
+    landCount: number;
+  };
+  deckCards: DeckCard[];
+}
+
+const DeckDetailsDialog: React.FC<DeckDetailsDialogProps> = ({ 
+  isOpen, 
+  onClose, 
+  deckTitle,
+  deckStats,
+  deckCards
+}) => {
+  if (!isOpen) return null;
+
+  // Function to count cards in each column
+  const getColumnCounts = () => {
+    const columnCounts: Record<number, number> = {};
+    
+    deckCards.forEach(card => {
+      const column = card.column !== undefined ? card.column : 0;
+      columnCounts[column] = (columnCounts[column] || 0) + card.count;
+    });
+    
+    return columnCounts;
+  };
+
+  const columnCounts = getColumnCounts();
+
+  return (
+    <div className="save-deck-dialog-overlay">
+      <div className="deck-details-dialog">
+        <h2>Deck Details: {deckTitle}</h2>
+        
+        <div className="deck-details-stats">
+          <div className="stats-section">
+            <h3>Card Counts</h3>
+            <div className="stats-grid">
+              <div className="stat-item">
+                <span className="stat-label">Total Cards:</span>
+                <span className="stat-value">{deckStats.totalCards}</span>
+              </div>
+              <div className="stat-item">
+                <span className="stat-label">Creatures:</span>
+                <span className="stat-value">{deckStats.creatureCount}</span>
+              </div>
+              <div className="stat-item">
+                <span className="stat-label">Non-Creatures:</span>
+                <span className="stat-value">{deckStats.nonCreatureCount}</span>
+              </div>
+              <div className="stat-item">
+                <span className="stat-label">Lands:</span>
+                <span className="stat-value">{deckStats.landCount}</span>
+              </div>
+            </div>
+          </div>
+          
+          <div className="stats-section">
+            <h3>Column Distribution</h3>
+            <div className="stats-grid">
+              {Object.keys(columnCounts).map(columnKey => {
+                const columnIndex = parseInt(columnKey);
+                return (
+                  <div className="stat-item" key={`column-${columnIndex}`}>
+                    <span className="stat-label">{`Column ${columnIndex + 1}`}:</span>
+                    <span className="stat-value">{columnCounts[columnIndex] || 0}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+        
+        <div className="dialog-buttons">
+          <button type="button" className="close-button" onClick={onClose}>
+            Close
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

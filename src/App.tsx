@@ -1,9 +1,10 @@
-import React, { Component, ErrorInfo } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { Component, ErrorInfo, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Sidebar from './components/Sidebar';
+import GlobalNavbar from './components/GlobalNavbar';
 import HomePage from './pages/homepage/HomePage';
 import ForumLayout from './pages/forums/ForumLayout';
 import ForumPage from './pages/forums/ForumPage';
@@ -18,13 +19,18 @@ import SearchPage from './pages/search/SearchPage';
 import DeckBuilder from './pages/deckbuilder';
 import DecksPage from './pages/decks';
 import Playmat from './pages/playmat';
+import ProfilePage from './pages/profile/ProfilePage';
 import { RandomCardProvider } from './context/RandomCardContext';
-import { DeckProvider } from './context/DeckContext';
+import { DeckProvider, useDeckContext } from './context/DeckContext';
+import { ProfileProvider } from './context/ProfileContext';
+import { FavoritesProvider } from './context/FavoritesContext';
+import DeckDetails from './pages/deck-details';
 
 // Main layout component with sidebar
 const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <div className="app-container">
+      <GlobalNavbar />
       <Sidebar />
       <div className="app-content">
         {children}
@@ -79,6 +85,27 @@ class ErrorBoundary extends Component<{children: React.ReactNode}, {hasError: bo
   }
 }
 
+// Add CreateDeckWrapper component that redirects to deckbuilder with a new ID
+const CreateDeckWrapper: React.FC = () => {
+  const navigate = useNavigate();
+  const { createNewDeckId } = useDeckContext();
+  
+  useEffect(() => {
+    // Clear any existing deckbuilder state in localStorage
+    localStorage.removeItem('deckbuilder_cards');
+    localStorage.removeItem('deckbuilder_title');
+    localStorage.removeItem('deckbuilder_column_titles');
+    localStorage.removeItem('deckbuilder_search_results');
+    localStorage.removeItem('deckbuilder_search_query');
+    
+    // Generate a new ID and redirect
+    const newDeckId = createNewDeckId();
+    navigate(`/deckbuilder/${newDeckId}`);
+  }, [navigate, createNewDeckId]);
+  
+  return <div>Creating new deck...</div>;
+};
+
 function App() {
   // Detect if we're on GitHub Pages and use the proper basename
   const isGitHubPages = window.location.hostname.includes('github.io');
@@ -91,117 +118,149 @@ function App() {
   return (
     <ErrorBoundary>
       <DeckProvider>
-        <Router basename={basename}>
-          <Routes>
-            {/* Main homepage is now the MTG Hub */}
-            <Route path="/" element={
-              <MainLayout>
-                <HomePage />
-              </MainLayout>
-            } />
-            
-            {/* Spoilers page */}
-            <Route path="/spoilers" element={
-              <MainLayout>
-                <SpoilersPage />
-              </MainLayout>
-            } />
-            
-            {/* Random Card page */}
-            <Route path="/random-card" element={
-              <MainLayout>
-                <RandomCardProvider>
-                  <RandomCard />
-                </RandomCardProvider>
-              </MainLayout>
-            } />
-            
-            {/* Deck Builder page */}
-            <Route path="/deckbuilder" element={
-              <MainLayout>
-                <DeckBuilder />
-              </MainLayout>
-            } />
-            
-            {/* Decks page */}
-            <Route path="/decks" element={
-              <MainLayout>
-                <DecksPage />
-              </MainLayout>
-            } />
-            
-            {/* Playmat page */}
-            <Route path="/playmat/:deckId" element={
-              <MainLayout>
-                <Playmat />
-              </MainLayout>
-            } />
-            
-            {/* Playmat page (default without deck) */}
-            <Route path="/playmat" element={
-              <MainLayout>
-                <Playmat />
-              </MainLayout>
-            } />
-            
-            {/* Search page */}
-            <Route path="/search" element={
-              <MainLayout>
-                <SearchPage />
-              </MainLayout>
-            } />
-            
-            {/* Forum routes */}
-            <Route path="/forums" element={
-              <MainLayout>
-                <ForumLayout />
-              </MainLayout>
-            }>
-              <Route index element={<ForumPage />} />
-              <Route path="community-general" element={<CommunityGeneral />} />
-              {/* Dynamic route for any category */}
-              <Route path="category/:categoryId" element={<CategoryPage />} />
-              {/* Individual post route */}
-              <Route path="post/:postId" element={<PostPage />} />
-              {/* Create post route */}
-              <Route path="create-post" element={<CreatePost />} />
-            </Route>
-            
-            {/* MTG Sets routes wrapped in MainLayout */}
-            {MtgSetsRoutes.map(route => {
-              const WrappedElement = () => (
-                <MainLayout>
-                  {route.props.element}
-                </MainLayout>
-              );
-              
-              return (
-                <Route 
-                  key={route.key} 
-                  path={route.props.path} 
-                  element={<WrappedElement />} 
-                />
-              );
-            })}
-            
-            {/* Regular routes with App container */}
-            <Route path="/about" element={
-              <MainLayout>
-                <div className="App">
-                  <header className="App-header">
-                    <Navbar />
-                  </header>
+        <ProfileProvider>
+          <FavoritesProvider>
+            <Router basename={basename}>
+              <Routes>
+                {/* Main homepage is now the MTG Hub */}
+                <Route path="/" element={
+                  <MainLayout>
+                    <HomePage />
+                  </MainLayout>
+                } />
+                
+                {/* Profile page */}
+                <Route path="/profile" element={
+                  <MainLayout>
+                    <ProfilePage />
+                  </MainLayout>
+                } />
+                
+                {/* Spoilers page */}
+                <Route path="/spoilers" element={
+                  <MainLayout>
+                    <SpoilersPage />
+                  </MainLayout>
+                } />
+                
+                {/* Random Card page */}
+                <Route path="/random-card" element={
+                  <MainLayout>
+                    <RandomCardProvider>
+                      <RandomCard />
+                    </RandomCardProvider>
+                  </MainLayout>
+                } />
+                
+                {/* Create New Deck (redirects to deckbuilder with temp ID) */}
+                <Route path="/create-deck" element={
+                  <MainLayout>
+                    <CreateDeckWrapper />
+                  </MainLayout>
+                } />
+                
+                {/* Deck Builder page with ID */}
+                <Route path="/deckbuilder/:deckId" element={
+                  <MainLayout>
+                    <DeckBuilder />
+                  </MainLayout>
+                } />
+                
+                {/* Deck Builder page (backward compatibility) */}
+                <Route path="/deckbuilder" element={
+                  <MainLayout>
+                    <DeckBuilder />
+                  </MainLayout>
+                } />
+                
+                {/* Deck Details page */}
+                <Route path="/deck-details/:deckId" element={
+                  <MainLayout>
+                    <DeckDetails />
+                  </MainLayout>
+                } />
+                
+                {/* Decks page */}
+                <Route path="/decks" element={
+                  <MainLayout>
+                    <DecksPage />
+                  </MainLayout>
+                } />
+                
+                {/* Playmat page */}
+                <Route path="/playmat/:deckId" element={
+                  <MainLayout>
+                    <Playmat />
+                  </MainLayout>
+                } />
+                
+                {/* Playmat page (default without deck) */}
+                <Route path="/playmat" element={
+                  <MainLayout>
+                    <Playmat />
+                  </MainLayout>
+                } />
+                
+                {/* Search page */}
+                <Route path="/search" element={
+                  <MainLayout>
+                    <SearchPage />
+                  </MainLayout>
+                } />
+                
+                {/* Forum routes */}
+                <Route path="/forums" element={
+                  <MainLayout>
+                    <ForumLayout />
+                  </MainLayout>
+                }>
+                  <Route index element={<ForumPage />} />
+                  <Route path="community-general" element={<CommunityGeneral />} />
+                  {/* Dynamic route for any category */}
+                  <Route path="category/:categoryId" element={<CategoryPage />} />
+                  {/* Individual post route */}
+                  <Route path="post/:postId" element={<PostPage />} />
+                  {/* Create post route */}
+                  <Route path="create-post" element={<CreatePost />} />
+                </Route>
+                
+                {/* MTG Sets routes wrapped in MainLayout */}
+                {MtgSetsRoutes.map(route => {
+                  const WrappedElement = () => (
+                    <MainLayout>
+                      {route.props.element}
+                    </MainLayout>
+                  );
                   
-                  <main className="App-main">
-                    <AboutPage />
-                  </main>
-                  
-                  <Footer />
-                </div>
-              </MainLayout>
-            } />
-          </Routes>
-        </Router>
+                  return (
+                    <Route 
+                      key={route.key} 
+                      path={route.props.path} 
+                      element={<WrappedElement />} 
+                    />
+                  );
+                })}
+                
+                {/* Regular routes with App container */}
+                <Route path="/about" element={
+                  <MainLayout>
+                    <div className="App">
+                      <header className="App-header">
+                        <Navbar />
+                      </header>
+                      
+                      <main className="App-main">
+                        <AboutPage />
+                      </main>
+                      
+                      <Footer />
+                    </div>
+                  </MainLayout>
+                } />
+              </Routes>
+            </Router>
+          </FavoritesProvider>
+        </ProfileProvider>
       </DeckProvider>
     </ErrorBoundary>
   );

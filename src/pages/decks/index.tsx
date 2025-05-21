@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faEdit, faArrowRight, faPlus, faBug, faCrown, faFire, faPalette, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faEdit, faArrowRight, faPlus, faBug, faCrown, faFire, faPalette, faUser, faInfoCircle, faLock, faGlobe } from '@fortawesome/free-solid-svg-icons';
 import { useDeckContext } from '../../context/DeckContext';
 import './Decks.css';
 
@@ -234,7 +234,7 @@ const DecksPage: React.FC = () => {
 
   const handleEditDeck = (deckId: string, e: React.MouseEvent) => {
     e.stopPropagation();
-    navigate(`/deckbuilder?deck=${deckId}`);
+    navigate(`/deckbuilder/${deckId}`);
   };
 
   // Debug function to check localStorage contents
@@ -314,6 +314,10 @@ const DecksPage: React.FC = () => {
                 {deck.popularity.toLocaleString()} players
               </div>
             )}
+            <div className="deck-privacy public">
+              <FontAwesomeIcon icon={faGlobe} />
+              Public
+            </div>
           </div>
         </div>
       </div>
@@ -328,7 +332,7 @@ const DecksPage: React.FC = () => {
       <div 
         key={deck.id} 
         className="deck-card"
-        onClick={() => navigate(`/deckbuilder?deck=${deck.id}`)}
+        onClick={() => navigate(`/deckbuilder/${deck.id}`)}
       >
         <div className="deck-image-container">
           {sampleCardImage ? (
@@ -347,6 +351,10 @@ const DecksPage: React.FC = () => {
           <h3 className="deck-name">{deck.name}</h3>
           <div className="deck-meta">
             <div className="deck-type">MTG</div>
+            <div className={`deck-privacy ${deck.isPublic ? 'public' : 'private'}`}>
+              <FontAwesomeIcon icon={deck.isPublic ? faGlobe : faLock} />
+              {deck.isPublic ? 'Public' : 'Private'}
+            </div>
           </div>
         </div>
         
@@ -356,6 +364,15 @@ const DecksPage: React.FC = () => {
             onClick={(e) => handleEditDeck(deck.id, e)}
           >
             <FontAwesomeIcon icon={faEdit} />
+          </button>
+          <button 
+            className="details-deck-btn"
+            onClick={(e) => {
+              e.stopPropagation();
+              navigate(`/deck-details/${deck.id}`);
+            }}
+          >
+            <FontAwesomeIcon icon={faInfoCircle} />
           </button>
           <button 
             className="playtest-deck-btn"
@@ -382,7 +399,7 @@ const DecksPage: React.FC = () => {
       {/* Page Header */}
       <div className="page-header">
         <div className="header-buttons">
-          <Link to="/deckbuilder" className="create-deck-button" onClick={clearLocalStorage}>
+          <Link to="/create-deck" className="create-deck-button" onClick={clearLocalStorage}>
             <FontAwesomeIcon icon={faPlus} />
             Create New Deck
           </Link>

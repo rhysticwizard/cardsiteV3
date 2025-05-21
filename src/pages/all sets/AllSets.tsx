@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { Link } from 'react-router-dom';
+import SearchBar from '../../components/SearchBar';
 import './styles.css';
 
 interface Set {
@@ -19,21 +20,14 @@ const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 const AllSets: React.FC = () => {
   // State
   const [allSets, setAllSets] = useState<Set[]>([]);
-  const [currentFilter, setCurrentFilter] = useState('all');
-  const [currentSort, setCurrentSort] = useState('newest');
-  const [currentView, setCurrentView] = useState('grid');
   const [currentYear, setCurrentYear] = useState<string | null>(null);
   const [isDemoMode, setIsDemoMode] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [filterDropdownOpen, setFilterDropdownOpen] = useState(false);
-  const [sortDropdownOpen, setSortDropdownOpen] = useState(false);
   const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   // Refs
   const setsContainerRef = useRef<HTMLDivElement>(null);
-  const filterDropdownRef = useRef<HTMLDivElement>(null);
-  const sortDropdownRef = useRef<HTMLDivElement>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
 
   // API URLs
@@ -342,41 +336,11 @@ const AllSets: React.FC = () => {
     };
   }, [fetchSets]);
   
-  useEffect(() => {
-    // Close dropdowns when clicking outside
-    const handleClickOutside = (event: MouseEvent) => {
-      if (filterDropdownRef.current && !filterDropdownRef.current.contains(event.target as Node)) {
-        setFilterDropdownOpen(false);
-      }
-      if (sortDropdownRef.current && !sortDropdownRef.current.contains(event.target as Node)) {
-        setSortDropdownOpen(false);
-      }
-    };
-    
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
-
-  // Apply filters and re-fetch when CORS proxy setting changes
-  useEffect(() => {
-    if (useCorsProxy !== undefined && !isDemoMode) {
-      fetchSets(true); // Skip cache when CORS proxy changes
-    }
-  }, [useCorsProxy, isDemoMode, fetchSets]);
-
   // Filter and sort sets
   const getFilteredAndSortedSets = useCallback(() => {
-    // Apply type filter
     let filteredSets = [...allSets];
     
-    if (currentFilter !== 'all') {
-      const filterType = currentFilter === 'draft' ? 'draft_innovation' : currentFilter;
-      filteredSets = filteredSets.filter(set => set.set_type === filterType);
-    }
-    
-    // Apply year filter if set
+    // Apply year filter if set (retained as it might be used elsewhere or in future)
     if (currentYear) {
       filteredSets = filteredSets.filter(set => {
         const setYear = new Date(set.released_at).getFullYear().toString();
@@ -384,24 +348,11 @@ const AllSets: React.FC = () => {
       });
     }
     
-    // Apply sort
-    switch (currentSort) {
-      case 'newest':
-        filteredSets.sort((a, b) => new Date(b.released_at).getTime() - new Date(a.released_at).getTime());
-        break;
-      case 'oldest':
-        filteredSets.sort((a, b) => new Date(a.released_at).getTime() - new Date(b.released_at).getTime());
-        break;
-      case 'name-asc':
-        filteredSets.sort((a, b) => a.name.localeCompare(b.name));
-        break;
-      case 'name-desc':
-        filteredSets.sort((a, b) => b.name.localeCompare(a.name));
-        break;
-    }
+    // Default sort: newest first (as currentSort is removed)
+    filteredSets.sort((a, b) => new Date(b.released_at).getTime() - new Date(a.released_at).getTime());
     
     return filteredSets;
-  }, [allSets, currentFilter, currentYear, currentSort]);
+  }, [allSets, currentYear]);
 
   // Group sets by year
   const groupSetsByYear = useCallback((sets: Set[]) => {
@@ -438,34 +389,6 @@ const AllSets: React.FC = () => {
               month: 'short',
               day: 'numeric'
             })}
-          </div>
-        </div>
-      </Link>
-    );
-  }, []);
-
-  // Render set list item
-  const renderSetListItem = useCallback((set: Set) => {
-    return (
-      <Link to={`/sets/${set.code}?name=${encodeURIComponent(set.name)}`} className="set-list-item" key={set.code}>
-        <div className="set-list-icon">
-          {set.icon_svg_uri ? (
-            <img src={set.icon_svg_uri} alt={`${set.name} logo`} loading="lazy" />
-          ) : (
-            <div className="set-logo-placeholder"></div>
-          )}
-        </div>
-        <div className="set-list-info">
-          <div className="set-list-name">{set.name}</div>
-          <div className="set-list-meta">
-            <span className="set-list-code">{set.code.toUpperCase()}</span>
-            <span className="set-list-date">
-              {new Date(set.released_at).toLocaleDateString('en-US', { 
-                year: 'numeric',
-                month: 'short',
-                day: 'numeric'
-              })}
-            </span>
           </div>
         </div>
       </Link>
@@ -512,137 +435,20 @@ const AllSets: React.FC = () => {
     return sortedYears.map(year => (
       <div key={year} className="year-container">
         <div className="year-header">{year}</div>
-        <div className={currentView === 'grid' ? 'sets-grid' : 'sets-list'}>
+        <div className={'sets-grid'}>
           {setsGroupedByYear[year].map(set => (
-            currentView === 'grid' ? renderSetCard(set) : renderSetListItem(set)
+            renderSetCard(set)
           ))}
         </div>
       </div>
     ));
-  }, [sortedYears, setsGroupedByYear, currentView, renderSetCard, renderSetListItem, isLoading]);
-
-  // Handle filter button click
-  const handleFilterTabClick = useCallback((filter: string) => {
-    setCurrentFilter(filter);
-  }, []);
-
-  // Handle filter option click
-  const handleFilterOptionClick = useCallback((filter: string) => {
-    if (filter.startsWith('data-year=')) {
-      setCurrentYear(filter.replace('data-year=', ''));
-    } else {
-      setCurrentFilter(filter);
-    }
-    setFilterDropdownOpen(false);
-  }, []);
-
-  // Handle sort option click
-  const handleSortOptionClick = useCallback((sort: string) => {
-    setCurrentSort(sort);
-    setSortDropdownOpen(false);
-  }, []);
-
-  // Toggle view mode (grid/list)
-  const toggleViewMode = useCallback((mode: 'grid' | 'list') => {
-    setCurrentView(mode);
-  }, []);
+  }, [sortedYears, setsGroupedByYear, renderSetCard, isLoading]);
 
   return (
     <main>
-      <div className="header">
-        <div className="nav-container">
-          <div className="nav-tabs">
-            <div 
-              className={`nav-tab ${currentFilter === 'all' ? 'active' : ''}`} 
-              onClick={() => handleFilterTabClick('all')}
-            >
-              All
-            </div>
-            <div 
-              className={`nav-tab ${currentFilter === 'expansion' ? 'active' : ''}`} 
-              onClick={() => handleFilterTabClick('expansion')}
-            >
-              Expansion
-            </div>
-            <div 
-              className={`nav-tab ${currentFilter === 'core' ? 'active' : ''}`} 
-              onClick={() => handleFilterTabClick('core')}
-            >
-              Core
-            </div>
-            <div 
-              className={`nav-tab ${currentFilter === 'masters' ? 'active' : ''}`} 
-              onClick={() => handleFilterTabClick('masters')}
-            >
-              Masters
-            </div>
-            <div 
-              className={`nav-tab ${currentFilter === 'draft' ? 'active' : ''}`} 
-              onClick={() => handleFilterTabClick('draft')}
-            >
-              Draft Innovation
-            </div>
-          </div>
-          <div className="nav-controls">
-            <div className="dropdown" ref={filterDropdownRef}>
-              <button 
-                className="filter-button"
-                onClick={() => setFilterDropdownOpen(!filterDropdownOpen)}
-              >
-                Filter <i className="fas fa-filter"></i>
-              </button>
-              <div className={`dropdown-content ${filterDropdownOpen ? 'show' : ''}`} id="filter-dropdown">
-                <div className="filter-group">
-                  <div className="filter-group-title">Set Type</div>
-                  <div className="filter-option" onClick={() => handleFilterOptionClick('expansion')}>Expansion</div>
-                  <div className="filter-option" onClick={() => handleFilterOptionClick('core')}>Core</div>
-                  <div className="filter-option" onClick={() => handleFilterOptionClick('masters')}>Masters</div>
-                  <div className="filter-option" onClick={() => handleFilterOptionClick('commander')}>Commander</div>
-                  <div className="filter-option" onClick={() => handleFilterOptionClick('draft')}>Draft Innovation</div>
-                </div>
-                <div className="filter-group">
-                  <div className="filter-group-title">Year</div>
-                  <div className="filter-option" onClick={() => handleFilterOptionClick('data-year=2023')}>2023</div>
-                  <div className="filter-option" onClick={() => handleFilterOptionClick('data-year=2022')}>2022</div>
-                  <div className="filter-option" onClick={() => handleFilterOptionClick('data-year=2021')}>2021</div>
-                  <div className="filter-option" onClick={() => handleFilterOptionClick('data-year=2020')}>2020</div>
-                </div>
-              </div>
-            </div>
-            <div className="dropdown" ref={sortDropdownRef}>
-              <button 
-                className="sort-button"
-                onClick={() => setSortDropdownOpen(!sortDropdownOpen)}
-              >
-                Sort <i className="fas fa-sort"></i>
-              </button>
-              <div className={`dropdown-content ${sortDropdownOpen ? 'show' : ''}`} id="sort-dropdown">
-                <div className="filter-option" onClick={() => handleSortOptionClick('newest')}>Newest First</div>
-                <div className="filter-option" onClick={() => handleSortOptionClick('oldest')}>Oldest First</div>
-                <div className="filter-option" onClick={() => handleSortOptionClick('name-asc')}>Name (A-Z)</div>
-                <div className="filter-option" onClick={() => handleSortOptionClick('name-desc')}>Name (Z-A)</div>
-              </div>
-            </div>
-            <div className="view-toggles">
-              <button 
-                className={`view-toggle grid-view ${currentView === 'grid' ? 'active' : ''}`} 
-                title="Grid View"
-                onClick={() => toggleViewMode('grid')}
-              >
-                <i className="fas fa-th-large"></i>
-              </button>
-              <button 
-                className={`view-toggle list-view ${currentView === 'list' ? 'active' : ''}`} 
-                title="List View"
-                onClick={() => toggleViewMode('list')}
-              >
-                <i className="fas fa-list"></i>
-              </button>
-            </div>
-          </div>
-        </div>
+      <div className="search-page">
+        <SearchBar />
       </div>
-
       <div id="sets-container" ref={setsContainerRef}>
         {isLoading && isInitialLoad ? (
           <div className="loading">

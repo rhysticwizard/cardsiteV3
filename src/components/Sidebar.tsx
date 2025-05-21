@@ -259,32 +259,11 @@ const Sidebar: React.FC = () => {
               All Sets
             </Link>
             <Link 
-              to="/search" 
-              className={`nav-item ${location.pathname.includes('/search') ? 'nav-item-active' : ''}`}
-              onClick={closeSidebar}
-            >
-              Search Cards
-            </Link>
-            <Link 
               to="/decks" 
               className={`nav-item ${location.pathname.includes('/decks') ? 'nav-item-active' : ''}`}
               onClick={closeSidebar}
             >
               Decks
-            </Link>
-            <Link 
-              to="/playmat" 
-              className={`nav-item ${location.pathname.includes('/playmat') ? 'nav-item-active' : ''}`}
-              onClick={closeSidebar}
-            >
-              Playmat
-            </Link>
-            <Link 
-              to="/random-card" 
-              className={`nav-item ${location.pathname.includes('/random-card') ? 'nav-item-active' : ''}`}
-              onClick={closeSidebar}
-            >
-              Random Card
             </Link>
             <Link 
               to="/spoilers" 

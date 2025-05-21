@@ -218,42 +218,42 @@
 .save-deck-button {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
-  background-color: #ffffff;
-  color: #222;
+  gap: 8px;
+  background-color: #4caf50;
+  color: white;
   border: none;
   border-radius: 4px;
-  padding: 10px 20px;
-  font-size: 16px;
-  font-weight: 600;
+  padding: 8px 12px;
   cursor: pointer;
-  transition: background-color 0.2s;
-  white-space: nowrap;
+  transition: background-color 0.2s ease;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .save-deck-button:hover {
-  background-color: #e0e0e0;
+  background-color: #43a047;
 }
 
 .save-deck-button:disabled {
-  background-color: #9e9e9e;
+  background-color: #a5d6a7;
   cursor: not-allowed;
+  opacity: 0.7;
 }
 
 /* Reset state button */
 .reset-state-button {
+  background-color: transparent;
+  color: rgba(255, 255, 255, 0.7);
+  border: none;
+  border-radius: 4px;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #607d8b;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  padding: 10px;
-  font-size: 16px;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: color 0.2s ease, background-color 0.2s ease;
+  font-size: 16px;
 }
 
 .reset-state-button:hover {
@@ -392,33 +392,146 @@
   z-index: 1;
 }
 
-/* Column title container */
+/* Column Title Dropdown Styles */
 .column-title-container {
-  width: 100%;
-  padding: 5px 0;
   position: relative;
-  z-index: 10; /* Ensure title is above cards */
-  margin-bottom: 5px;
 }
 
-/* Column title input styling */
-.column-title-input {
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+.column-title-button {
+  background-color: #000000; /* Changed to black */
+  color: white;
+  border: 1px solid #444;
   border-radius: 4px;
-  color: #fff;
-  padding: 5px 8px;
-  font-size: 12px;
-  text-align: center;
-  outline: none;
-  transition: border-color 0.2s ease, background-color 0.2s ease;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  transition: background-color 0.2s, border-color 0.2s;
+  box-sizing: border-box; /* Added for robustness */
 }
 
-.column-title-input:hover, .column-title-input:focus {
-  background-color: rgba(0, 0, 0, 0.6);
-  border-color: rgba(255, 255, 255, 0.3);
+/* Styles for when the column title button is in editing mode */
+.column-title-button.editing {
+  background-color: #F0F0F0; /* Light grey background for textbox appearance */
+  border: 1px solid #A9A9A9; /* Medium grey border for textbox */
+  color: #222222; /* Dark text color for the input content */
+  padding: 8px 12px; /* MAINTAIN original padding for size consistency */
+  display: flex; /* Use flex to manage input child */
+  align-items: center; /* Vertically center input within the button's padding box */
+  cursor: text; /* Change cursor to indicate text input */
 }
+
+/* Hide children of the button (like text spans or caret) when editing, */
+/* assuming .column-title-input is the one to remain visible. */
+.column-title-button.editing > *:not(.column-title-input) {
+  display: none;
+}
+.column-title-button.editing .caret-icon { /* Be specific for caret if it's nested differently */
+    display: none;
+}
+
+.column-title-button:hover {
+  background-color: #e0e0e0;
+}
+
+/* Override hover effect when button is in editing mode */
+.column-title-button.editing:hover {
+  background-color: #F0F0F0; /* Keep background same as non-hover editing state */
+  border-color: #A9A9A9; /* Keep border same, or use focus color if preferred */
+}
+
+/* Style for when the input inside the .editing button is focused */
+.column-title-button.editing:focus-within {
+  border-color: #777; /* Highlight to mimic input focus */
+}
+
+.column-title-button .caret-icon {
+  transition: transform 0.2s ease-in-out;
+}
+
+.column-title-button .caret-icon.open {
+  transform: rotate(180deg);
+}
+
+/* Styles for the column title input field */
+/* This input is expected to be a child of .column-title-button.editing */
+.column-title-input {
+  width: 100%; /* Fill the parent button */
+  padding: 0; /* Input itself has no padding; parent button provides it */
+  font: inherit; /* Inherit font-size, weight, family from parent button */
+  color: inherit; /* Inherit text color from parent button */
+  background-color: transparent; /* Make input background transparent */
+  border: none; /* Remove input's own border */
+  outline: none; /* Remove default outline */
+  box-sizing: border-box; /* Still important for width: 100% */
+  line-height: normal; /* Ensure consistent line height for the input text */
+}
+
+.column-title-input:focus {
+  /* No specific styles needed here if :focus-within on parent is used */
+  /* border-color: #777; */ /* This was original, now handled by parent */
+  border: none; /* Ensure no border appears on focus for the input itself */
+}
+
+.column-dropdown-tree {
+  position: absolute;
+  top: 100%; /* Position below the button */
+  left: 0;
+  right: 0;
+  background-color: #000; /* Changed from white to black */
+  border: 1px solid #000; /* Changed from #ccc to black */
+  border-top: none; /* Avoid double border with button */
+  border-radius: 0 0 4px 4px;
+  z-index: 10; /* Ensure it's above other content */
+  padding: 10px;
+  color: white; /* Added for text readability */
+}
+
+.tree-item {
+  /* Basic styling, can be enhanced */
+  padding: 6px 8px;
+  border-radius: 3px;
+  color: white; /* Ensure text is white by default */
+  cursor: pointer;
+  display: flex; /* For aligning icon, text, and checkmark */
+  align-items: center;
+}
+
+.tree-item:hover {
+  background-color: #333; /* Darker hover for black background */
+}
+
+.tree-item span {
+  /* Styles for the text within the tree item */
+  flex-grow: 1; /* Allow text to take available space */
+}
+
+/* Add styles for selected tree item if needed later */
+.tree-item.selected {
+  background-color: #555; /* Dark gray for selected item on black background */
+  color: white;
+  font-weight: bold;
+}
+
+.tree-item .checkmark {
+  margin-left: auto; /* Pushes checkmark to the right */
+  color: #4caf50; /* Green checkmark */
+  font-size: 16px;
+}
+
+.tree-item .caret-icon-tree {
+  margin-right: 5px; /* Space between caret and item text if item also has children */
+  width: 10px; /* Ensure consistent width for alignment */
+  text-align: center;
+  transition: transform 0.2s ease-in-out;
+}
+
+/* Style for the caret when an item is expanded (already handled by faCaretDown/Right in component) */
+/* .tree-item .caret-icon-tree.open { transform: rotate(90deg); } */
 
 /* Remove z-index precedence for hovered cards */
 /* Individual card hover still takes precedence */
@@ -572,15 +685,90 @@
   background-color: #272727;
   border-radius: 8px;
   padding: 24px;
+  max-width: 400px;
   width: 100%;
-  max-width: 500px;
+  color: white;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
 }
 
 .save-deck-dialog h2 {
-  color: #f8f8f8;
   margin-top: 0;
   margin-bottom: 16px;
-  font-size: 20px;
+  font-size: 24px;
+  color: #f8f8f8;
+}
+
+.deck-details-dialog {
+  background-color: #272727;
+  border-radius: 8px;
+  padding: 24px;
+  max-width: 500px;
+  width: 100%;
+  color: white;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.deck-details-dialog h2 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  font-size: 24px;
+  color: #f8f8f8;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 12px;
+}
+
+.deck-details-dialog h3 {
+  margin-top: 16px;
+  margin-bottom: 12px;
+  font-size: 18px;
+  color: #f0f0f0;
+}
+
+.deck-details-stats {
+  margin-bottom: 24px;
+}
+
+.stats-section {
+  margin-bottom: 20px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.stat-item {
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 8px 12px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.stat-label {
+  font-weight: 500;
+  color: #cccccc;
+}
+
+.stat-value {
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.close-button {
+  background-color: #555;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.close-button:hover {
+  background-color: #666;
 }
 
 .form-group {
@@ -871,4 +1059,23 @@
 
 .import-button:hover {
   background-color: #e0e0e0;
+}
+
+.details-deck-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #9c27b0;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.details-deck-button:hover {
+  background-color: #8e24aa;
 } 

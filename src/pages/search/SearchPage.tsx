@@ -1,325 +1,103 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faTimes, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import ScryfallAPI, { Card } from '../../utils/ScryfallAPI';
+import { Card } from '../../utils/ScryfallAPI'; // ScryfallAPI is not needed directly anymore
+import SearchBar from '../../components/SearchBar'; // Import the new SearchBar component
+import CardPreview from '../../components/CardPreview'; // Import the CardPreview component
 import './SearchPage.css';
 
 const SearchPage: React.FC = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const initialQuery = searchParams.get('q') || '';
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  
-  const [searchQuery, setSearchQuery] = useState(initialQuery);
-  const [hasSearched, setHasSearched] = useState(!!initialQuery); // Track if a search has been performed
-  const [suggestions, setSuggestions] = useState<Card[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isFetchingSuggestions, setIsFetchingSuggestions] = useState(false);
+  const initialQuery = searchParams.get('q') || '';
+
   const [searchResults, setSearchResults] = useState<Card[]>([]);
-  const [showSuggestions, setShowSuggestions] = useState(false);
-  const searchInputRef = useRef<HTMLInputElement>(null);
-  const suggestionsRef = useRef<HTMLDivElement>(null);
-  const lastSearchRef = useRef<string>(''); // Track last successful search query
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasSearched, setHasSearched] = useState(!!initialQuery);
   
-  // Initialize API connection
+  // State for card preview
+  const [previewCard, setPreviewCard] = useState<Card | null>(null);
+  const [previewPosition, setPreviewPosition] = useState<{ x: number; y: number } | null>(null);
+  const hoverTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Effect to load initial search results from localStorage if available
   useEffect(() => {
-    // Add click outside handler to close suggestions
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        suggestionsRef.current && 
-        !suggestionsRef.current.contains(event.target as Node) &&
-        searchInputRef.current && 
-        !searchInputRef.current.contains(event.target as Node)
-      ) {
-        setShowSuggestions(false);
-      }
-    };
-    
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
+    const storedResults = localStorage.getItem('searchResults');
+    if (storedResults) {
+      setSearchResults(JSON.parse(storedResults));
+      localStorage.removeItem('searchResults'); // Clear after loading
+    }
   }, []);
-  
-  // Perform search when initialQuery is available
+
+  // Effect to manage hasSearched state based on query, results, and loading status
   useEffect(() => {
     if (initialQuery && !isLoading) {
-      // Only perform initial search if we have a query and we're not already loading
-      handleSearch();
+      // If there's a query, and we are not loading, a search has effectively occurred.
+      // The presence of results (even an empty array) means the API call finished.
+      setHasSearched(true);
+    } else if (!initialQuery) {
+      // If there's no query (e.g., input cleared and URL updated), reset hasSearched
+      setHasSearched(false);
     }
-  }, [initialQuery]); // Remove isLoading dependency to prevent loops
-  
-  // Generate suggestions based on input
-  useEffect(() => {
-    const getSuggestions = async () => {
-      if (!searchQuery.trim() || searchQuery.length < 2) {
-        setSuggestions([]);
-        setShowSuggestions(false);
-        return;
-      }
-      
-      setIsFetchingSuggestions(true);
-      
-      try {
-        // Use direct API auto-complete endpoint
-        const autocompleteUrl = `${ScryfallAPI.baseUrl}/cards/autocomplete?q=${encodeURIComponent(searchQuery.trim())}`;
-        const autocompleteResponse = await fetch(autocompleteUrl);
-        
-        if (autocompleteResponse.ok) {
-          const data = await autocompleteResponse.json();
-          if (data.data && data.data.length > 0) {
-            // Convert autocomplete data to Card objects with at least an id and name
-            const cardSuggestions = data.data.slice(0, 5).map((name: string, index: number) => ({
-              id: `suggestion-${index}`,
-              name: name
-            }));
-            
-            setSuggestions(cardSuggestions);
-            setShowSuggestions(true);
-          } else {
-            setSuggestions([]);
-            setShowSuggestions(false);
-          }
-        } else {
-          setSuggestions([]);
-          setShowSuggestions(false);
-        }
-      } catch (error) {
-        console.error('Error getting suggestions:', error);
-        setSuggestions([]);
-        setShowSuggestions(false);
-      } finally {
-        setIsFetchingSuggestions(false);
-      }
-    };
-    
-    // Debounce the suggestions request
-    const timer = setTimeout(() => {
-      if (searchQuery.trim().length >= 2) {
-        getSuggestions();
-      }
-    }, 300);
-    
-    return () => clearTimeout(timer);
-  }, [searchQuery]);
-  
-  // Handle search submission
-  const handleSearch = async () => {
-    const trimmedQuery = searchQuery.trim();
-    if (!trimmedQuery) return;
-    
-    // Prevent duplicate searches
-    if (trimmedQuery === lastSearchRef.current && searchResults.length > 0) {
-      return;
-    }
-    
-    // Only update URL if the query has changed
-    const currentQueryParam = searchParams.get('q');
-    if (currentQueryParam !== trimmedQuery) {
-      setSearchParams({ q: trimmedQuery });
-    }
-    
-    // Prevent searching if already loading
-    if (isLoading) return;
-    
-    setIsLoading(true);
-    setShowSuggestions(false);
-    setHasSearched(true); // Mark that a search has been performed
-    
-    try {
-      // Use Scryfall API search
-      const response = await ScryfallAPI.searchCards(trimmedQuery);
-      
-      if (response.data && response.data.length > 0) {
-        setSearchResults(response.data);
-        lastSearchRef.current = trimmedQuery; // Update last search reference
-      } else {
-        setSearchResults([]);
-      }
-    } catch (error) {
-      console.error('Error searching cards:', error);
-      setSearchResults([]);
-    } finally {
+    // We don't need to set hasSearched(false) during loading, as initialQuery might still be present
+  }, [initialQuery, isLoading, searchResults]); // Listen to searchResults to re-evaluate when they arrive
+
+  const handleSearchResults = (results: Card[] | null) => {
+    if (results === null) {
+      setIsLoading(true);
+      setSearchResults([]); // Clear previous results
+    } else {
+      setSearchResults(results);
       setIsLoading(false);
     }
   };
-  
-  // Handle search input changes
-  const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(e.target.value);
-    if (hasSearched && e.target.value.trim() === '') {
-      // Clear results if user clears search query after having searched
-      setSearchResults([]);
-      setHasSearched(false);
-    }
-  };
-  
-  // Handle suggestion selection
-  const handleSuggestionSelect = (card: Card) => {
-    setSearchQuery(card.name);
-    setSuggestions([]);
-    setShowSuggestions(false);
-    
-    // Trigger search immediately when suggestion is selected
-    setTimeout(() => {
-      handleSearch();
-    }, 100);
-    
-    // Focus back on the input
-    if (searchInputRef.current) {
-      searchInputRef.current.focus();
-    }
-  };
-  
-  // Handle card selection
+
+  // Handle card selection from search results
   const handleCardSelect = (card: Card) => {
-    // Save card info to localStorage for the card page
     localStorage.setItem('currentCard', JSON.stringify(card));
     localStorage.setItem('currentSetName', card.set_name || '');
-    
-    // Navigate to the card page
     navigate(`/card/${card.id}?set=${card.set}`);
   };
   
-  // Handle clear search
-  const handleClearSearch = () => {
-    setSearchQuery('');
-    setSearchResults([]);
-    setSearchParams({});
-    setShowSuggestions(false);
-    setHasSearched(false); // Reset search state
-    lastSearchRef.current = ''; // Reset last search reference
-    
-    // Focus back on the input
-    if (searchInputRef.current) {
-      searchInputRef.current.focus();
+  // Handle card hover to show preview
+  const handleCardMouseEnter = (card: Card, event: React.MouseEvent) => {
+    if (hoverTimerRef.current) {
+      clearTimeout(hoverTimerRef.current);
+      hoverTimerRef.current = null;
     }
+    
+    const targetElement = event.currentTarget;
+    hoverTimerRef.current = setTimeout(() => {
+      if (!targetElement) return;
+      
+      const rect = targetElement.getBoundingClientRect();
+      const posX = rect.right + 20; // Position to the right of the card
+      const posY = rect.top;
+      
+      setPreviewCard(card);
+      setPreviewPosition({ x: posX, y: posY });
+    }, 500); // 500ms delay before showing preview
   };
   
-  // Handle Enter key press
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      handleSearch();
-    } else if (e.key === 'ArrowDown' && showSuggestions && suggestions.length > 0) {
-      // Focus the first suggestion item when pressing arrow down
-      const suggestionItems = suggestionsRef.current?.querySelectorAll('.suggestion-item');
-      if (suggestionItems && suggestionItems.length > 0) {
-        (suggestionItems[0] as HTMLElement).focus();
-      }
+  // Cancel preview when mouse leaves card
+  const handleCardMouseLeave = () => {
+    if (hoverTimerRef.current) {
+      clearTimeout(hoverTimerRef.current);
+      hoverTimerRef.current = null;
     }
+    setPreviewCard(null);
+    setPreviewPosition(null);
   };
 
-  // Handle keyboard navigation in the suggestions dropdown
-  const handleSuggestionKeyDown = (e: React.KeyboardEvent<HTMLDivElement>, card: Card, index: number) => {
-    if (e.key === 'ArrowDown') {
-      e.preventDefault();
-      const suggestionItems = suggestionsRef.current?.querySelectorAll('.suggestion-item');
-      if (suggestionItems && index < suggestionItems.length - 1) {
-        (suggestionItems[index + 1] as HTMLElement).focus();
-      }
-    } else if (e.key === 'ArrowUp') {
-      e.preventDefault();
-      const suggestionItems = suggestionsRef.current?.querySelectorAll('.suggestion-item');
-      if (index > 0 && suggestionItems) {
-        (suggestionItems[index - 1] as HTMLElement).focus();
-      } else if (index === 0) {
-        // Focus back to search input if we're at the first suggestion
-        if (searchInputRef.current) {
-          searchInputRef.current.focus();
-        }
-      }
-    } else if (e.key === 'Enter') {
-      e.preventDefault();
-      handleSuggestionSelect(card);
-    } else if (e.key === 'Escape') {
-      e.preventDefault();
-      setShowSuggestions(false);
-      if (searchInputRef.current) {
-        searchInputRef.current.focus();
-      }
-    }
-  };
-  
-  // Handle input focus to show suggestions
-  const handleInputFocus = () => {
-    if (searchQuery.trim() && suggestions.length > 0) {
-      setShowSuggestions(true);
-    }
-  };
-  
   return (
     <div className="search-page">
-      <div className="search-container">
-        <div className="search-input-wrapper">
-          <input
-            ref={searchInputRef}
-            type="text"
-            className="search-input"
-            placeholder="Search for a Magic card..."
-            value={searchQuery}
-            onChange={handleSearchInputChange}
-            onKeyDown={handleKeyPress}
-            onFocus={handleInputFocus}
-            aria-label="Search for cards"
-            aria-autocomplete="list"
-            aria-controls={showSuggestions ? "suggestions-list" : undefined}
-            aria-expanded={showSuggestions}
-          />
-          
-          {searchQuery && (
-            <button 
-              className="clear-search-btn" 
-              onClick={handleClearSearch}
-              aria-label="Clear search"
-            >
-              <FontAwesomeIcon icon={faTimes} />
-            </button>
-          )}
-          
-          <button 
-            className="search-btn" 
-            onClick={handleSearch}
-            disabled={isLoading || !searchQuery.trim()}
-            aria-label="Search"
-          >
-            {isLoading ? (
-              <FontAwesomeIcon icon={faSpinner} spin />
-            ) : (
-              <FontAwesomeIcon icon={faSearch} />
-            )}
-          </button>
-          
-          {/* Suggestions dropdown */}
-          {showSuggestions && (
-            <div 
-              ref={suggestionsRef} 
-              className="suggestions-dropdown"
-              role="listbox"
-              id="suggestions-list"
-            >
-              {isFetchingSuggestions ? (
-                <div className="suggestion-loading">Loading suggestions...</div>
-              ) : suggestions.length > 0 ? (
-                suggestions.map((card, index) => (
-                  <div
-                    key={card.id}
-                    className="suggestion-item"
-                    onClick={() => handleSuggestionSelect(card)}
-                    onKeyDown={(e) => handleSuggestionKeyDown(e, card, index)}
-                    role="option"
-                    tabIndex={0}
-                    aria-selected={false}
-                  >
-                    {card.name}
-                  </div>
-                ))
-              ) : (
-                <div className="no-suggestions">No matching cards found</div>
-              )}
-            </div>
-          )}
-        </div>
-      </div>
+      {/* Use the SearchBar component */}
+      <SearchBar 
+        onSearch={handleSearchResults} 
+        initialQuery={initialQuery} 
+        onClearNavigateTo="/sets"
+      />
       
       <div className="search-results-container">
         {isLoading ? (
@@ -337,6 +115,8 @@ const SearchPage: React.FC = () => {
                       key={card.id} 
                       className="card-item"
                       onClick={() => handleCardSelect(card)}
+                      onMouseEnter={(e) => handleCardMouseEnter(card, e)}
+                      onMouseLeave={handleCardMouseLeave}
                     >
                       {card.image_uris?.normal ? (
                         <img 
@@ -362,15 +142,18 @@ const SearchPage: React.FC = () => {
                   ))}
                 </div>
               </>
-            ) : hasSearched && searchQuery ? (
+            ) : hasSearched && initialQuery ? ( // Check initialQuery to show no results message correctly
               <div className="no-results">
-                <p>No cards found matching "{searchQuery}"</p>
+                <p>No cards found matching "{initialQuery}"</p>
                 <p className="no-results-suggestion">Try adjusting your search term or checking for spelling errors.</p>
               </div>
             ) : null}
           </>
         )}
       </div>
+      
+      {/* Add the CardPreview component */}
+      <CardPreview card={previewCard} position={previewPosition} />
     </div>
   );
 };

@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useParams, useLocation } from 'react-router-dom';
+import CardPreview from '../../components/CardPreview';
 import './styles.css';
 
 interface Card {
@@ -34,6 +35,11 @@ const SetPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isDemoMode, setIsDemoMode] = useState(false);
+  
+  // State for card preview
+  const [previewCard, setPreviewCard] = useState<Card | null>(null);
+  const [previewPosition, setPreviewPosition] = useState<{ x: number; y: number } | null>(null);
+  const hoverTimerRef = useRef<NodeJS.Timeout | null>(null);
   
   // API URLs
   const SCRYFALL_BASE_URL = 'https://api.scryfall.com';
@@ -186,6 +192,36 @@ const SetPage: React.FC = () => {
     }
   }, [useCorsProxy]);
 
+  // Handle card hover to show preview
+  const handleCardMouseEnter = (card: Card, event: React.MouseEvent) => {
+    if (hoverTimerRef.current) {
+      clearTimeout(hoverTimerRef.current);
+      hoverTimerRef.current = null;
+    }
+    
+    const targetElement = event.currentTarget;
+    hoverTimerRef.current = setTimeout(() => {
+      if (!targetElement) return;
+      
+      const rect = targetElement.getBoundingClientRect();
+      const posX = rect.right + 20; // Position to the right of the card
+      const posY = rect.top;
+      
+      setPreviewCard(card);
+      setPreviewPosition({ x: posX, y: posY });
+    }, 500); // 500ms delay before showing preview
+  };
+  
+  // Cancel preview when mouse leaves card
+  const handleCardMouseLeave = () => {
+    if (hoverTimerRef.current) {
+      clearTimeout(hoverTimerRef.current);
+      hoverTimerRef.current = null;
+    }
+    setPreviewCard(null);
+    setPreviewPosition(null);
+  };
+
   // Render card grid item
   const renderCardItem = (card: Card, index: number) => {
     // Skip cards without images or double-faced card backs
@@ -197,7 +233,7 @@ const SetPage: React.FC = () => {
     // Use the normal image if available, otherwise use the first face of a double-faced card
     const imageUrl = card.image_uris ? 
       card.image_uris.normal : 
-      (card.card_faces && card.card_faces[0].image_uris ? 
+      (card.card_faces && card.card_faces[0]?.image_uris ? 
         card.card_faces[0].image_uris.normal : 
         '');
     
@@ -212,6 +248,8 @@ const SetPage: React.FC = () => {
             localStorage.setItem('currentCard', JSON.stringify(card));
             localStorage.setItem('currentSetName', setName);
           }}
+          onMouseEnter={(e) => handleCardMouseEnter(card, e)} 
+          onMouseLeave={handleCardMouseLeave}
         >
           <img 
             src={imageUrl} 
@@ -280,6 +318,9 @@ const SetPage: React.FC = () => {
           </div>
         </div>
       </div>
+      
+      {/* Add the CardPreview component */}
+      <CardPreview card={previewCard} position={previewPosition} />
     </main>
   );
 };

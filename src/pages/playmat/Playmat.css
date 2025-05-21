@@ -249,8 +249,8 @@
   position: absolute;
   width: 120px;
   height: 168px; /* 5:7 aspect ratio for Magic cards */
-  transition: transform 0.1s ease;
-  cursor: move;
+  /* transition: transform 0.1s ease; */ /* Temporarily commented out for diagnostics */
+  cursor: default;
   z-index: 1;
 }
 
@@ -294,6 +294,53 @@
   font-weight: bold;
   font-size: 14px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Card stack count indicator */
+.battlefield-card .card-stack-count {
+  position: absolute;
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Adjust for element's own size */
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  border-radius: 4px;
+  padding: 5px 10px; /* Slightly larger padding like deck count */
+  font-weight: bold;
+  font-size: 18px; /* Larger font size like deck count */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  z-index: 2;
+}
+
+/* Create a stacked appearance for cards with stacks */
+.battlefield-card[data-has-stack="true"] {
+  box-shadow: 0 2px 10px rgba(255, 255, 255, 0.3);
+}
+
+.battlefield-card[data-has-stack="true"]::before {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  z-index: -1;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+.battlefield-card[data-has-stack="true"]::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+  z-index: -2;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
 }
 
 .card-actions {
@@ -352,18 +399,20 @@
   border-radius: 4.8px; /* Slightly rounded corners like MTG Arena */
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.9); /* Stronger shadow for better visibility */
   pointer-events: auto; /* Make cards interactive */
-  cursor: pointer;
+  cursor: pointer; /* Show pointer cursor to indicate clickable */
   will-change: transform; /* Optimization for animations */
   transform-origin: center bottom;
-  border: 2px solid rgb(255, 255, 255); /* Always visible border */
-  transition: transform 0.2s ease-out, box-shadow 0.2s ease-out, border-color 0.2s ease-out;
-  /* Remove fixed width/height as they're now set dynamically in the component */
+  border: 2px solid rgba(255, 255, 255, 0.3); /* Slightly visible border */
+  transition: transform 0.2s ease-out, box-shadow 0.2s ease-out, border-color 0.2s ease-out, opacity 0.2s ease-out !important;
   overflow: hidden; /* Ensure content doesn't overflow when scaled */
 }
 
+/* Add white glow outline on hover, similar to deckbuilder */
 .hand-card.hovered {
-  box-shadow: 0 12px 24px rgba(255, 255, 255, 0.4); /* Stronger shadow on hover */
-  border-color: rgb(141, 224, 255); /* Bright blue glow on hover */
+  box-shadow: 0 0 0 2px #fff, 0 6px 16px rgba(255, 255, 255, 0.3); /* White outline glow */
+  border-color: rgba(255, 255, 255, 0.8); /* Brighter border */
+  z-index: 100; /* Ensure hovered card is on top */
+  transform: translate(-50%, -25px) scale(1.1) !important; /* Lift card more when hovered */
 }
 
 .hand-card-image {
@@ -372,6 +421,8 @@
   border-radius: 3px;
   object-fit: cover;
   pointer-events: none; /* Prevent image from capturing events */
+  user-select: none; /* Prevent selection during drag */
+  -webkit-user-drag: none; /* Additional drag prevention for webkit browsers */
 }
 
 .hand-card .card-placeholder {
@@ -417,4 +468,191 @@
 
 .playmat-deck:hover .deck-tooltip {
   opacity: 1;
+}
+
+/* Animation for when a card is dropped */
+@keyframes cardDropped {
+  0% {
+    transform: scale(1.2);
+    opacity: 0.7;
+    box-shadow: 0 0 20px rgba(100, 149, 237, 0.8); /* Add glow effect */
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+  }
+}
+
+.battlefield-card.just-dropped {
+  /* animation: cardDropped 0.4s ease-out; */ /* Animation removed */
+  z-index: 10; /* Ensure it's above other cards briefly */
+}
+
+/* Card Preview */
+.card-preview {
+  position: fixed;
+  z-index: 1000;
+  pointer-events: none;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+  border-radius: 10px;
+  transform-origin: center;
+  animation: fadeIn 0.2s ease-out forwards;
+  width: 240px;
+  will-change: transform, opacity;
+}
+
+/* Add classes for left/right positioning */
+.card-preview.preview-left {
+  /* Preview appears on left side of screen */
+  border-right: 2px solid #4d4d4d;
+  animation: fadeInLeft 0.2s ease-out forwards;
+}
+
+.card-preview.preview-right {
+  /* Preview appears on right side of screen */
+  border-left: 2px solid #4d4d4d;
+  animation: fadeInRight 0.2s ease-out forwards;
+}
+
+.card-preview-image {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  display: block;
+}
+
+/* Animation for preview appearing on left side */
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Animation for preview appearing on right side */
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Add styles for drag and drop */
+.playmat-battlefield.drop-active {
+  /* Remove blue glow effects */
+  box-shadow: none;
+  background-color: rgba(0, 0, 0, 0);
+  transition: none;
+}
+
+.battlefield-card.dragging {
+  opacity: 0.4;
+  z-index: 1000;
+  cursor: grabbing;
+}
+
+/* Ensure the cursor is set to grabbable for draggable cards */
+.battlefield-card {
+  cursor: grab;
+}
+
+.battlefield-card:active {
+  cursor: grabbing;
+}
+
+.hand-card {
+  cursor: grab;
+}
+
+.hand-card:active {
+  cursor: grabbing;
+}
+
+.dnd-overlay {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.8);
+  border-radius: 4.75% / 3.5%;
+  z-index: 2000;
+  pointer-events: none;
+  opacity: 1 !important;
+}
+
+/* Style for when a card is being dragged over the hand zone */
+.hand-zone.hand-zone-drop-active {
+  /* Subtle visual indicator for drop area */
+  background-color: rgba(50, 50, 50, 0.2);
+  border-radius: 10px;
+}
+
+/* Add styles for face-down cards */
+.battlefield-card.facedown img {
+  display: none; /* Hide the front image */
+}
+
+.card-back {
+  width: 100%;
+  height: 100%;
+  background-color: #7a1712; /* Match deck background */
+  background-image: linear-gradient(45deg, #7a1712 25%, #961e17 25%, #961e17 50%, #7a1712 50%, #7a1712 75%, #961e17 75%, #961e17 100%); /* Match deck background pattern */
+  background-size: 10px 10px; /* Match deck background pattern size */
+  border-radius: 5px; /* Match deck border radius */
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.5); /* Match deck box shadow */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Ensure inner content respects border radius */
+}
+
+.card-back-inner {
+  /* Remove previous styling for inner element, as it's not needed for the new design */
+  /* Old styles related to the "6" will be removed or commented out */
+}
+
+/* Make sure card actions are visible on facedown cards */
+.battlefield-card.facedown .card-actions {
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+}
+
+/* Card context menu */
+.card-context-menu {
+  min-width: 180px;
+  background-color: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 5px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
+  padding: 4px 0;
+  z-index: 1000;
+  overflow: hidden;
+}
+
+.card-context-menu-item {
+  padding: 8px 16px;
+  font-size: 14px;
+  color: #ddd;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.card-context-menu-item:hover {
+  background-color: #333;
 } 
