@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set Details | Magic: The Gathering</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <main>
+        <div class="header">
+            <div class="breadcrumb-container">
+                <div class="breadcrumbs">
+                    <a href="index.html" class="breadcrumb-item home-link">All Sets</a>
+                    <i class="fas fa-chevron-right breadcrumb-separator"></i>
+                    <span id="set-breadcrumb" class="breadcrumb-item active"></span>
+                </div>
+            </div>
+        </div>
+
+        <div id="set-details-container">
+            <div class="cards-content">
+                <h2 id="set-title"></h2>
+                <div id="cards-grid">
+                    <!-- Cards will be loaded here -->
+                    <div class="loading">Loading cards...</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Card Modal -->
+        <div id="card-modal" class="modal hidden">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <div class="modal-body">
+                    <!-- Card details will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="set.js"></script>
+</body>
+</html> 

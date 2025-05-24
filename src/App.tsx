@@ -20,11 +20,16 @@ import DeckBuilder from './pages/deckbuilder';
 import DecksPage from './pages/decks';
 import Playmat from './pages/playmat';
 import ProfilePage from './pages/profile/ProfilePage';
+import RulesPage from './pages/rules/RulesPage';
 import { RandomCardProvider } from './context/RandomCardContext';
 import { DeckProvider, useDeckContext } from './context/DeckContext';
 import { ProfileProvider } from './context/ProfileContext';
 import { FavoritesProvider } from './context/FavoritesContext';
 import DeckDetails from './pages/deck-details';
+// import { LoreTimeline, LoreDetail } from './components/lore/index'; // Commenting out for testing
+import LoreTimeline from './components/lore/LoreTimeline'; // Direct import
+import LoreDetail from './components/lore/LoreDetail'; // Direct import
+import CharacterDetail from './components/lore/CharacterDetail'; // Character detail import
 
 // Main layout component with sidebar
 const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -143,6 +148,13 @@ function App() {
                   </MainLayout>
                 } />
                 
+                {/* Rules page */}
+                <Route path="/rules" element={
+                  <MainLayout>
+                    <RulesPage />
+                  </MainLayout>
+                } />
+                
                 {/* Random Card page */}
                 <Route path="/random-card" element={
                   <MainLayout>
@@ -205,6 +217,27 @@ function App() {
                 <Route path="/search" element={
                   <MainLayout>
                     <SearchPage />
+                  </MainLayout>
+                } />
+                
+                {/* Lore Timeline page */}
+                <Route path="/lore" element={
+                  <MainLayout>
+                    <LoreTimeline />
+                  </MainLayout>
+                } />
+                
+                {/* Character Detail page */}
+                <Route path="/lore/character/:characterName" element={
+                  <MainLayout>
+                    <CharacterDetail />
+                  </MainLayout>
+                } />
+                
+                {/* Lore Detail page */}
+                <Route path="/lore/:eventId" element={
+                  <MainLayout>
+                    <LoreDetail />
                   </MainLayout>
                 } />
                 

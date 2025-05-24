@@ -1,0 +1,200 @@
+/* Lore Detail Page Styles */
+
+.back-link {
+    display: flex;
+    align-items: center;
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    transition: color 0.2s;
+}
+
+.back-link svg {
+    margin-right: 0.5rem;
+}
+
+.back-link:hover {
+    color: var(--link-color);
+}
+
+#lore-detail-container {
+    padding: 2rem 0;
+    min-height: 80vh;
+}
+
+.lore-detail-header {
+    margin-bottom: 3rem;
+    text-align: center;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 2rem;
+}
+
+.lore-detail-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.lore-detail-meta {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    color: var(--text-secondary);
+    font-size: 1rem;
+}
+
+.lore-detail-meta span {
+    display: flex;
+    align-items: center;
+}
+
+.lore-detail-meta span::before {
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background-color: var(--timeline-line-color);
+    border-radius: 50%;
+    margin-right: 0.5rem;
+}
+
+.lore-detail-content {
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.8;
+}
+
+.lore-detail-description {
+    font-size: 1.2rem;
+    margin-bottom: 3rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    border-left: 3px solid var(--link-color);
+    padding-left: 1.5rem;
+    white-space: pre-line;
+}
+
+.lore-detail-expanded h2 {
+    font-size: 1.5rem;
+    margin: 2rem 0 1rem;
+    font-weight: 600;
+    position: relative;
+}
+
+.lore-detail-expanded h2::after {
+    content: '';
+    position: absolute;
+    height: 2px;
+    width: 40px;
+    background-color: var(--link-color);
+    bottom: -8px;
+    left: 0;
+}
+
+.lore-detail-expanded p {
+    margin-bottom: 1.5rem;
+}
+
+.lore-detail-expanded .character-list {
+    margin: 1rem 0 2rem 0;
+    list-style-type: none;
+}
+
+.lore-detail-expanded .character-list li {
+    margin-bottom: 0.8rem;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.lore-detail-expanded .character-list li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--link-color);
+    font-weight: bold;
+}
+
+.lore-detail-expanded ul {
+    margin: 1rem 0 2rem 1.5rem;
+    list-style-type: none;
+}
+
+.lore-detail-expanded ul li {
+    margin-bottom: 0.8rem;
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.lore-detail-expanded ul li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--link-color);
+    font-weight: bold;
+}
+
+.lore-detail-expanded a {
+    color: var(--link-color);
+    text-decoration: none;
+    transition: opacity 0.2s;
+}
+
+.lore-detail-expanded a:hover {
+    opacity: 0.8;
+    text-decoration: underline;
+}
+
+.sources {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+/* Error message styling */
+.error-message {
+    text-align: center;
+    padding: 3rem;
+    background-color: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    margin: 2rem auto;
+    max-width: 500px;
+}
+
+.error-message h2 {
+    color: var(--link-color);
+    margin-bottom: 1rem;
+}
+
+.back-button {
+    display: inline-block;
+    margin-top: 1.5rem;
+    padding: 0.8rem 1.5rem;
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    text-decoration: none;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+    transition: background-color 0.2s;
+}
+
+.back-button:hover {
+    background-color: var(--hover-color);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .lore-detail-header h1 {
+        font-size: 1.8rem;
+    }
+    
+    .lore-detail-meta {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .lore-detail-description {
+        font-size: 1rem;
+    }
+} 

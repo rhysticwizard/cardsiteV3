@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faTimes, faSpinner, faSlidersH, faRandom } from '@fortawesome/free-solid-svg-icons';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import ScryfallAPI, { Card } from '../utils/ScryfallAPI';
-// import './SearchBar.css';
+import './SearchBar.css';
 
 interface SearchBarProps {
   onSearch?: (results: Card[] | null) => void;

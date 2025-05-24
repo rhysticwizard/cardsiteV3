@@ -1,0 +1,358 @@
+.characters-container {
+  color: #fff;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+}
+
+.characters-container h1 {
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+/* Alphabet Navigation */
+.alphabet-navigation {
+  display: flex;
+  flex-wrap: nowrap;
+  margin: 0;
+  padding: 10px 15px;
+  background-color: transparent;
+  border: none;
+  justify-content: flex-start;
+  gap: 12px;
+  align-items: center;
+}
+
+.alphabet-btn {
+  background: none;
+  border: none;
+  color: #888;
+  font-size: 14px;
+  padding: 3px 6px;
+  min-width: unset;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  font-weight: normal;
+  margin: 0;
+  border-radius: 0;
+  position: relative;
+}
+
+/* Add spacer for the first button (All) */
+.alphabet-btn:first-child {
+  margin-right: 12px;
+}
+
+/* Separator after "All" button */
+.alphabet-navigation::after {
+  content: '';
+  position: static;
+  display: block;
+  height: 16px;
+  width: 1px;
+  background-color: #555;
+  margin-right: 12px;
+  margin-left: -12px;
+}
+
+.alphabet-btn:hover {
+  color: #fff;
+  background-color: transparent;
+}
+
+.alphabet-btn.active {
+  color: #fff;
+  background-color: transparent;
+  position: relative;
+  font-weight: normal;
+}
+
+.alphabet-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #fff;
+}
+
+/* Characters Content */
+.characters-content {
+  padding: 20px;
+  color: #fff;
+  overflow-y: auto;
+  max-height: 80vh;
+}
+
+/* Characters Header */
+.characters-header {
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.characters-header h2 {
+  color: #fff;
+  font-size: 1.5rem;
+  margin: 0 0 10px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.character-count {
+  font-size: 0.9rem;
+  color: #888;
+  font-weight: normal;
+}
+
+.pagination-info {
+  color: #888;
+  font-size: 0.85rem;
+  margin-top: 5px;
+}
+
+/* Character List */
+.character-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+/* Character Card - Updated for full image display */
+.character-card {
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  overflow: hidden;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+}
+
+.character-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.character-image-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.character-full-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.character-overlay {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.7) 0%,
+    rgba(0, 0, 0, 0.3) 50%,
+    rgba(0, 0, 0, 0.9) 100%
+  );
+  padding: 15px;
+}
+
+.character-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.character-info {
+  flex: 1;
+}
+
+.character-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 4px 0;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #fff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  line-height: 1.2;
+}
+
+.character-colors {
+  font-size: 1.1em;
+  margin-bottom: 4px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.character-details {
+  margin-top: auto;
+}
+
+.character-detail {
+  margin: 3px 0;
+  font-size: 0.85em;
+  color: #f0f0f0;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.6);
+  padding: 2px 6px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-right: 4px;
+  margin-bottom: 4px;
+}
+
+.character-detail strong {
+  color: #fff;
+}
+
+/* Character Icon */
+.character-icon {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+/* Color Indicators */
+.color-indicators {
+  display: flex;
+  gap: 2px;
+  margin-left: auto;
+}
+
+.color-indicator {
+  font-size: 0.8rem;
+  opacity: 0.9;
+}
+
+/* Character planes and types */
+.character-planes {
+  margin-bottom: 4px;
+}
+
+.character-planes small {
+  color: #bbb;
+  font-size: 0.75rem;
+}
+
+.character-types small {
+  color: #aaa;
+  font-size: 0.7rem;
+  font-style: italic;
+}
+
+/* Pagination Controls */
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 30px;
+  padding: 20px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.pagination-btn {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.pagination-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.page-indicator {
+  color: #fff;
+  font-weight: 500;
+  padding: 0 10px;
+  font-size: 0.9rem;
+}
+
+/* No Characters Message */
+.no-characters {
+  text-align: center;
+  padding: 40px 20px;
+  color: #888;
+}
+
+.no-characters p {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .alphabet-navigation {
+    gap: 0.1rem;
+  }
+  
+  .alphabet-btn {
+    min-width: 1.8rem;
+    font-size: 0.8rem;
+    padding: 0.3rem;
+  }
+  
+  .character-list {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+  }
+  
+  .characters-header h2 {
+    font-size: 1.3rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  .character-name {
+    font-size: 0.9rem;
+  }
+
+  .character-header {
+    gap: 8px;
+  }
+  
+  .character-avatar {
+    width: 40px;
+    height: 40px;
+  }
+
+  .pagination-controls {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  .pagination-btn {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
+} 

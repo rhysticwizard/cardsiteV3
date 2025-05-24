@@ -1,0 +1,272 @@
+{
+  "metadata": {
+    "generated": "2025-05-23T22:27:42.398Z",
+    "total_characters": 1316,
+    "source": "mtg_characters_COMPLETE_20250523_141653.json",
+    "cleaned_on": "5/23/2025"
+  },
+  "characters": {
+    "Ā": {
+      "name": "Ā",
+      "description": "'''Ā''' () was a planeswalker tyrant. He was killed by Tyler.",
+      "type": "Character",
+      "status": "Deceased",
+      "is_planeswalker": true,
+      "planeswalker_type": "",
+      "colors": [],
+      "races": [],
+      "classes": [],
+      "planes": [
+        "Planeswalker",
+        "planeswalker"
+      ],
+      "biographical_info": {
+        "race": "Planeswalker"
+      },
+      "image_path": ".jpg",
+      "wiki_url": "",
+      "last_updated": "2025-05-23T13:10:04.568384"
+    },
+    "Ajani Goldmane": {
+      "name": "Ajani Goldmane",
+      "description": "'''Ajani Goldmane''' (Phyrexian: DFaUnEED, IPA: [ʔəʤɒniʔ]) is a leonin planeswalker from Naya, Alara. He was part of the Gatewatch, but was later compleated by the Phyrexians into becoming a sleeper agent. At the end of New Phyrexia's Invasion of the Multiverse, he was un-compleated.",
+      "type": "Character",
+      "status": "Alive",
+      "is_planeswalker": true,
+      "planeswalker_type": "",
+      "colors": [
+        "W"
+      ],
+      "races": [],
+      "classes": [],
+      "planes": [
+        "A Planeswalker's Guide to Alara",
+        "Realmbreaker|Eight",
+        "Kaladesh",
+        "Meditation Realm",
+        "Meditation Plane",
+        "Koth|planeswalker",
+        "Innistrad",
+        "Theros",
+        "New New Phyrexia",
+        "Dominaria"
+      ],
+      "biographical_info": {
+        "race": "Cat#Nacatl|Nacatl Leonin PlaneswalkerBriefly Phyrexian",
+        "birthplace": "Qasal Valley, Naya, Alara",
+        "lifetime": "Born c. 4527; Compleated and un-compleated in 4562"
+      },
+      "image_path": "Ajani_Goldmane.jpg",
+      "wiki_url": "",
+      "last_updated": "2025-05-23T13:10:05.332667"
+    },
+    "Altair of Coloni": {
+      "name": "Altair of Coloni",
+      "description": "'''Altair of Coloni''', also known as the \"White Mage\" was a planeswalker of white magic from the Plains of Coloni on Corondor on Dominaria.",
+      "type": "Character",
+      "status": "Deceased",
+      "is_planeswalker": true,
+      "planeswalker_type": "",
+      "colors": [
+        "W"
+      ],
+      "races": [],
+      "classes": [],
+      "planes": [
+        "Dominaria",
+        "planeswalker"
+      ],
+      "biographical_info": {
+        "race": "Human planeswalker",
+        "birthplace": "Plains of Coloni, Darkling Plains, Golthonor, Corondor, Dominaria",
+        "born": "Before 3000 AR",
+        "death": "4195 AR",
+        "lifetime": "The Thaw or earlier - War with Phyrexia"
+      },
+      "image_path": "Altair_of_Coloni.jpg",
+      "wiki_url": "",
+      "last_updated": "2025-05-23T13:10:05.999031"
+    },
+    "Anton": {
+      "name": "Anton",
+      "description": "'''Anton''' was a green and white planeswalker first mentioned in the ''Duelist'' #1. He dueled Karshan on at least three occasions.",
+      "type": "Character",
+      "status": "Alive",
+      "is_planeswalker": true,
+      "planeswalker_type": "",
+      "colors": [],
+      "races": [],
+      "classes": [],
+      "planes": [
+        "Planeswalker",
+        "Dominaria",
+        "planeswalker"
+      ],
+      "biographical_info": {
+        "race": "Planeswalker",
+        "lifetime": "Pre-Mending"
+      },
+      "image_path": "Anton.jpg",
+      "wiki_url": "",
+      "last_updated": "2025-05-23T13:10:06.689217"
+    },
+    "Arlinn Kord": {
+      "name": "Arlinn Kord",
+      "description": "'''Arlinn Kord''' is a tormented werewolf planeswalker from the Kessig province of the plane of Innistrad. She is the protector of the Ulvenwald.",
+      "type": "Character",
+      "status": "Alive",
+      "is_planeswalker": true,
+      "planeswalker_type": "",
+      "colors": [],
+      "races": [],
+      "classes": [],
+      "planes": [
+        "Dominaria",
+        "planeswalkers",
+        "the plane of Innistrad",
+        "plane",
+        "planeswalker's spark|spark",
+        "Innistrad",
+        "Amonkhet",
+        "Planeswalker",
+        "planeswalker"
+      ],
+      "biographical_info": {
+        "race": "Werewolf Human Planeswalker",
+        "birthplace": "Avabruck, Kessig, Innistrad",
+        "lifetime": "Born between 4515 and 4528 AR"
+      },
+      "image_path": "Arlinn_Kord.jpg",
+      "wiki_url": "",
+      "last_updated": "2025-05-23T13:10:07.399485"
+    },
+    "Arzakon": {
+      "name": "Arzakon",
+      "description": "'''Arzakon''' was a powerful planeswalker from an unknown plane who tried to take control over Shandalar.",
+      "type": "Character",
+      "status": "Alive",
+      "is_planeswalker": true,
+      "planeswalker_type": "",
+      "colors": [],
+      "races": [],
+      "classes": [],
+      "planes": [
+        "Planeswalker",
+        "planeswalker",
+        "Category:Unknown plane characters"
+      ],
+      "biographical_info": {
+        "race": "Planeswalker",
+        "lifetime": "The Thaw"
+      },
+      "image_path": "Arzakon.jpg",
+      "wiki_url": "",
+      "last_updated": "2025-05-23T13:10:08.071201"
+    },
+    "Azor": {
+      "name": "Azor",
+      "description": "'''Azor''' is a sphinx of unknown origin and a former planeswalker. He is a lawmage and a hieromancer and sees himself as the '''Arbiter of Law'''.",
+      "type": "Character",
+      "status": "Alive",
+      "is_planeswalker": true,
+      "planeswalker_type": "",
+      "colors": [],
+      "races": [],
+      "classes": [],
+      "planes": [
+        "Dominaria",
+        "Planeswalker",
+        "Ixalan",
+        "planeswalker's spark",
+        "Kaldheim",
+        "Category:Desparked Planeswalkers",
+        "planeswalker",
+        "Meditation Plane"
+      ],
+      "biographical_info": {
+        "race": "SphinxFormerly Planeswalker",
+        "lifetime": "~-6740 AR - present"
+      },
+      "image_path": "Azor.jpg",
+      "wiki_url": "",
+      "last_updated": "2025-05-23T13:10:08.776865"
+    },
+    "Baltrice": {
+      "name": "Baltrice",
+      "description": "'''Baltrice''' is a red-aligned planeswalker, at least 6 feet tall with broad shoulders and ash-grey hair. She is the loyal lieutenant of the artificer Tezzeret, working for the Infinite Consortium. Being a pyromancer, she specializes in fire elementals though she seems to have learned some of the art of artifice from Tezzeret.",
+      "type": "Character",
+      "status": "Alive",
+      "is_planeswalker": true,
+      "planeswalker_type": "",
+      "colors": [],
+      "races": [],
+      "classes": [],
+      "planes": [
+        "Planeswalker",
+        "planeswalker",
+        "Category:Planeswalker Saga"
+      ],
+      "biographical_info": {
+        "race": "Human Planeswalker",
+        "lifetime": "Mending Era"
+      },
+      "image_path": "Baltrice.jpg",
+      "wiki_url": "",
+      "last_updated": "2025-05-23T13:10:09.439143"
+    },
+    "Basri Ket": {
+      "name": "Basri Ket",
+      "description": "'''Basri Ket''' is a Human, former planeswalker, and sand-mage from Amonkhet. He used to be a paladin devoted to Oketra, who evangelized the virtue of solidarity. Later, he became the champion folk hero of Amonkhet, having earned his plane's respect by fending off the Phyrexians alongside the living and the dead.",
+      "type": "Character",
+      "status": "Alive",
+      "is_planeswalker": true,
+      "planeswalker_type": "",
+      "colors": [],
+      "races": [],
+      "classes": [],
+      "planes": [
+        "Dominaria",
+        "plane",
+        "Planeswalker's spark",
+        "Amonkhet",
+        "Planeswalker",
+        "Category:Desparked Planeswalkers",
+        "planeswalker",
+        "what he was"
+      ],
+      "biographical_info": {
+        "race": "HumanFormerly Planeswalker",
+        "birthplace": "Naktamun, Amonkhet",
+        "lifetime": "Born c. 4540 AR"
+      },
+      "image_path": "Basri_Ket.jpg",
+      "wiki_url": "",
+      "last_updated": "2025-05-23T13:10:10.146029"
+    },
+    "Bolar": {
+      "name": "Bolar",
+      "description": "'''Bolar''' (BOH-lar) was a shaman of an unknown race from the city of Kjeld, during the Ice Age of Dominaria.",
+      "type": "Character",
+      "status": "Alive",
+      "is_planeswalker": true,
+      "planeswalker_type": "",
+      "colors": [],
+      "races": [],
+      "classes": [],
+      "planes": [
+        "Dominaria",
+        "World Spell",
+        "Ice Age on the World of Magic: The Gathering",
+        "planeswalker",
+        "Shard of the Twelve Worlds",
+        "Ice Age on the World of Magic: The Gathering|Ice Age"
+      ],
+      "biographical_info": {
+        "lifetime": "Ice Ice Age"
+      },
+      "image_path": "Bolar.jpg",
+      "wiki_url": "",
+      "last_updated": "2025-05-23T13:10:10.805591"
+    }
+  }
+}

@@ -1,0 +1,1322 @@
+MTG CHARACTERS COMPLETE DATABASE
+==================================================
+Generated: 2025-05-23T14:16:53.576709
+Total Characters: 1316
+Newly Added: 105
+
+   1. ⚔️ !Kath
+   2. ⚔️ Abomination
+   3. ⚔️ Abomination of Llanowar
+   4. ⚔️ Aboshan
+   5. ⚔️ Abuelo
+   6. ⚔️ Accountant
+   7. ⚔️ Ad'Amra
+   8. ⚔️ Adam Carthalion
+   9. ⚔️ Adeline
+  10. ⚔️ Adira Strongheart
+  11. ⚔️ Adrix and Nev
+  12. ⚔️ Adun Oakenshield
+  13. ⚔️ Aerophin
+  14. ⚔️ Aevar Borg
+  15. ⚔️ Agnate
+  16. ⚔️ Agrus Kos
+  17. ⚔️ Aiman
+  18. 🧙‍♂️ Ajani Goldmane
+  19. ⚔️ Akroma
+  20. ⚔️ Al-Hayat
+  21. ⚔️ Aladdin
+  22. ⚔️ Albrecht
+  23. ⚔️ Alchemist
+  24. ⚔️ Alena
+  25. ⚔️ Alesha
+  26. ⚔️ Alexandrite
+  27. ⚔️ Alexi
+  28. ⚔️ Alexio
+  29. 🧙‍♂️ Algenus Kenrith
+  30. ⚔️ Alhammarret
+  31. ⚔️ Alharu
+  32. ⚔️ Ali Baba
+  33. ⚔️ Ali from Cairo
+  34. ⚔️ Aliban
+  35. ⚔️ Alicorn
+  36. ⚔️ Allav Hask
+  37. ⚔️ Allenal
+  38. ⚔️ Alniul
+  39. ⚔️ Alsadim K'mer
+  40. 🧙‍♂️ Altair of Coloni
+  41. ⚔️ Amalia Benavides Aguirre
+  42. ⚔️ Amenakhte
+  43. ⚔️ Ana
+  44. ⚔️ Anafenza Mevak
+  45. 🧙‍♂️ Anax
+  46. ⚔️ Ancient One
+  47. ⚔️ Andres
+  48. ⚔️ Andrios
+  49. ⚔️ Anemone
+  50. ⚔️ Anep
+  51. ⚔️ Angus
+  52. ⚔️ Angus MacKenzie
+  53. ⚔️ Anhelo
+  54. ⚔️ Anikthea
+  55. ⚔️ Anowon
+  56. ⚔️ Antelope
+  57. 🧙‍♂️ Anton
+  58. ⚔️ Anyxni
+  59. 🧙‍♂️ Apatzec Intli III
+  60. 🧙‍♂️ Apatzec Intli IV
+  61. ⚔️ Apepei
+  62. ⚔️ Arah
+  63. ⚔️ Arcades Sabboth
+  64. ⚔️ Archie Dixon
+  65. ⚔️ Arcum Dagsson
+  66. ⚔️ Arima
+  67. ⚔️ Arimaya
+  68. ⚔️ Arine
+  69. ⚔️ Arinos
+  70. ⚔️ Arlen
+  71. 🧙‍♂️ Arlinn Kord
+  72. ⚔️ Armont
+  73. ⚔️ Armored
+  74. ⚔️ Army
+  75. ⚔️ Arn
+  76. ⚔️ Arnjlot Olasson
+  77. ⚔️ Aron Capashen
+  78. ⚔️ Art (creature type)
+  79. ⚔️ Arteeoh
+  80. ⚔️ Artist (creature type)
+  81. ⚔️ Arvad
+  82. ⚔️ Arvinox
+  83. 🧙‍♂️ Arzakon
+  84. ⚔️ Asenue
+  85. ⚔️ Asha
+  86. ⚔️ Ashnod
+  87. ⚔️ Asmira
+  88. ⚔️ Assad
+  89. ⚔️ Assembly-Worker
+  90. ⚔️ Asterion
+  91. ⚔️ Atalya
+  92. ⚔️ Athlete
+  93. ⚔️ Atraxa
+  94. ⚔️ Attendee
+  95. ⚔️ Augustin IV
+  96. ⚔️ Aurochs
+  97. ⚔️ Autobot
+  98. ⚔️ Autumn-Tail
+  99. ⚔️ Avacyn
+ 100. ⚔️ Avenger
+ 101. ⚔️ Avenger (creature type)
+ 102. ⚔️ Averru
+ 103. ⚔️ Avram Garrisson
+ 104. 🧙‍♂️ Ayara
+ 105. ⚔️ Ayesha Tanaka
+ 106. ⚔️ Aylith
+ 107. ⚔️ Ayula
+ 108. ⚔️ Azami Ozu
+ 109. ⚔️ Azar
+ 110. 🧙‍♂️ Azor
+ 111. ⚔️ Azusa
+ 112. ⚔️ Baankis
+ 113. ⚔️ Babolax
+ 114. ⚔️ Badger
+ 115. ⚔️ Baishya
+ 116. ⚔️ Balgot
+ 117. ⚔️ Balloon
+ 118. ⚔️ Balthor Rockfist
+ 119. 🧙‍♂️ Baltrice
+ 120. ⚔️ Banshee
+ 121. ⚔️ Baris
+ 122. ⚔️ Barishi
+ 123. ⚔️ Barktooth Warbeard
+ 124. ⚔️ Barrin
+ 125. ⚔️ Bartolomé del Presidio
+ 126. ⚔️ Basilisk
+ 127. 🧙‍♂️ Basri Ket
+ 128. ⚔️ Batar Throatslasher
+ 129. ⚔️ Baylen
+ 130. ⚔️ Bayul
+ 131. ⚔️ Bazzle
+ 132. ⚔️ Beholder
+ 133. ⚔️ Belaxis
+ 134. ⚔️ Belbe
+ 135. ⚔️ Belenda Danisdotter
+ 136. ⚔️ Bell Borca
+ 137. ⚔️ Belzenlok
+ 138. ⚔️ Ben-Ben
+ 139. ⚔️ Bernatheen
+ 140. ⚔️ Bertram Graywater
+ 141. ⚔️ Bikov
+ 142. ⚔️ Biracazir
+ 143. ⚔️ Black-Nose
+ 144. ⚔️ Blinkmoth
+ 145. ⚔️ Blorpityblorpboop
+ 146. ⚔️ Bly
+ 147. ⚔️ Bo Levar
+ 148. ⚔️ Bodyguard
+ 149. 🧙‍♂️ Bolar
+ 150. ⚔️ Bontu
+ 151. 🧙‍♂️ Boragor
+ 152. ⚔️ Boris
+ 153. ⚔️ Boris Devilboon
+ 154. ⚔️ Bosh
+ 155. ⚔️ Botono
+ 156. ⚔️ Boxer
+ 157. ⚔️ Bozak
+ 158. 🧙‍♂️ Brago
+ 159. 🧙‍♂️ Brand
+ 160. ⚔️ Brandis Thorn
+ 161. ⚔️ Brandt
+ 162. ⚔️ Branko
+ 163. ⚔️ Breya
+ 164. 🧙‍♂️ Brimaz
+ 165. ⚔️ Bringer
+ 166. ⚔️ Brion Stoutarm
+ 167. ⚔️ Brisela
+ 168. ⚔️ Brudiclad
+ 169. ⚔️ Bruenna
+ 170. ⚔️ Bruna
+ 171. ⚔️ Brushwagg
+ 172. ⚔️ Bureaucrat
+ 173. ⚔️ Burke
+ 174. ⚔️ Busjaw
+ 175. ⚔️ Butterfly
+ 176. 🧙‍♂️ Byode
+ 177. ⚔️ Callaphe
+ 178. ⚔️ Calmont
+ 179. ⚔️ Camarid
+ 180. ⚔️ Camel
+ 181. ⚔️ Caribou
+ 182. ⚔️ Carlo
+ 183. ⚔️ Carmen
+ 184. ⚔️ Carrier
+ 185. ⚔️ Carth
+ 186. ⚔️ Cassie An-Havva
+ 187. ⚔️ Cazur
+ 188. ⚔️ Cecilee
+ 189. ⚔️ Chaeska
+ 190. ⚔️ Chainer
+ 191. ⚔️ Champion (creature type)
+ 192. ⚔️ Champions of Archery
+ 193. ⚔️ Chandler
+ 194. 🧙‍♂️ Chandra Nalaar
+ 195. 🧙‍♂️ Chaney
+ 196. ⚔️ Chanto Umezawa
+ 197. ⚔️ Characteristic and iconic races
+ 198. ⚔️ Chayum-Icha
+ 199. ⚔️ Cheetah
+ 200. ⚔️ Chef
+ 201. ⚔️ Cheyne
+ 202. ⚔️ Chicken
+ 203. ⚔️ Child
+ 204. ⚔️ Chiye
+ 205. ⚔️ Chiyo
+ 206. ⚔️ Cho-Manno
+ 207. ⚔️ Chondeah
+ 208. ⚔️ Chorus of the Conclave
+ 209. ⚔️ Choryu
+ 210. ⚔️ Chromium Rhuell
+ 211. ⚔️ Chunth
+ 212. ⚔️ Cinematic Phoenix
+ 213. ⚔️ Cisarzim
+ 214. ⚔️ Claria
+ 215. ⚔️ Clavileño
+ 216. ⚔️ Clown
+ 217. ⚔️ Cockatrice
+ 218. ⚔️ Coernn
+ 219. ⚔️ Colfenor
+ 220. ⚔️ Cormela
+ 221. ⚔️ Cow
+ 222. ⚔️ Crank (character)
+ 223. ⚔️ Creature class
+ 224. ⚔️ Croag
+ 225. ⚔️ Crovax
+ 226. 🧙‍♂️ Crucius
+ 227. ⚔️ Cullinarn
+ 228. ⚔️ Cyborg
+ 229. ⚔️ Cymede
+ 230. ⚔️ Cyril Rav
+ 231. 🧙‍♂️ Dack Fayden
+ 232. ⚔️ Daghatar
+ 233. 🧙‍♂️ Dakkon Blackblade
+ 234. ⚔️ Dalto
+ 235. ⚔️ Damon
+ 236. 🧙‍♂️ Daretti
+ 237. ⚔️ Daria
+ 238. ⚔️ Darien
+ 239. ⚔️ Darien XLVIII
+ 240. ⚔️ Darka
+ 241. ⚔️ Dauthi
+ 242. 🧙‍♂️ Davriel Cane
+ 243. ⚔️ Davvol
+ 244. ⚔️ Daxos
+ 245. ⚔️ Deer
+ 246. ⚔️ Deguhe
+ 247. ⚔️ Deidamia
+ 248. ⚔️ Dein Salvasi
+ 249. ⚔️ Delney
+ 250. ⚔️ Delphine
+ 251. 🧙‍♂️ Demonic Leviathan
+ 252. ⚔️ Dennick Betzold
+ 253. ⚔️ Deserter
+ 254. ⚔️ Designer
+ 255. ⚔️ Die (creature type)
+ 256. ⚔️ Digody
+ 257. ⚔️ Dipo Wola
+ 258. ⚔️ Disa
+ 259. ⚔️ Dokai
+ 260. 🧙‍♂️ Domri Rade
+ 261. ⚔️ Donal (Mirrodin)
+ 262. ⚔️ Donal Alloway
+ 263. ⚔️ Donner Rus
+ 264. ⚔️ Dorothea
+ 265. ⚔️ Dosan
+ 266. 🧙‍♂️ Dovin Baan
+ 267. ⚔️ Draco
+ 268. ⚔️ Drafna
+ 269. ⚔️ Dragonfly
+ 270. 🧙‍♂️ Draktha
+ 271. ⚔️ Dralnu
+ 272. ⚔️ Drasus
+ 273. ⚔️ Dreadnought
+ 274. ⚔️ Dreygar
+ 275. ⚔️ Drone
+ 276. ⚔️ Drufalden
+ 277. 🧙‍♂️ Dungeon Master
+ 278. ⚔️ Dwynen
+ 279. 🧙‍♂️ Dyfed
+ 280. ⚔️ Eberhart
+ 281. ⚔️ Ebi
+ 282. ⚔️ Ebirri
+ 283. ⚔️ Edara
+ 284. ⚔️ Eesha
+ 285. ⚔️ Egg
+ 286. ⚔️ Ehsan
+ 287. ⚔️ Eidren
+ 288. ⚔️ Eight-and-a-Half-Tails
+ 289. ⚔️ Eiko Shizuki
+ 290. ⚔️ Eitoku
+ 291. ⚔️ Eknet
+ 292. ⚔️ El-Hajjâj
+ 293. ⚔️ Eladamri
+ 294. ⚔️ Elamon
+ 295. ⚔️ Elazar
+ 296. ⚔️ Elder Dragon Legend
+ 297. ⚔️ Elemental?
+ 298. ⚔️ Elenda of Garrano
+ 299. ⚔️ Elesh Norn
+ 300. ⚔️ Elkan
+ 301. 🧙‍♂️ Ellywick Tumblestrum
+ 302. ⚔️ Elmegraun
+ 303. ⚔️ Elnor
+ 304. ⚔️ Elsi Rimheit
+ 305. 🧙‍♂️ Elspeth Tirel
+ 306. ⚔️ Elusen
+ 307. ⚔️ Elves (creature type)
+ 308. 🧙‍♂️ Embereck
+ 309. ⚔️ Emil
+ 310. ⚔️ Enchantment creature
+ 311. ⚔️ Enchantress
+ 312. ⚔️ Endrek Sahr
+ 313. ⚔️ Enkindi
+ 314. ⚔️ Epikos
+ 315. ⚔️ Erayo
+ 316. ⚔️ Erec Kenrith
+ 317. ⚔️ Errant
+ 318. 🧙‍♂️ Ersta
+ 319. ⚔️ Ertai
+ 320. ⚔️ Ervos Trax
+ 321. ⚔️ Eska
+ 322. 🧙‍♂️ Eskil
+ 323. ⚔️ Etali
+ 324. ⚔️ Etrata
+ 325. ⚔️ Euroakus
+ 326. ⚔️ Evangela
+ 327. ⚔️ Evelyn
+ 328. ⚔️ Expansion-Symbol
+ 329. ⚔️ Extus Narr
+ 330. ⚔️ Eye
+ 331. ⚔️ Ezer
+ 332. ⚔️ Fan
+ 333. 🧙‍♂️ Faralyn
+ 334. ⚔️ Farid
+ 335. ⚔️ Fask
+ 336. 🧙‍♂️ Fatima
+ 337. ⚔️ Fec
+ 338. ⚔️ Feldon
+ 339. ⚔️ Felisa Fang
+ 340. ⚔️ Felothar
+ 341. ⚔️ Ferantia
+ 342. 🧙‍♂️ Feroz
+ 343. ⚔️ Ferret
+ 344. ⚔️ Ferrous Rokiric
+ 345. ⚔️ Feryar
+ 346. ⚔️ Fiend
+ 347. ⚔️ Fiero Vespin
+ 348. ⚔️ Fighter
+ 349. ⚔️ Fire Eye
+ 350. ⚔️ Flagbearer
+ 351. ⚔️ Flann
+ 352. ⚔️ Florian Voldaren
+ 353. ⚔️ Flying Men
+ 354. ⚔️ Fonn Zunich
+ 355. ⚔️ Forenzad
+ 356. ⚔️ Fost
+ 357. 🧙‍♂️ Freyalise
+ 358. ⚔️ Frostbeast
+ 359. ⚔️ Fumiko
+ 360. ⚔️ Gaddock Teeg
+ 361. ⚔️ Galina
+ 362. ⚔️ Galo Aher
+ 363. ⚔️ Gargoyle
+ 364. 🧙‍♂️ Garth
+ 365. ⚔️ Garza Zol
+ 366. ⚔️ Gatha
+ 367. ⚔️ General (creature type)
+ 368. ⚔️ Genub
+ 369. ⚔️ Geralf Cecani
+ 370. 🧙‍♂️ Gerheart
+ 371. ⚔️ Germ
+ 372. ⚔️ Gerrard Capashen
+ 373. ⚔️ Geth
+ 374. ⚔️ Gev
+ 375. 🧙‍♂️ Geyadrone Dihada
+ 376. 🧙‍♂️ Gideon Jura
+ 377. ⚔️ Gisa Cecani
+ 378. ⚔️ Gisela
+ 379. ⚔️ Gix
+ 380. ⚔️ Glacian
+ 381. ⚔️ Glarb
+ 382. ⚔️ Glass
+ 383. ⚔️ Gnoll
+ 384. ⚔️ Go-Shintai of Ancient Wars
+ 385. ⚔️ Go-Shintai of Boundless Vigor
+ 386. ⚔️ Go-Shintai of Hidden Cruelty
+ 387. ⚔️ Go-Shintai of Life's Origin
+ 388. ⚔️ Go-Shintai of Lost Wisdom
+ 389. ⚔️ Go-Shintai of Shared Purpose
+ 390. ⚔️ Goat
+ 391. ⚔️ Goblin King
+ 392. ⚔️ God
+ 393. ⚔️ Godo
+ 394. ⚔️ Goka
+ 395. ⚔️ Golden-Gear Colossus
+ 396. ⚔️ Golden-Tail
+ 397. ⚔️ Gonti
+ 398. ⚔️ Gorex
+ 399. ⚔️ Gorilla
+ 400. ⚔️ Gosta Dirk
+ 401. ⚔️ Grakmaw
+ 402. ⚔️ Grandchild
+ 403. ⚔️ Graveborn
+ 404. ⚔️ Greel
+ 405. 🧙‍♂️ Greensleeves
+ 406. ⚔️ Gregor (Dominaria)
+ 407. 🧙‍♂️ Grenfell Mor
+ 408. ⚔️ Greven il-Vec
+ 409. ⚔️ Grim Captain
+ 410. 🧙‍♂️ Grinth
+ 411. ⚔️ Griselbrand
+ 412. ⚔️ Groth Jonar
+ 413. ⚔️ Gryffid
+ 414. ⚔️ Guardian
+ 415. 🧙‍♂️ Guff
+ 416. ⚔️ Gull
+ 417. ⚔️ Gulsen
+ 418. ⚔️ Gunamo
+ 419. ⚔️ Gurgel Brothers
+ 420. ⚔️ Gurias
+ 421. ⚔️ Gus
+ 422. ⚔️ Gustha Ebbasdotter
+ 423. ⚔️ Gwendlyn Di Corci
+ 424. ⚔️ Gwendolyn Carthalion
+ 425. ⚔️ Gwenna
+ 426. ⚔️ Gydolien Mor
+ 427. ⚔️ Gæller No-Breath
+ 428. ⚔️ Haakon
+ 429. ⚔️ Haen
+ 430. ⚔️ Hailin
+ 431. ⚔️ Hajar
+ 432. ⚔️ Haki Umezawa
+ 433. ⚔️ Haktos
+ 434. ⚔️ Halana
+ 435. ⚔️ Half
+ 436. ⚔️ Halfdane
+ 437. ⚔️ Hallar
+ 438. ⚔️ Hamster
+ 439. ⚔️ Hamu
+ 440. ⚔️ Hanna
+ 441. ⚔️ Hans Eriksson
+ 442. ⚔️ Hapatra
+ 443. ⚔️ Haqikah
+ 444. 🧙‍♂️ Harald
+ 445. ⚔️ Harbin
+ 446. ⚔️ Harcu
+ 447. ⚔️ Harlequin
+ 448. ⚔️ Hatificer
+ 449. ⚔️ Haunt of Hightower
+ 450. ⚔️ Hawk
+ 451. ⚔️ Hazduhr
+ 452. ⚔️ Hazel Kenrith
+ 453. ⚔️ Hazezon Tamar
+ 454. ⚔️ Hazoret
+ 455. ⚔️ Head
+ 456. ⚔️ Heidar
+ 457. ⚔️ Heiko Yamazaki
+ 458. ⚔️ Heliod
+ 459. ⚔️ Helligan
+ 460. ⚔️ Henrika Domnathi
+ 461. ⚔️ Heptane
+ 462. ⚔️ Hero
+ 463. ⚔️ Higure
+ 464. ⚔️ Hippogriff
+ 465. ⚔️ Holger Burk
+ 466. ⚔️ Homura
+ 467. ⚔️ Hope of Ghirapur
+ 468. ⚔️ Hormgart
+ 469. 🧙‍♂️ Howler
+ 470. 🧙‍♂️ Huatli
+ 471. ⚔️ Hugs
+ 472. ⚔️ Hunding Gjornersen
+ 473. ⚔️ Hurkyl
+ 474. ⚔️ Hurn
+ 475. ⚔️ Ib Halfheart
+ 476. 🧙‍♂️ Icy
+ 477. ⚔️ Ihesia
+ 478. ⚔️ Ihsan
+ 479. ⚔️ Iizuka
+ 480. ⚔️ Ikenet
+ 481. ⚔️ Iki Hisoka
+ 482. ⚔️ Ikra Shidiqi
+ 483. ⚔️ Ilvoro
+ 484. ⚔️ Imodane
+ 485. ⚔️ Inga Rune-Eyes
+ 486. ⚔️ Ink-Eyes
+ 487. ⚔️ Inti
+ 488. 🧙‍♂️ Inzerva
+ 489. ⚔️ Irini Sengir
+ 490. ⚔️ Iroas
+ 491. ⚔️ Isak Glen'Dard
+ 492. ⚔️ Isamaru
+ 493. ⚔️ Isao
+ 494. ⚔️ Ishi-Ishi
+ 495. ⚔️ Ishikari Bindra
+ 496. 🧙‍♂️ Isona Maive
+ 497. ⚔️ Isperia
+ 498. ⚔️ Istvan
+ 499. ⚔️ Ith
+ 500. ⚔️ Iwamori
+ 501. ⚔️ Ixidor
+ 502. ⚔️ Izolda
+ 503. 🧙‍♂️ Jace Beleren
+ 504. ⚔️ Jacques le Vert
+ 505. ⚔️ Jaeger Ojanen
+ 506. ⚔️ Jaeuhl Carthalion
+ 507. ⚔️ Jaguar
+ 508. ⚔️ Janus
+ 509. ⚔️ Jarad vod Savo
+ 510. 🧙‍♂️ Jared Carthalion
+ 511. ⚔️ Jarin
+ 512. ⚔️ Jarkeld
+ 513. ⚔️ Jarsyl
+ 514. ⚔️ Jasmine Boreal
+ 515. ⚔️ Jason Carthalion
+ 516. ⚔️ Javin
+ 517. 🧙‍♂️ Jaya Ballard
+ 518. ⚔️ Jazal Goldmane
+ 519. ⚔️ Jedhian
+ 520. ⚔️ Jedit Ojanen
+ 521. ⚔️ Jek
+ 522. ⚔️ Jekelth
+ 523. ⚔️ Jellyfish
+ 524. ⚔️ Jenrik
+ 525. ⚔️ Jerren
+ 526. 🧙‍♂️ Jeska
+ 527. ⚔️ Jherana Rure
+ 528. ⚔️ Jhoira
+ 529. 🧙‍♂️ Jiang Yanggu
+ 530. ⚔️ Jimak Ravelth
+ 531. ⚔️ Jin-Gitaxias
+ 532. ⚔️ Jinno Terimund
+ 533. 🧙‍♂️ Jirina Kudro
+ 534. ⚔️ Jofridus
+ 535. ⚔️ Johan
+ 536. ⚔️ Jolav
+ 537. 🧙‍♂️ Jolrael
+ 538. ⚔️ Joshua and Saxon
+ 539. ⚔️ Joskun
+ 540. ⚔️ Josu Vess
+ 541. ⚔️ Joven
+ 542. ⚔️ Judge (creature type)
+ 543. ⚔️ Jugan
+ 544. ⚔️ Juggernaut
+ 545. ⚔️ Jurgen Garensun
+ 546. ⚔️ K'rrik
+ 547. ⚔️ Kaalia
+ 548. ⚔️ Kaho
+ 549. ⚔️ Kailo
+ 550. 🧙‍♂️ Kaito Shizuki
+ 551. ⚔️ Kalitas
+ 552. ⚔️ Kalyntri
+ 553. ⚔️ Kamahl
+ 554. ⚔️ Kamat
+ 555. ⚔️ Kamber
+ 556. ⚔️ Kangaroo
+ 557. ⚔️ Kangee
+ 558. ⚔️ Karador
+ 559. ⚔️ Karlov (Grandfather)
+ 560. 🧙‍♂️ Karn
+ 561. ⚔️ Karona
+ 562. ⚔️ Karrak
+ 563. 🧙‍♂️ Karshan
+ 564. ⚔️ Kasimir
+ 565. ⚔️ Kavu
+ 566. ⚔️ Kawit
+ 567. 🧙‍♂️ Kaya Cassir
+ 568. 🧙‍♂️ Kayla bin-Kroog
+ 569. ⚔️ Kaylen
+ 570. ⚔️ Kazarov
+ 571. 🧙‍♂️ Kedarick VI
+ 572. ⚔️ Keeper of the Secret Lair
+ 573. ⚔️ Kefnet
+ 574. ⚔️ Kei Takahashi
+ 575. ⚔️ Keiga
+ 576. ⚔️ Keimi
+ 577. ⚔️ Keimon
+ 578. ⚔️ Kela and Dar Chensal
+ 579. ⚔️ Kelse
+ 580. 🧙‍♂️ Kenan Sahrmal
+ 581. ⚔️ Kenshi Sakashima
+ 582. ⚔️ Kentaro
+ 583. 🧙‍♂️ Kento
+ 584. ⚔️ Kenzo
+ 585. ⚔️ Kessla
+ 586. ⚔️ Khali
+ 587. ⚔️ Kharis
+ 588. 🧙‍♂️ Khazi
+ 589. ⚔️ Khrad
+ 590. ⚔️ Khudal
+ 591. ⚔️ Khurzog
+ 592. ⚔️ Kianne
+ 593. ⚔️ Kianon
+ 594. ⚔️ Kibo
+ 595. ⚔️ Kiki-Jiki
+ 596. ⚔️ Kiku
+ 597. ⚔️ Killbot
+ 598. ⚔️ King
+ 599. ⚔️ Kirtar
+ 600. ⚔️ Klaus
+ 601. ⚔️ Kobo
+ 602. ⚔️ Kokusho
+ 603. ⚔️ Koll
+ 604. ⚔️ Kolman
+ 605. ⚔️ Koma
+ 606. ⚔️ Kondo
+ 607. ⚔️ Korlash
+ 608. ⚔️ Korvold
+ 609. 🧙‍♂️ Koth of the Hammer
+ 610. ⚔️ Kothophed
+ 611. ⚔️ Kozilek
+ 612. ⚔️ Krark
+ 613. ⚔️ Kraum
+ 614. ⚔️ Kreig
+ 615. 🧙‍♂️ Krim
+ 616. ⚔️ Kristina of the Woods
+ 617. ⚔️ Kuberr
+ 618. ⚔️ Kudo
+ 619. ⚔️ Kudro
+ 620. ⚔️ Kuon
+ 621. ⚔️ Kurkesh
+ 622. 🧙‍♂️ Kuthuman
+ 623. ⚔️ Kylox
+ 624. ⚔️ Kynaios and Tiro
+ 625. ⚔️ Kzzy'n
+ 626. ⚔️ Lady Verdenth
+ 627. ⚔️ Lady of Proper Etiquette
+ 628. ⚔️ Laelia
+ 629. ⚔️ Lakil
+ 630. ⚔️ Lamia
+ 631. ⚔️ Lammasu
+ 632. ⚔️ Lannery Storm
+ 633. ⚔️ Lannos Nodov
+ 634. ⚔️ Laquatus
+ 635. ⚔️ Laria
+ 636. ⚔️ Lathril
+ 637. ⚔️ Latulla
+ 638. ⚔️ Leaf
+ 639. ⚔️ Leech
+ 640. ⚔️ Legend
+ 641. ⚔️ Lemure
+ 642. ⚔️ Leori
+ 643. 🧙‍♂️ Leshrac
+ 644. ⚔️ Lhurgoyf
+ 645. 🧙‍♂️ Liana
+ 646. ⚔️ Liberator
+ 647. ⚔️ Licid
+ 648. 🧙‍♂️ Liliana Vess
+ 649. ⚔️ Lily Emberseed
+ 650. ⚔️ Lim-Dûl
+ 651. 🧙‍♂️ Linden Kenrith
+ 652. ⚔️ Liont
+ 653. ⚔️ List of gods and deities
+ 654. ⚔️ Lita
+ 655. ⚔️ Lividus
+ 656. ⚔️ Llawan
+ 657. ⚔️ Llora
+ 658. ⚔️ Lobster
+ 659. ⚔️ Locus (creature type)
+ 660. ⚔️ Logan
+ 661. ⚔️ Loran
+ 662. ⚔️ Lord
+ 663. ⚔️ Lord of Tresserhorn
+ 664. ⚔️ Loren
+ 665. ⚔️ Lorris
+ 666. ⚔️ Lorthos
+ 667. ⚔️ Lorthun
+ 668. ⚔️ Lothar
+ 669. ⚔️ Lothar Lovisason
+ 670. ⚔️ Lovisa Coldeyes
+ 671. ⚔️ Lowallyn
+ 672. ⚔️ Lucard
+ 673. 🧙‍♂️ Lukka
+ 674. ⚔️ Lyese (character)
+ 675. ⚔️ M'Odo
+ 676. ⚔️ Macar
+ 677. ⚔️ Maeveen O'Donagh
+ 678. ⚔️ Maga
+ 679. ⚔️ Magfire
+ 680. ⚔️ Maigoyume
+ 681. ⚔️ Mairsil
+ 682. ⚔️ Makare
+ 683. ⚔️ Malach of the Anvil
+ 684. ⚔️ Malanai
+ 685. ⚔️ Malfegor
+ 686. ⚔️ Malil
+ 687. ⚔️ Malvos
+ 688. ⚔️ Malynn
+ 689. ⚔️ Mammoth
+ 690. ⚔️ Man
+ 691. 🧙‍♂️ Manatarqua
+ 692. ⚔️ Mandek Ironfist
+ 693. ⚔️ Manticore
+ 694. ⚔️ Mantis
+ 695. ⚔️ Maralen
+ 696. ⚔️ Maraxus
+ 697. 🧙‍♂️ Marchesa d'Amati
+ 698. ⚔️ Marcois Jean-Jaquent
+ 699. ⚔️ Marek
+ 700. ⚔️ Marhault Elsdragon
+ 701. ⚔️ Marisi
+ 702. ⚔️ Mariska
+ 703. ⚔️ Markos
+ 704. ⚔️ Markus
+ 705. ⚔️ Marrow-Gnawer
+ 706. ⚔️ Martyrs of Korlis
+ 707. ⚔️ Marunaten and Merinaten
+ 708. ⚔️ Marycz
+ 709. ⚔️ Masako
+ 710. 🧙‍♂️ Masrath
+ 711. ⚔️ Masticore
+ 712. ⚔️ Matoc
+ 713. ⚔️ Mattak
+ 714. ⚔️ Mavren Fein
+ 715. ⚔️ Mayael
+ 716. ⚔️ Mazirek
+ 717. ⚔️ Melira
+ 718. ⚔️ Melisk
+ 719. ⚔️ Meloku
+ 720. ⚔️ Memnarch
+ 721. ⚔️ Merieke Ri Berit
+ 722. ⚔️ Meris
+ 723. ⚔️ Merrevia Sal
+ 724. 🧙‍♂️ Meshuvel
+ 725. ⚔️ Methos
+ 726. ⚔️ Mevra
+ 727. 🧙‍♂️ Mezlok
+ 728. ⚔️ Michiko Konda
+ 729. ⚔️ Migellic
+ 730. ⚔️ Mihail Stovorod
+ 731. ⚔️ Mikaeus Cecani
+ 732. ⚔️ Miko
+ 733. ⚔️ Millena
+ 734. ⚔️ Millicent
+ 735. ⚔️ Mime
+ 736. ⚔️ Mina and Denn
+ 737. ⚔️ Mindosz
+ 738. 🧙‍♂️ Mindrel
+ 739. ⚔️ Mira and Tau
+ 740. ⚔️ Miralda
+ 741. ⚔️ Mirko Vosk
+ 742. ⚔️ Mirri
+ 743. ⚔️ Mishra
+ 744. ⚔️ Mist
+ 745. ⚔️ Mistfolk
+ 746. ⚔️ Mochi
+ 747. ⚔️ Modar Bejiri
+ 748. ⚔️ Mogis
+ 749. ⚔️ Moira
+ 750. ⚔️ Momir Vig
+ 751. ⚔️ Monger
+ 752. ⚔️ Mongoose
+ 753. ⚔️ Mons
+ 754. ⚔️ Morgane
+ 755. ⚔️ Morinfen and Gallowbraid
+ 756. ⚔️ Morven
+ 757. 🧙‍♂️ Mu Yanling
+ 758. ⚔️ Muggtoth
+ 759. ⚔️ Multani
+ 760. ⚔️ Mummy
+ 761. ⚔️ Munetsugu Takeno
+ 762. ⚔️ Muni
+ 763. ⚔️ Murat
+ 764. ⚔️ Musata
+ 765. ⚔️ Mwigo
+ 766. ⚔️ Myntasha
+ 767. ⚔️ Myr
+ 768. ⚔️ Myrel
+ 769. ⚔️ Mystic
+ 770. ⚔️ Mytaru
+ 771. ⚔️ Márton Stromgald
+ 772. ⚔️ Naga
+ 773. ⚔️ Nagao
+ 774. ⚔️ Naiva
+ 775. ⚔️ Nakht
+ 776. ⚔️ Nameless Race
+ 777. 🧙‍♂️ Narfi
+ 778. ⚔️ Narok
+ 779. 🧙‍♂️ Narset
+ 780. ⚔️ Narwhal
+ 781. ⚔️ Nassari
+ 782. ⚔️ Nath
+ 783. ⚔️ Nautilus
+ 784. ⚔️ Nazir
+ 785. ⚔️ Nebuchadnezzar
+ 786. ⚔️ Necrosavant
+ 787. ⚔️ Neheb
+ 788. ⚔️ Neit
+ 789. ⚔️ Nekusar
+ 790. ⚔️ Nellick
+ 791. ⚔️ Nephilim
+ 792. ⚔️ Nevar
+ 793. ⚔️ Nevinyrral
+ 794. ⚔️ Ngabo
+ 795. ⚔️ Niall Silvain
+ 796. 🧙‍♂️ Nicol Bolas
+ 797. ⚔️ Nighteyes
+ 798. ⚔️ Nightstalker
+ 799. ⚔️ Nikko
+ 800. 🧙‍♂️ Niko Aris
+ 801. 🧙‍♂️ Nimbys
+ 802. ⚔️ Nira
+ 803. ⚔️ Nira (Duel Masters)
+ 804. 🧙‍♂️ Nissa Revane
+ 805. ⚔️ Nivea
+ 806. ⚔️ Nnanyielugo
+ 807. ⚔️ Noggle
+ 808. ⚔️ Nohr
+ 809. ⚔️ Nylah
+ 810. ⚔️ O-Kagachi
+ 811. 🧙‍♂️ Ob Nixilis
+ 812. ⚔️ Obuun
+ 813. ⚔️ Obzedat
+ 814. ⚔️ Ogwater Rifkin
+ 815. ⚔️ Ohabi Caleria
+ 816. ⚔️ Oiyan
+ 817. ⚔️ Oketra
+ 818. ⚔️ Okinec Ahau
+ 819. ⚔️ Olag
+ 820. ⚔️ Olexo
+ 821. ⚔️ Oliver Farrel
+ 822. ⚔️ Olutio
+ 823. ⚔️ Omo
+ 824. ⚔️ Onala Kjeld
+ 825. 🧙‍♂️ Oona
+ 826. ⚔️ Opal-Eye
+ 827. ⚔️ Ophelia
+ 828. ⚔️ Oracle en-Vec
+ 829. ⚔️ Orai Daiyeta
+ 830. ⚔️ Orb
+ 831. ⚔️ Orca
+ 832. ⚔️ Orgg
+ 833. ⚔️ Orhaft Stoneback
+ 834. ⚔️ Oriel Kjeldos
+ 835. ⚔️ Orim
+ 836. ⚔️ Ormendahl
+ 837. ⚔️ Orthion
+ 838. ⚔️ Orwell
+ 839. ⚔️ Ota
+ 840. ⚔️ Oviya Pashiri
+ 841. ⚔️ Oyster
+ 842. ⚔️ Ozox
+ 843. ⚔️ Palla
+ 844. ⚔️ Palladia-Mors
+ 845. ⚔️ Pangolin
+ 846. ⚔️ Paratrooper
+ 847. 🧙‍♂️ Parcher
+ 848. ⚔️ Parnesse
+ 849. ⚔️ Pavios and Thanasis
+ 850. ⚔️ Pearl-Ear
+ 851. 🧙‍♂️ Pedron
+ 852. ⚔️ Peemel
+ 853. ⚔️ Penguin
+ 854. ⚔️ Pentavite
+ 855. ⚔️ Penthikos
+ 856. ⚔️ Phyrexian War Beast
+ 857. ⚔️ Pianna
+ 858. ⚔️ Pig
+ 859. ⚔️ Pikepierce
+ 860. ⚔️ Pincher
+ 861. ⚔️ Piru
+ 862. ⚔️ Pitre
+ 863. ⚔️ Pixie Queen
+ 864. ⚔️ Pizoondertanx
+ 865. 🧙‍♂️ Platon
+ 866. ⚔️ Polukranos
+ 867. ⚔️ Pontifex
+ 868. ⚔️ Pony
+ 869. ⚔️ Porcupine
+ 870. ⚔️ Porros
+ 871. ⚔️ Present
+ 872. ⚔️ Princess Lucrezia
+ 873. ⚔️ Prism
+ 874. ⚔️ Processor
+ 875. ⚔️ Project Kraj
+ 876. ⚔️ Qadir
+ 877. ⚔️ Qhattib
+ 878. 🧙‍♂️ Quintorius Kand
+ 879. ⚔️ Quopomma
+ 880. ⚔️ Race
+ 881. ⚔️ Raddic
+ 882. ⚔️ Radiant
+ 883. ⚔️ Rael Gar
+ 884. 🧙‍♂️ Rafthrasa
+ 885. ⚔️ Rafwyn Capashen
+ 886. ⚔️ Rag Man
+ 887. ⚔️ Ragnar
+ 888. ⚔️ Rakhan
+ 889. ⚔️ Rakka Mar
+ 890. ⚔️ Raklan
+ 891. ⚔️ Raksha Golden Cub
+ 892. 🧙‍♂️ Ral Zarek
+ 893. 🧙‍♂️ Ramaz
+ 894. ⚔️ Ramirez DePietro
+ 895. ⚔️ Ramos
+ 896. ⚔️ Ramses Overdark
+ 897. ⚔️ Ranar
+ 898. ⚔️ Rarp
+ 899. ⚔️ Rashka
+ 900. ⚔️ Rasputin Dreamweaver
+ 901. ⚔️ Ratadrabik
+ 902. ⚔️ Ratepe
+ 903. 🧙‍♂️ Ravi Sengir
+ 904. 🧙‍♂️ Ravidel
+ 905. ⚔️ Ravus
+ 906. ⚔️ Rayami
+ 907. ⚔️ Rayne
+ 908. ⚔️ Razaketh
+ 909. ⚔️ Razia
+ 910. ⚔️ Reaper King
+ 911. ⚔️ Rebbec
+ 912. ⚔️ Red Donald
+ 913. ⚔️ Reezug
+ 914. ⚔️ Reflection
+ 915. ⚔️ Reika Eberhardt
+ 916. ⚔️ Reki
+ 917. ⚔️ Relio Voldaren
+ 918. ⚔️ Relov
+ 919. ⚔️ Renata
+ 920. ⚔️ Rendall
+ 921. ⚔️ Reveler
+ 922. ⚔️ Rex Nebula
+ 923. ⚔️ Reya Dawnbringer
+ 924. ⚔️ Reyhan
+ 925. ⚔️ Reyhan (Ulgrotha)
+ 926. ⚔️ Rhonas
+ 927. ⚔️ Rhys
+ 928. ⚔️ Ria Ivor
+ 929. ⚔️ Rica
+ 930. ⚔️ Richlau
+ 931. ⚔️ Rigger
+ 932. ⚔️ Riko
+ 933. ⚔️ Rinni
+ 934. ⚔️ Riolla Hifrata
+ 935. 🧙‍♂️ Ripley Vance
+ 936. ⚔️ Rocco
+ 937. ⚔️ Rodolf Duskbringer
+ 938. ⚔️ Rofellos
+ 939. ⚔️ Rograkh
+ 940. ⚔️ Rohgahh
+ 941. ⚔️ Rorix Bladewing
+ 942. ⚔️ Rotapan
+ 943. ⚔️ Rothga
+ 944. 🧙‍♂️ Rowan Kenrith
+ 945. ⚔️ Rubra
+ 946. ⚔️ Ruhan
+ 947. ⚔️ Rukarumel
+ 948. ⚔️ Rukh
+ 949. ⚔️ Ruko
+ 950. ⚔️ Rune-Tail
+ 951. ⚔️ Runo Stromkirk
+ 952. ⚔️ Ruric Thar
+ 953. ⚔️ Rusko
+ 954. ⚔️ Ryusaki Kumano
+ 955. ⚔️ Ryusei
+ 956. ⚔️ Sable
+ 957. ⚔️ Sachem Karelon Frie
+ 958. ⚔️ Sachi
+ 959. ⚔️ Sacumon
+ 960. ⚔️ Saffi Eriksdotter
+ 961. ⚔️ Sage
+ 962. 🧙‍♂️ Saheeli Rai
+ 963. ⚔️ Sakiko
+ 964. ⚔️ Salamander
+ 965. ⚔️ Samiks
+ 966. ⚔️ Samor
+ 967. 🧙‍♂️ Samut
+ 968. 🧙‍♂️ Sandruu
+ 969. ⚔️ Sanwell
+ 970. ⚔️ Sapling of Colfenor
+ 971. 🧙‍♂️ Sarkhan Vol
+ 972. ⚔️ Sarya Haasendel
+ 973. ⚔️ Saryth
+ 974. ⚔️ Sasaya
+ 975. ⚔️ Savra vod Savo
+ 976. 🧙‍♂️ Scarlet Vizier
+ 977. ⚔️ Scientist
+ 978. ⚔️ Scion
+ 979. ⚔️ Scorpion God
+ 980. ⚔️ Sculpture
+ 981. ⚔️ Sea King
+ 982. ⚔️ Sedris
+ 983. ⚔️ Seitaro and Shujiro Yamazaki
+ 984. ⚔️ Sek'Kuar
+ 985. ⚔️ Seklistis
+ 986. ⚔️ Selena Mistencharmer
+ 987. ⚔️ Selenia
+ 988. ⚔️ Sen Triplets
+ 989. 🧙‍♂️ Sengir
+ 990. ⚔️ Sentos
+ 991. ⚔️ Serenok
+ 992. ⚔️ Serf
+ 993. 🧙‍♂️ Serra
+ 994. ⚔️ Servo
+ 995. ⚔️ Seshiro
+ 996. ⚔️ Setha and Basetha
+ 997. ⚔️ Sethron
+ 998. ⚔️ Seton
+ 999. ⚔️ Severo Jr.
+1000. ⚔️ Shadress
+1001. ⚔️ Shandlar
+1002. ⚔️ Shanna Sisay
+1003. ⚔️ Sharaman
+1004. ⚔️ Sharp-Ear
+1005. ⚔️ Sharuum
+1006. ⚔️ Sheep
+1007. ⚔️ Sheoldred
+1008. ⚔️ Shidako
+1009. ⚔️ Shigeki
+1010. ⚔️ Ship
+1011. ⚔️ Shisato
+1012. ⚔️ Shizuko
+1013. ⚔️ Shu Yun
+1014. ⚔️ Siani
+1015. ⚔️ Sianna
+1016. 🧙‍♂️ Sidisi
+1017. 🧙‍♂️ Sifa Grent
+1018. ⚔️ Silas Brotten
+1019. ⚔️ Silas Renn
+1020. ⚔️ Silk-Eyes
+1021. ⚔️ Silver-Foot
+1022. ⚔️ Sima
+1023. ⚔️ Sindbad
+1024. ⚔️ Sirimiti
+1025. 🧙‍♂️ Sisay
+1026. ⚔️ Sisters of Stone Death
+1027. 🧙‍♂️ Sivitri Scarzam
+1028. ⚔️ Sivvi en-Vec
+1029. ⚔️ Skaal Kesh
+1030. ⚔️ Skavius Slan
+1031. ⚔️ Skeleton Ship
+1032. ⚔️ Skellum
+1033. ⚔️ Sketch
+1034. ⚔️ Skitter
+1035. ⚔️ Skrikkle
+1036. ⚔️ Skule
+1037. ⚔️ Skullbriar
+1038. ⚔️ Slimefoot
+1039. ⚔️ Slith
+1040. ⚔️ Sliver Queen
+1041. 🧙‍♂️ Slobad
+1042. ⚔️ Smith
+1043. ⚔️ Sobeslav
+1044. ⚔️ Sol
+1045. ⚔️ Soldevi Steam Beast
+1046. ⚔️ Soraya
+1047. 🧙‍♂️ Sorin Markov
+1048. ⚔️ Sorya
+1049. ⚔️ Sosuke
+1050. ⚔️ Spawn
+1051. ⚔️ Spellcaster
+1052. ⚔️ Spike
+1053. ⚔️ Spirokai
+1054. ⚔️ Splinter
+1055. ⚔️ Sponge
+1056. ⚔️ Spurna
+1057. ⚔️ Spuzzem
+1058. ⚔️ Squee
+1059. ⚔️ Squid
+1060. ⚔️ Sruta
+1061. ⚔️ Stabwhisker
+1062. ⚔️ Stained
+1063. ⚔️ Stangg
+1064. ⚔️ Stangg Twin
+1065. ⚔️ Stanslov
+1066. ⚔️ Starcryst
+1067. ⚔️ Starke il-Vec
+1068. ⚔️ Stenn
+1069. ⚔️ Stonebrow
+1070. ⚔️ Storrev
+1071. ⚔️ Subira
+1072. ⚔️ Suleiman
+1073. ⚔️ Sulli Valenco
+1074. ⚔️ Sunastian Falconer
+1075. ⚔️ Surrakar
+1076. ⚔️ Sutina
+1077. ⚔️ Suzue
+1078. 🧙‍♂️ Svega
+1079. ⚔️ Svogthir
+1080. 🧙‍♂️ Sylvene
+1081. ⚔️ Symond Halm
+1082. ⚔️ Szadek
+1083. ⚔️ Taaveti
+1084. ⚔️ Tacenda Verlasen
+1085. ⚔️ Tae Jin
+1086. ⚔️ Tagard Tarngold
+1087. ⚔️ Tahngarth
+1088. ⚔️ Tail Brothers
+1089. 🧙‍♂️ Taishiar
+1090. ⚔️ Taivas
+1091. ⚔️ Takeshi Konda
+1092. ⚔️ Talara Many-Tined
+1093. ⚔️ Talion
+1094. ⚔️ Tameshi
+1095. 🧙‍♂️ Tamiyo
+1096. ⚔️ Tamsyn Sweene
+1097. ⚔️ Tasigur
+1098. ⚔️ Tavver
+1099. ⚔️ Tawnos
+1100. ⚔️ Tawny
+1101. ⚔️ Taysir of Rabiah
+1102. ⚔️ Tayva and Loria
+1103. ⚔️ Te Ju Ki
+1104. ⚔️ Teacher
+1105. ⚔️ Teddy
+1106. 🧙‍♂️ Teferi Akosa
+1107. ⚔️ Temken
+1108. 🧙‍♂️ Temmet
+1109. 🧙‍♂️ Tempé
+1110. ⚔️ Tenihas
+1111. ⚔️ Tentacle
+1112. ⚔️ Teroh
+1113. 🧙‍♂️ Tessebik
+1114. ⚔️ Tetravite
+1115. ⚔️ Tetsuo Umezawa
+1116. ⚔️ Tetzin
+1117. 🧙‍♂️ Tevesh Szat
+1118. 🧙‍♂️ Teyo Verada
+1119. ⚔️ Teysa Karlov
+1120. 🧙‍♂️ Tezzeret
+1121. ⚔️ Thabit
+1122. ⚔️ Thaddeus
+1123. ⚔️ Thalakos
+1124. ⚔️ Thane Du-Moriss IV
+1125. ⚔️ Thatu Reiniger
+1126. 🧙‍♂️ The Adventurer
+1127. ⚔️ The Archimandrite
+1128. ⚔️ The Biggest, Baddest, Nastiest, Scariest Creature You'll Ever See
+1129. ⚔️ The Fallen
+1130. 🧙‍♂️ The Thorn
+1131. 🧙‍♂️ The Traveler
+1132. 🧙‍♂️ The Unluckiest
+1133. 🧙‍♂️ The Wanderer
+1134. ⚔️ Thelon
+1135. ⚔️ Thexar
+1136. 🧙‍♂️ Thomil
+1137. ⚔️ Thranegeld
+1138. ⚔️ Thraximundar
+1139. ⚔️ Thura
+1140. ⚔️ Tiana
+1141. 🧙‍♂️ Tibalt
+1142. ⚔️ Timin
+1143. ⚔️ Tinybones
+1144. ⚔️ Titania
+1145. ⚔️ Tivadar
+1146. ⚔️ Tivit
+1147. ⚔️ Tiyint
+1148. ⚔️ Tobias Andrion
+1149. ⚔️ Tobias Kavrel
+1150. ⚔️ Tobita
+1151. ⚔️ Tocasia
+1152. ⚔️ Toggo
+1153. ⚔️ Tok-Tok
+1154. ⚔️ Tolsimir Wolfblood
+1155. ⚔️ Tomik Vrona
+1156. ⚔️ Tommy
+1157. ⚔️ Tomoya
+1158. ⚔️ Tor Wauki the Elder
+1159. ⚔️ Tor Wauki the Younger
+1160. ⚔️ Tori D'Avenant
+1161. ⚔️ Tormod
+1162. ⚔️ Torsten Von Ursus
+1163. ⚔️ Torturer
+1164. ⚔️ Torya Longshanks
+1165. ⚔️ Toshiro Umezawa
+1166. ⚔️ Toski
+1167. ⚔️ Tourach
+1168. ⚔️ Townsfolk
+1169. ⚔️ Traft
+1170. ⚔️ Tree
+1171. ⚔️ Treizeci
+1172. ⚔️ Trilobite
+1173. ⚔️ Trine
+1174. ⚔️ Triskelavite
+1175. ⚔️ Tsabo Tavoc
+1176. ⚔️ Tuktuk
+1177. ⚔️ Tulan
+1178. ⚔️ Turg
+1179. ⚔️ Tuvasa
+1180. 🧙‍♂️ Tymaret
+1181. ⚔️ Tymna
+1182. ⚔️ Tymolin Loneglade
+1183. 🧙‍♂️ Tyreus
+1184. 🧙‍♂️ Tyvar Kell
+1185. ⚔️ Uchbenbak
+1186. 🧙‍♂️ Ugin
+1187. ⚔️ Ulamog
+1188. ⚔️ Ulaten
+1189. ⚔️ Uncle Istvan
+1190. ⚔️ Undead
+1191. ⚔️ Ur-Dragon
+1192. ⚔️ Urabrask
+1193. ⚔️ Uramon
+1194. ⚔️ Urdom
+1195. ⚔️ Urgoros
+1196. ⚔️ Ursal Daleel
+1197. 🧙‍♂️ Urza
+1198. ⚔️ Usman
+1199. ⚔️ Uyo
+1200. 🧙‍♂️ Vaash Vroga
+1201. ⚔️ Vadmir
+1202. ⚔️ Vadrik
+1203. ⚔️ Vaevictis Asmadi
+1204. 🧙‍♂️ Valdusian Tomer
+1205. ⚔️ Vampyre
+1206. ⚔️ Varchild
+1207. ⚔️ Vargus Wrath
+1208. ⚔️ Varina
+1209. ⚔️ Varnel Buckara
+1210. ⚔️ Varragoth
+1211. ⚔️ Vaylesh
+1212. ⚔️ Vega
+1213. ⚔️ Vegetable
+1214. ⚔️ Veldrane
+1215. ⚔️ Velena
+1216. ⚔️ Vendilion Clique
+1217. 🧙‍♂️ Venser
+1218. ⚔️ Verdeloth
+1219. ⚔️ Verrak
+1220. ⚔️ Vervamon
+1221. ⚔️ Vhati il-Dal
+1222. ⚔️ Vict Gharti
+1223. ⚔️ Vikya
+1224. ⚔️ Villain
+1225. ⚔️ Vinack
+1226. ⚔️ Virot Maglan
+1227. ⚔️ Vis Svokunol
+1228. ⚔️ Vito Quijano de Pasamonte
+1229. 🧙‍♂️ Vivien Reid
+1230. ⚔️ Volpaig
+1231. ⚔️ Volrath
+1232. ⚔️ Volver
+1233. ⚔️ Vona de Iedo
+1234. ⚔️ Vorik
+1235. ⚔️ Vorinclex
+1236. ⚔️ Voska
+1237. 🧙‍♂️ Vram
+1238. 🧙‍♂️ Vraska
+1239. 🧙‍♂️ Vronos
+1240. ⚔️ Vy Covalt
+1241. ⚔️ Vytas
+1242. ⚔️ Vígniút
+1243. ⚔️ Waiter
+1244. 🧙‍♂️ Wallis Parrish
+1245. ⚔️ Warlord of Kroog
+1246. ⚔️ Warree Tarcha
+1247. ⚔️ Warthog
+1248. ⚔️ Wasitora
+1249. ⚔️ Weatherlight crew
+1250. ⚔️ Weaver King
+1251. 🧙‍♂️ Wezna
+1252. ⚔️ Whisper
+1253. ⚔️ Whistledove Kithkin
+1254. ⚔️ Wilhelt
+1255. 🧙‍♂️ Will Kenrith
+1256. ⚔️ Willia
+1257. 🧙‍♂️ Windgrace
+1258. ⚔️ Windmill
+1259. ⚔️ Winota
+1260. ⚔️ Witch
+1261. ⚔️ Worm
+1262. ⚔️ Worrin Betzold
+1263. 🧙‍♂️ Worzel
+1264. ⚔️ Wraith
+1265. 🧙‍♂️ Wrenn
+1266. ⚔️ Wrestler
+1267. ⚔️ Wydwen
+1268. ⚔️ Wyvern
+1269. ⚔️ Xander
+1270. ⚔️ Xantcha
+1271. ⚔️ Xarl
+1272. 🧙‍♂️ Xenagos
+1273. ⚔️ Xian
+1274. ⚔️ Xira Arien
+1275. ⚔️ Xyrun-Jed
+1276. ⚔️ Yahenni
+1277. ⚔️ Yargle
+1278. ⚔️ Yasova
+1279. 🧙‍♂️ Yawden
+1280. ⚔️ Yawgmoth
+1281. ⚔️ Yenna
+1282. ⚔️ Yert
+1283. ⚔️ Yeti
+1284. ⚔️ Yisan
+1285. ⚔️ Yolotzin
+1286. ⚔️ Yorgo
+1287. 🧙‍♂️ Yorvo
+1288. ⚔️ Yosei
+1289. ⚔️ Yotian soldier
+1290. ⚔️ Yuma
+1291. ⚔️ Yunnie
+1292. ⚔️ Yzaak
+1293. ⚔️ Zabaz
+1294. ⚔️ Zagorka
+1295. ⚔️ Zagras
+1296. ⚔️ Zalgadib
+1297. ⚔️ Zangari
+1298. ⚔️ Zara
+1299. ⚔️ Zaraya
+1300. ⚔️ Zarel Ewine
+1301. ⚔️ Zareth San
+1302. ⚔️ Zegana
+1303. ⚔️ Zeki
+1304. ⚔️ Zenon
+1305. ⚔️ Zhulodok
+1306. ⚔️ Zihir Wola
+1307. ⚔️ Zilgeth
+1308. ⚔️ Zinnia
+1309. ⚔️ Zivan
+1310. ⚔️ Zo-Zu
+1311. ⚔️ Zomaj Hauc
+1312. ⚔️ Zonian
+1313. ⚔️ Zubera
+1314. ⚔️ Zumaki
+1315. ⚔️ Élan d'Avenant
+1316. 🧙‍♂️ Ā

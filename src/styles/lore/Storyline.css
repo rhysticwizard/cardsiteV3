@@ -1,0 +1,150 @@
+/* CSS Variables for Storyline Component */
+:root {
+  --text-color: #ffffff;
+  --text-secondary: #a0a0a0;
+  --link-color: #ffffff;
+  --link-color-hover: #cccccc;
+  --border-color: #333333;
+  --background-color: #000000;
+}
+
+/* Styles for the Storyline component */
+.storyline-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 0;
+  line-height: 1.8;
+  font-family: 'Inter', sans-serif;
+  color: var(--text-color);
+  background-color: var(--background-color);
+}
+
+.storyline-container h1 {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: var(--text-color);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  position: relative;
+}
+
+.storyline-container h1:after {
+  content: "";
+  position: absolute;
+  width: 80px;
+  height: 3px;
+  background-color: var(--link-color);
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.storyline-content {
+  color: var(--text-color);
+}
+
+.storyline-content h2 {
+  font-size: 1.5rem;
+  margin: 2.5rem 0 1.2rem;
+  color: var(--text-color);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 0.5rem;
+}
+
+.storyline-content p {
+  margin-bottom: 1.4rem;
+  text-align: justify;
+  font-size: 0.9rem;
+}
+
+.storyline-intro {
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--text-secondary);
+  border-left: 3px solid var(--link-color);
+  padding-left: 1.5rem;
+  margin-bottom: 2rem !important;
+}
+
+.storyline-conclusion {
+  font-size: 1rem;
+  font-style: italic;
+  border-right: 3px solid var(--link-color);
+  padding-right: 1.5rem;
+  text-align: right !important;
+  margin-top: 2.5rem;
+}
+
+.storyline-footer {
+  margin-top: 4rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  border-top: 1px solid var(--border-color);
+  padding-top: 1.5rem;
+}
+
+.storyline-footer a {
+  color: var(--link-color);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.storyline-footer a:hover {
+  color: var(--link-color-hover);
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .storyline-container {
+    padding: 1.5rem;
+  }
+  
+  .storyline-container h1 {
+    font-size: 2rem;
+  }
+  
+  .storyline-content h2 {
+    font-size: 1.5rem;
+  }
+  
+  .storyline-intro,
+  .storyline-conclusion,
+  .storyline-content p {
+    font-size: 0.9rem;
+  }
+}
+
+/* .storyline-content can be removed if it no longer serves a purpose, 
+   or kept if you plan to add other distinct content blocks later. 
+   For now, I'll simplify assuming only .storyline-text is the direct child for content.*/
+
+.storyline-text {
+  text-align: justify;
+}
+
+.storyline-text p {
+  margin-bottom: 15px;
+  line-height: 1.6;
+}
+
+.storyline-text em {
+  font-style: italic;
+}
+
+/* Removed styles related to .storyline-image-container, .storyline-image, .storyline-image-caption 
+   and the flexbox layout for .storyline-content as they are no longer needed. 
+   The responsive @media query might also be simplified or removed if not needed for a single column layout.
+*/
+
+/* Basic responsive adjustment if needed for very narrow screens, though less critical now */
+@media (max-width: 480px) {
+  .storyline-container {
+    padding: 15px;
+  }
+  .storyline-main-title {
+    font-size: 1.8em;
+  }
+} 

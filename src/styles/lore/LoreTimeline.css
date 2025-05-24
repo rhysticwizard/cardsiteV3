@@ -1,0 +1,424 @@
+.lore-container {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: #000;
+  color: #fff;
+  min-height: 100vh;
+}
+
+.lore-container .site-title, 
+.lore-container .footer-content,
+.lore-container .search-container,
+.lore-container .filter-sort,
+.lore-container .view-controls,
+.lore-container .tabs {
+  display: none; /* Hide elements not in the new design */
+}
+
+/* Top Navigation Bar */
+.top-nav-bar {
+  display: flex;
+  justify-content: flex-start;
+  padding: 1rem 2rem; /* Adjust padding as needed */
+  border-bottom: 1px solid #333; /* Subtle separator line */
+}
+
+.top-nav-btn {
+  background: none;
+  border: none;
+  color: #aaa; /* Default color for inactive buttons */
+  padding: 0.5rem 1rem;
+  margin-right: 1rem; /* Spacing between buttons */
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.top-nav-btn:hover {
+  color: #fff;
+}
+
+.top-nav-btn.active {
+  color: #fff; /* Color for the active button */
+  font-weight: 700;
+}
+
+.top-nav-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; /* Position underline relative to bottom border of nav bar */
+  left: 0.5rem; /* Align with text padding */
+  right: 0.5rem; /* Align with text padding */
+  height: 2px;
+  background-color: #fff;
+}
+
+/* Timeline View */
+.timeline {
+  position: relative;
+  margin: 0 auto;
+  padding: 5rem 2rem;
+  max-width: 1200px;
+}
+
+/* Center line */
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  background-color: #fff; /* Changed from green to white */
+  transform: translateX(-50%);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.4); /* Changed from green to white */
+}
+
+/* Process step structure */
+.process-step {
+  position: relative;
+  display: flex;
+  justify-content: space-between; /* Distribute space for a central gap */
+  align-items: flex-start; /* Align items to the top */
+  margin: 8rem 0;
+  /* min-height: 150px; Removed to allow content to dictate height */
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeIn 0.8s ease forwards;
+  animation-delay: calc(var(--animation-order, 0) * 0.2s);
+}
+
+.process-step:nth-child(1) { --animation-order: 1; }
+.process-step:nth-child(2) { --animation-order: 2; }
+.process-step:nth-child(3) { --animation-order: 3; }
+.process-step:nth-child(4) { --animation-order: 4; }
+.process-step:nth-child(5) { --animation-order: 5; }
+.process-step:nth-child(6) { --animation-order: 6; }
+.process-step:nth-child(7) { --animation-order: 7; }
+.process-step:nth-child(8) { --animation-order: 8; }
+.process-step:nth-child(9) { --animation-order: 9; }
+.process-step:nth-child(10) { --animation-order: 10; }
+.process-step:nth-child(11) { --animation-order: 11; }
+.process-step:nth-child(12) { --animation-order: 12; }
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Left and right content */
+.left-content {
+  flex-basis: calc(50% - 3rem); /* Adjusted for slightly more gap */
+  padding-right: 0;
+  text-align: right;
+  box-sizing: border-box;
+  padding-top: 0.3rem; /* Align text slightly below the dot's center */
+}
+
+.right-content {
+  flex-basis: calc(50% - 3rem); /* Adjusted for slightly more gap */
+  padding-left: 0;
+  text-align: left;
+  box-sizing: border-box;
+  padding-top: 0.3rem; /* Align text slightly below the dot's center */
+}
+
+/* Timeline dot */
+.timeline-dot {
+  position: absolute;
+  top: 0.5rem; /* Position dot relative to the start of the text */
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  background-color: #fff; /* Changed from green to white */
+  border-radius: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.6); /* Changed from green to white */
+}
+
+.timeline-dot.white-dot {
+  background-color: #fff; /* White dot */
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+}
+
+/* Typography */
+.step-title {
+  font-size: 2rem;
+  font-weight: 400;
+  color: #fff; /* Changed from green to white */
+  margin: 0 0 1rem 0;
+  transition: color 0.3s ease;
+}
+
+.left-content .step-title {
+  margin-top: -0.5rem; /* Adjusts left title to center with dot */
+}
+
+.right-content .step-title {
+  color: #fff; /* White title for right side */
+}
+
+.step-description {
+  font-size: 0.9rem;
+  color: #aaa; /* Keeping this light gray for readability against white titles */
+  line-height: 1.8;
+  margin: 0;
+  /* white-space: pre-line; No longer needed here, handled by event items */
+}
+
+/* Individual Event Styling within description */
+.event-item {
+  margin-bottom: 1.5rem; /* Space between events */
+}
+
+.event-item:last-child {
+  margin-bottom: 0;
+}
+
+.event-link {
+  text-decoration: none;
+  color: inherit; /* Inherit color from .step-description (which is #aaa) */
+  display: inline-block; /* Allow margin bottom on link if needed in future */
+}
+
+.event-link:hover em,
+.event-link:hover strong {
+  text-decoration: underline;
+}
+
+.event-link em {
+  color: #fff; 
+  font-style: normal;
+  font-weight: 400;
+}
+
+.event-link strong {
+  color: #fff;
+  font-weight: 500;
+}
+
+.event-text {
+  color: #aaa;
+  margin-top: 0.25rem; /* Small space between link and its description */
+  white-space: pre-line; /* Handle newlines in individual event descriptions */
+  font-size: 0.9rem; /* Ensure consistent font size with overall step description */
+  line-height: 1.6; /* Adjust line height for readability */
+}
+
+/* Style for event dates */
+.step-description em {
+  color: #fff; /* Changed from green to white */
+  font-style: normal;
+  font-weight: 400;
+}
+
+/* Scrollbar styling - Keep for other potential uses, but not active here */
+.step-description::-webkit-scrollbar {
+  width: 6px;
+}
+
+.step-description::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+}
+
+.step-description::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+}
+
+.step-description::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Hover effects */
+.process-step:hover .timeline-dot {
+  transform: translateX(-50%) scale(1.2);
+  transition: transform 0.3s ease;
+}
+
+.process-step:hover .step-title {
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.4); /* Changed from green to white */
+}
+
+/* Grid View */
+.grid-view {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  padding: 1rem;
+}
+
+.grid-item {
+  background-color: rgba(30, 30, 30, 0.8);
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  text-decoration: none;
+  color: #fff;
+}
+
+.grid-item:hover {
+  background-color: rgba(40, 40, 40, 0.8);
+}
+
+.grid-category {
+  font-size: 0.8rem;
+  color: #aaa;
+  text-transform: uppercase;
+  margin-bottom: 0.3rem;
+}
+
+.grid-date {
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.grid-title {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  color: #fff;
+}
+
+.grid-description {
+  font-size: 0.9rem;
+  color: #ccc;
+  line-height: 1.5;
+}
+
+/* Utility Classes */
+.hidden {
+  display: none;
+}
+
+.no-results {
+  text-align: center;
+  padding: 2rem;
+  color: #aaa;
+  background-color: rgba(30, 30, 30, 0.8);
+  border: 1px solid #333;
+  border-radius: 8px;
+  margin: 2rem;
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  color: #aaa;
+}
+
+/* Footer */
+footer {
+  display: none; /* Hide footer as it's not in the screenshot */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .top-nav-bar {
+    padding: 0.5rem 1rem;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .top-nav-btn {
+    padding: 0.5rem;
+    margin-right: 0.5rem;
+    font-size: 0.85rem;
+  }
+
+  .top-nav-btn.active::after {
+    left: 0.25rem;
+    right: 0.25rem;
+  }
+
+  .timeline::before {
+    left: 30px;
+  }
+  
+  .timeline-dot {
+    left: 30px;
+    top: 0.3rem; /* Adjust dot for responsive */
+  }
+  
+  .process-step {
+    flex-direction: column;
+    margin: 4rem 0;
+  }
+  
+  .left-content, 
+  .right-content {
+    width: 100%;
+    text-align: left;
+    padding-left: 60px; /* Space for the timeline line and dot */
+    padding-right: 20px;
+    flex-basis: auto; /* Reset flex-basis for stacked layout */
+    padding-top: 0; /* Reset for stacked layout */
+  }
+  
+  .left-content {
+    order: 1;
+    margin-bottom: 1rem;
+  }
+  
+  .left-content .step-title {
+    margin-top: 0; /* Reset specific adjustment for mobile */
+    color: #fff; /* Changed from green to white */
+  }
+  
+  .right-content {
+    order: 2;
+  }
+  
+  .step-empty {
+    display: none;
+  }
+  
+  .step-description {
+    /* Removed max-height, so no scrollbar by default */
+  }
+}
+
+/* Event detail styling */
+.event-header {
+  margin-bottom: 1.5rem;
+}
+
+.event-category {
+  font-size: 0.9rem;
+  color: #666;
+  text-transform: uppercase;
+  margin-bottom: 0.3rem;
+}
+
+.event-date {
+  font-weight: 600;
+  color: #2d6a4f;
+  margin-bottom: 0.5rem;
+}
+
+.event-title {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.event-content {
+  font-size: 1rem;
+  color: #333;
+  line-height: 1.6;
+}
+
+.event-content h3 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+} 

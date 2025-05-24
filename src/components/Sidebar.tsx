@@ -252,6 +252,13 @@ const Sidebar: React.FC = () => {
               Home
             </Link>
             <Link 
+              to="/rules" 
+              className={`nav-item ${location.pathname.includes('/rules') ? 'nav-item-active' : ''}`}
+              onClick={closeSidebar}
+            >
+              Rules
+            </Link>
+            <Link 
               to="/sets" 
               className={`nav-item ${location.pathname.includes('/sets') || location.pathname.includes('/card/') ? 'nav-item-active' : ''}`}
               onClick={closeSidebar}
@@ -271,6 +278,13 @@ const Sidebar: React.FC = () => {
               onClick={closeSidebar}
             >
               Spoilers
+            </Link>
+            <Link 
+              to="/lore" 
+              className={`nav-item ${location.pathname.includes('/lore') ? 'nav-item-active' : ''}`}
+              onClick={closeSidebar}
+            >
+              Lore
             </Link>
             <Link 
               to="/forums" 

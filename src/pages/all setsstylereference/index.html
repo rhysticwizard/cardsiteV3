@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magic: The Gathering Sets</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <main>
+        <div class="header">
+            <div class="nav-container">
+                <div class="nav-tabs">
+                    <div class="nav-tab active" data-filter="all">All</div>
+                    <div class="nav-tab" data-filter="expansion">Expansion</div>
+                    <div class="nav-tab" data-filter="core">Core</div>
+                    <div class="nav-tab" data-filter="masters">Masters</div>
+                    <div class="nav-tab" data-filter="draft">Draft Innovation</div>
+                </div>
+                <div class="nav-controls">
+                    <div class="dropdown">
+                        <button class="filter-button">
+                            Filter <i class="fas fa-filter"></i>
+                        </button>
+                        <div class="dropdown-content" id="filter-dropdown">
+                            <div class="filter-group">
+                                <div class="filter-group-title">Set Type</div>
+                                <div class="filter-option" data-filter="expansion">Expansion</div>
+                                <div class="filter-option" data-filter="core">Core</div>
+                                <div class="filter-option" data-filter="masters">Masters</div>
+                                <div class="filter-option" data-filter="commander">Commander</div>
+                                <div class="filter-option" data-filter="draft">Draft Innovation</div>
+                            </div>
+                            <div class="filter-group">
+                                <div class="filter-group-title">Year</div>
+                                <div class="filter-option" data-year="2023">2023</div>
+                                <div class="filter-option" data-year="2022">2022</div>
+                                <div class="filter-option" data-year="2021">2021</div>
+                                <div class="filter-option" data-year="2020">2020</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <button class="sort-button">
+                            Sort <i class="fas fa-sort"></i>
+                        </button>
+                        <div class="dropdown-content" id="sort-dropdown">
+                            <div class="filter-option" data-sort="newest">Newest First</div>
+                            <div class="filter-option" data-sort="oldest">Oldest First</div>
+                            <div class="filter-option" data-sort="name-asc">Name (A-Z)</div>
+                            <div class="filter-option" data-sort="name-desc">Name (Z-A)</div>
+                        </div>
+                    </div>
+                    <div class="view-toggles">
+                        <button class="view-toggle grid-view active" title="Grid View">
+                            <i class="fas fa-th-large"></i>
+                        </button>
+                        <button class="view-toggle list-view" title="List View">
+                            <i class="fas fa-list"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="sets-container">
+            <!-- Sets will be loaded here -->
+            <div class="loading">Loading sets...</div>
+        </div>
+        
+        <!-- Card Modal -->
+        <div id="card-modal" class="modal hidden">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <div class="modal-body">
+                    <!-- Card details will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html> 

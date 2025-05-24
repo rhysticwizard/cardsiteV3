@@ -1330,4 +1330,10 @@ main {
   outline: 1px solid white !important; /* Change focus outline to white */
   border-color: white !important; /* Ensure border color also changes or is consistent */
   box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25) !important; /* Optional: to mimic bootstrap focus shadow but in white */
+}
+
+/* Search Bar overrides */
+.search-page {
+  max-width: 1200px;
+  margin: 0 auto;
 } 
